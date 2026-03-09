@@ -18,9 +18,15 @@
       "command": "npx",
       "args": ["shadcn@latest", "mcp"]
     },
-    "web-search": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-web-search"]
+
+    "shrimp-task-manager": {
+      "command": "node",
+      "args": ["/Users/mac/workspace/mcp-shrimp-task-manager/dist/index.js"],
+      "env": {
+        "DATA_DIR": "/Users/mac/workspace/notion-cms-project/shrimp_data",
+        "TEMPLATES_USE": "en",
+        "ENABLE_GUI": "false"
+      }
     }
   }
 }
