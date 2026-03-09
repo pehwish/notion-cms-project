@@ -2,6 +2,10 @@
 
 이 파일은 Claude Code (claude.ai/code)가 이 저장소의 코드를 작업할 때 필요한 지침을 제공합니다.
 
+# Project Context
+- PRD 문서: @docs/PRD.md
+- 개발 로드맵: @docs/ROADMAP.md
+
 ## 프로젝트 개요
 
 **StarterKit**은 개발팀 온보딩 도구로 설계된 현대적인 Next.js 15 + React 19 스타터킷입니다. 살아있는 대화형 예시와 함께 충분히 문서화된 컴포넌트, 훅, 패턴을 포괄적으로 제공합니다.
