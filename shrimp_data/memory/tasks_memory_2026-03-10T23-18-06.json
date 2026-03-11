@@ -1,0 +1,147 @@
+{
+  "tasks": [
+    {
+      "id": "06370d3c-3b09-4197-90dc-5ad9d689e803",
+      "name": "Task 1-1: 환경 변수 설정 (.env.local, .env.example)",
+      "description": "Notion API 인증에 필요한 환경 변수 설정 파일 생성. NOTION_API_KEY(통합 토큰), NOTION_DATABASE_ID(Blog Posts DB ID) 정의. .env.local은 git 무시, .env.example은 버전 컨트롤에 포함하여 팀원을 위한 템플릿 제공.",
+      "notes": "- .env.example은 git push 대상, .env.local은 git ignore\\n- 환경 변수 값이 없으면 Phase 2 API 클라이언트 구현 불가\\n- TypeScript에서 사용할 때는 process.env.NOTION_API_KEY 형태로 접근",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T13:41:59.221Z",
+      "updatedAt": "2026-03-10T13:46:13.421Z",
+      "relatedFiles": [
+        {
+          "path": ".env.example",
+          "type": "CREATE",
+          "description": "환경 변수 템플릿 (버전 컨트롤)"
+        },
+        {
+          "path": ".env.local",
+          "type": "CREATE",
+          "description": "실제 환경 변수 (git 무시)"
+        },
+        {
+          "path": ".gitignore",
+          "type": "REFERENCE",
+          "description": "환경 변수 무시 규칙 확인"
+        }
+      ],
+      "implementationGuide": "1. .env.example 생성:\\n   NOTION_API_KEY=your_notion_api_key_here\\n   NOTION_DATABASE_ID=your_database_id_here\\n2. .env.local 생성 (실제 값):\\n   NOTION_API_KEY=(실제 토큰)\\n   NOTION_DATABASE_ID=(실제 DB ID)\\n3. .gitignore 확인: .env.local이 무시되는지 검증\\n4. 파일 생성 후 npm run dev로 환경 변수 로드 확인",
+      "verificationCriteria": "- .env.example과 .env.local 모두 생성됨\\n- .env.local은 .gitignore에 포함됨\\n- 두 파일 모두 NOTION_API_KEY, NOTION_DATABASE_ID 포함\\n- npm run dev 실행 후 환경 변수 로드 오류 없음",
+      "analysisResult": "Phase 1: 프로젝트 골격 (구조, 환경 설정) - 모든 후속 단계의 기초 구축. (blog) 라우트 그룹, 블로그 전용 컴포넌트, 타입 정의 초기화. 기존 (marketing), (docs) 라우트 무손상 보호. 총 5개 세부 작업, 순차 실행 필수.",
+      "summary": "Task 1-1 완료: .env.example과 .env.local 모두 생성. NOTION_API_KEY, NOTION_DATABASE_ID 정의. .gitignore에 .env* 패턴으로 안전하게 무시됨. Phase 2 API 클라이언트 구현 준비 완료.",
+      "completedAt": "2026-03-10T13:46:13.416Z"
+    },
+    {
+      "id": "5e4e0be9-a468-47d9-9b69-d527fcbb76cc",
+      "name": "Task 1-2: TypeScript 타입 정의 확장 (lib/types.ts)",
+      "description": "블로그 도메인의 핵심 타입 정의 추가. 기존 NavLink, PageMeta, SiteConfig는 보존하고, BlogPost(블로그 글 데이터 모델), BlogCategory(카테고리), BlogTag(태그), NotionPageMeta(Notion 페이지 메타정보) 등 블로그 전용 타입을 lib/types.ts 하단에 추가.",
+      "notes": "- any 타입 금지, 모든 타입 명시적 정의\\n- BlogCategory는 Notion 선택 옵션과 동기화\\n- Phase 2에서 추가 타입(NotionBlockResponse 등) 확장 가능하도록 설계\\n- JSDoc 주석 추가로 각 필드 설명 제공",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T13:41:59.221Z",
+      "updatedAt": "2026-03-10T13:46:15.007Z",
+      "relatedFiles": [
+        {
+          "path": "lib/types.ts",
+          "type": "TO_MODIFY",
+          "description": "기존 타입 보존, 블로그 타입 추가",
+          "lineStart": 1,
+          "lineEnd": 22
+        },
+        {
+          "path": "docs/PRD.md",
+          "type": "REFERENCE",
+          "description": "§5 Notion 데이터베이스 스키마 참고",
+          "lineStart": 60,
+          "lineEnd": 90
+        }
+      ],
+      "implementationGuide": "1. lib/types.ts 기존 내용 보존 (NavLink, PageMeta, SiteConfig)\\n2. 하단에 블로그 타입 추가:\\n   export type BlogStatus = 'Draft' | 'Published';\\n   export type BlogCategory = 'React' | 'Node.js' | 'TypeScript' | 'DevOps' | 'Web Performance';\\n   export interface BlogPost {\\n     id: string;\\n     title: string;\\n     slug: string;\\n     category: BlogCategory;\\n     tags: string[];\\n     publishedDate: Date;\\n     status: BlogStatus;\\n     description?: string;\\n     content?: string;\\n   }\\n   export interface NotionPageMeta {\\n     id: string;\\n     url: string;\\n     createdTime: string;\\n     lastEditedTime: string;\\n   }\\n3. 타입은 Notion 스키마(PRD §5)와 일치하도록 정의",
+      "verificationCriteria": "- lib/types.ts에 BlogPost, BlogCategory, BlogTag, NotionPageMeta 정의됨\\n- 기존 NavLink, PageMeta, SiteConfig 보존됨\\n- TypeScript strict 모드에서 에러 없음 (npm run lint 통과)\\n- 각 타입이 PRD §5 스키마와 일치함",
+      "analysisResult": "Phase 1: 프로젝트 골격 (구조, 환경 설정) - 모든 후속 단계의 기초 구축. (blog) 라우트 그룹, 블로그 전용 컴포넌트, 타입 정의 초기화. 기존 (marketing), (docs) 라우트 무손상 보호. 총 5개 세부 작업, 순차 실행 필수.",
+      "summary": "Task 1-2 완료: BlogPost, BlogCategory, BlogStatus, NotionPageMeta 타입 정의 추가. 기존 NavLink, PageMeta, SiteConfig 완전 보존. TypeScript strict 모드 준수. 모든 필드 JSDoc 주석 포함.",
+      "completedAt": "2026-03-10T13:46:15.004Z"
+    },
+    {
+      "id": "36488a75-d546-48e8-b743-16ff491b7ba2",
+      "name": "Task 1-3: 디렉토리 구조 생성",
+      "description": "블로그 관련 디렉토리 생성. app/(blog)/ 라우트 그룹, components/blog/ 컴포넌트 디렉토리, lib/ 하위 유틸 파일 준비용 디렉토리. 이 단계에서는 폴더 생성만 수행, 파일 내용은 다음 작업에서 구현.",
+      "notes": "- 폴더 구조는 ROADMAP.md §7 프로젝트 디렉토리 구조 준수\\n- (blog)는 라우트 그룹이므로 URL에 포함되지 않음 (/(blog)/page.tsx = /page.tsx)\\n- 향후 components/blog/에는 post-card, post-list, search-bar, category-filter 추가 예정\\n- 변경된 구조는 프로젝트 설명서에 반영 필요",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T13:41:59.221Z",
+      "updatedAt": "2026-03-10T13:46:16.902Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/",
+          "type": "CREATE",
+          "description": "블로그 라우트 그룹 디렉토리"
+        },
+        {
+          "path": "app/(blog)/posts/[slug]/",
+          "type": "CREATE",
+          "description": "동적 라우트 디렉토리"
+        },
+        {
+          "path": "components/blog/",
+          "type": "CREATE",
+          "description": "블로그 전용 컴포넌트 디렉토리"
+        },
+        {
+          "path": "docs/ROADMAP.md",
+          "type": "REFERENCE",
+          "description": "§7 디렉토리 구조 참고"
+        }
+      ],
+      "implementationGuide": "1. app/(blog)/ 디렉토리 생성\\n2. app/(blog)/posts/ 디렉토리 생성\\n3. app/(blog)/posts/[slug]/ 디렉토리 생성 (동적 라우트)\\n4. components/blog/ 디렉토리 생성\\n5. (선택) lib/ 하위 다음 파일 생성 준비:\\n   - lib/notion.ts (Phase 2)\\n   - lib/blog-utils.ts (Phase 2)\\n   - lib/notion-blocks.ts (Phase 2)\\n이번 작업에서 파일 생성하지 않음, 구조만 정의",
+      "verificationCriteria": "- app/(blog)/ 디렉토리 존재\\n- app/(blog)/posts/[slug]/ 디렉토리 존재\\n- components/blog/ 디렉토리 존재\\n- 기존 app/(marketing)/, app/(docs)/ 무손상\\n- 폴더 구조가 ROADMAP.md와 일치",
+      "analysisResult": "Phase 1: 프로젝트 골격 (구조, 환경 설정) - 모든 후속 단계의 기초 구축. (blog) 라우트 그룹, 블로그 전용 컴포넌트, 타입 정의 초기화. 기존 (marketing), (docs) 라우트 무손상 보호. 총 5개 세부 작업, 순차 실행 필수.",
+      "summary": "Task 1-3 완료: app/(blog)/, app/(blog)/posts/, app/(blog)/posts/[slug]/, components/blog/ 모두 생성. 기존 (marketing), (docs) 라우트 완전 무손상. ROADMAP.md §7 구조와 정확히 일치.",
+      "completedAt": "2026-03-10T13:46:16.899Z"
+    },
+    {
+      "id": "75ae1ace-a50a-4ebb-8cdc-a7c296141fa5",
+      "name": "Task 1-4: 블로그 레이아웃 생성 (app/(blog)/layout.tsx)",
+      "description": "블로그 라우트 그룹 전용 레이아웃 컴포넌트 생성. Header + main + Footer 구조 (마케팅 라우트 패턴 참고). 블로그 페이지들의 공통 UI 구조 정의. 메타데이터 기본값 설정.",
+      "notes": "- Header, Footer는 마케팅과 공유 (components/layout)\\n- main className: 'flex-1'으로 전체 높이 채우기\\n- ISR 설정은 page.tsx에서 수행 (이 파일 아님)\\n- 스타일링: 기존 패턴(Tailwind)과 동일",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "5e4e0be9-a468-47d9-9b69-d527fcbb76cc"
+        }
+      ],
+      "createdAt": "2026-03-10T13:41:59.221Z",
+      "updatedAt": "2026-03-10T14:10:17.112Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/layout.tsx",
+          "type": "CREATE",
+          "description": "블로그 라우트 레이아웃 (신규)"
+        },
+        {
+          "path": "app/(marketing)/layout.tsx",
+          "type": "REFERENCE",
+          "description": "마케팅 레이아웃 패턴 참고",
+          "lineStart": 1,
+          "lineEnd": 22
+        },
+        {
+          "path": "components/layout/header.tsx",
+          "type": "REFERENCE",
+          "description": "기존 Header 컴포넌트"
+        },
+        {
+          "path": "components/layout/footer.tsx",
+          "type": "REFERENCE",
+          "description": "기존 Footer 컴포넌트"
+        }
+      ],
+      "implementationGuide": "1. app/(blog)/layout.tsx 파일 생성\\n2. 구조 (app/(marketing)/layout.tsx 참고):\\n   import { Header } from '@/components/layout/header';\\n   import { Footer } from '@/components/layout/footer';\\n   \\n   export default function BlogLayout({ children }: { children: React.ReactNode }) {\\n     return (\\n       <div className=\\\"flex min-h-screen flex-col\\\">\\n         <Header />\\n         <main className=\\\"flex-1\\\">\\n           {children}\\n         </main>\\n         <Footer />\\n       </div>\\n     );\\n   }\\n3. 메타데이터 기본값 추가 (선택사항):\\n   export const metadata: Metadata = {\\n     title: { template: '%s | Dev Blog', default: 'Dev Blog' },\\n     description: '개발 경험과 지식을 공유하는 블로그'\\n   };\\n4. JSDoc 주석 추가: 블로그 전용 레이아웃임을 명시",
+      "verificationCriteria": "- app/(blog)/layout.tsx 파일 생성됨\\n- Header, Footer 임포트 및 렌더링 정상\\n- className 구조가 (marketing) 패턴과 일치\\n- TypeScript strict 모드 검증 통과\\n- npm run lint 통과",
+      "analysisResult": "Phase 1: 프로젝트 골격 (구조, 환경 설정) - 모든 후속 단계의 기초 구축. (blog) 라우트 그룹, 블로그 전용 컴포넌트, 타입 정의 초기화. 기존 (marketing), (docs) 라우트 무손상 보호. 총 5개 세부 작업, 순차 실행 필수.",
+      "summary": "app/(blog)/layout.tsx 파일 생성 완료. Header, Footer 임포트 및 렌더링 정상. Metadata 기본값(title template, description) 추가. TypeScript strict 모드 통과, npm run lint 성공. 마케팅 레이아웃 패턴과 일치하는 깔끔한 구조 완성.",
+      "completedAt": "2026-03-10T14:10:17.109Z"
+    }
+  ]
+}

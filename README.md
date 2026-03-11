@@ -114,12 +114,23 @@ npm start
 
 자세한 배포 가이드는 [Next.js 배포 문서](https://nextjs.org/docs/app/building-your-application/deploying)를 참고하세요.
 
+## 📋 개발 상태
+
+- Phase 1 (구조 설정): 완료 - 기본 디렉토리 구조, 타입 정의, 환경 변수
+- Phase 2 (공통 모듈): 예정 - Notion API 클라이언트, 공통 컴포넌트 구현
+- Phase 3 (핵심 기능): 예정 - 글 목록/상세 페이지, ISR 설정
+- Phase 4 (추가 기능): 예정 - 카테고리 필터, 검색, SEO 최적화
+- Phase 5 (배포): 예정 - 반응형 완성, 성능 최적화, Vercel 배포
+
+자세한 개발 계획은 [ROADMAP.md](./docs/ROADMAP.md)를 참고하세요.
+
 ## 📝 개발 가이드
 
-- **컴포넌트 추가**: `components/` 디렉토리에 새 컴포넌트 생성
-- **페이지 추가**: `app/(blog)/` 라우트 그룹에 새 페이지 생성
-- **스타일링**: Tailwind CSS 클래스 사용
-- **타입 안전성**: TypeScript strict 모드 준수
+- **블로그 컴포넌트**: `components/blog/` 디렉토리에 구현
+- **Notion API**: `lib/notion.ts`에 페칭 함수 구현
+- **새 페이지**: `app/(blog)/` 라우트 그룹에 추가
+- **타입 정의**: `lib/types.ts`의 Post, Category, Tag 타입 확장
+- **스타일링**: Tailwind CSS 클래스 사용 (반응형 필수)
 
 자세한 내용은 [CLAUDE.md](./CLAUDE.md)를 참고하세요.
 

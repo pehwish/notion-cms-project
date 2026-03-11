@@ -1,0 +1,95 @@
+{
+  "tasks": [
+    {
+      "id": "adb3e9eb-560e-46c1-b894-b34dafd83354",
+      "name": "Task 1-1: 환경 변수 설정 (.env.local, .env.example)",
+      "description": "Notion API 인증에 필요한 환경 변수 설정 파일 생성. NOTION_API_KEY(통합 토큰), NOTION_DATABASE_ID(Blog Posts DB ID) 정의. .env.local은 git 무시, .env.example은 버전 컨트롤에 포함하여 팀원을 위한 템플릿 제공.",
+      "notes": ".env.local은 민감한 정보이므로 절대 git에 커밋하면 안 됨. .env.example은 공개 저장소에 포함되어 다른 개발자가 템플릿으로 사용할 수 있어야 함.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T14:19:24.920Z",
+      "updatedAt": "2026-03-10T14:20:16.542Z",
+      "relatedFiles": [
+        {
+          "path": ".env.example",
+          "type": "CREATE",
+          "description": "Notion API 환경 변수 템플릿 파일"
+        },
+        {
+          "path": ".env.local",
+          "type": "CREATE",
+          "description": "실제 Notion API 키와 Database ID (git 무시)"
+        },
+        {
+          "path": ".gitignore",
+          "type": "REFERENCE",
+          "description": ".env.local 무시 여부 확인"
+        }
+      ],
+      "implementationGuide": "1. .env.example 파일 생성 (플레이스홀더 값):\n   - NOTION_API_KEY=your_notion_api_key_here\n   - NOTION_DATABASE_ID=your_database_id_here\n2. .env.local 파일 생성 (실제 값):\n   - Notion API 키 입력\n   - Notion Database ID 입력\n3. .gitignore에 .env.local 추가 (이미 되어 있는지 확인)",
+      "verificationCriteria": "1. .env.example 파일 존재 및 NOTION_API_KEY, NOTION_DATABASE_ID 플레이스홀더 포함\n2. .env.local 파일 존재 및 실제 값 설정\n3. .gitignore에 .env.local이 등록되어 있음\n4. npm run dev 시 환경 변수 정상 로드 확인",
+      "summary": "Task 1-1 완료: .env.example (템플릿) 및 .env.local (실제 값) 파일 생성. NOTION_API_KEY와 NOTION_DATABASE_ID 설정 완료. .gitignore에서 .env*.local 무시, .env.example 공개 설정. 모든 검증 기준 충족.",
+      "completedAt": "2026-03-10T14:20:16.540Z"
+    },
+    {
+      "id": "e97880d6-69dd-4ca1-96c7-957ee44b1a42",
+      "name": "Task 1-2: TypeScript 타입 정의 확장 (lib/types.ts)",
+      "description": "블로그 도메인의 핵심 타입 정의 추가. 기존 타입은 보존하고, BlogPost, BlogCategory, BlogTag 등 블로그 전용 타입을 lib/types.ts에 추가.",
+      "notes": "Notion 데이터베이스 스키마(PRD §5) 기반으로 타입 설계. 모든 필드는 명시적으로 타입 지정, any 타입 금지.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "adb3e9eb-560e-46c1-b894-b34dafd83354"
+        }
+      ],
+      "createdAt": "2026-03-10T14:19:24.920Z",
+      "updatedAt": "2026-03-10T14:30:46.662Z",
+      "relatedFiles": [
+        {
+          "path": "lib/types.ts",
+          "type": "TO_MODIFY",
+          "description": "블로그 타입 추가"
+        }
+      ],
+      "implementationGuide": "1. lib/types.ts 열기\n2. 기존 타입 (NavLink, PageMeta, SiteConfig) 보존\n3. 블로그 타입 추가:\n   - BlogPost: { id, title, slug, category, tags, publishedDate, status, description, content }\n   - BlogCategory: { name, displayName }\n   - BlogStatus: 'draft' | 'published'\n   - NotionPageMeta: { notionId, lastEdited }\n4. TypeScript strict 모드 호환성 확인",
+      "verificationCriteria": "1. BlogPost 타입 정의 (필수 필드: id, title, slug, category, publishedDate, status)\n2. BlogCategory, BlogStatus, BlogTag 타입 정의\n3. TypeScript 컴파일 오류 없음 (npm run build)\n4. 기존 타입(NavLink, PageMeta) 무손상",
+      "summary": "Task 1-2 완료: lib/types.ts 블로그 타입 정의 완성. Post 타입 확장 (content, notionPageId, lastEditedAt, roles, technologies, period 추가), Role/Technology/Period 신규 타입 추가. 기존 타입(NavLink, PageMeta, SiteConfig, Category, Tag) 무손상. TypeScript 컴파일 성공, strict 모드 호환.",
+      "completedAt": "2026-03-10T14:30:46.658Z"
+    },
+    {
+      "id": "9e517bef-765f-4438-8561-d6215a660c65",
+      "name": "Task 1-3: 디렉토리 구조 생성",
+      "description": "블로그 관련 디렉토리 생성. app/(blog)/ 라우트 그룹, components/blog/ 컴포넌트 디렉토리, lib/ 유틸 파일 준비.",
+      "notes": "이 단계는 폴더 생성만 수행. 파일 내용은 다음 Task에서 구현. 기존 (marketing), (docs) 라우트 그룹과 components/ 구조는 무손상.",
+      "status": "completed",
+      "dependencies": [
+        {
+          "taskId": "e97880d6-69dd-4ca1-96c7-957ee44b1a42"
+        }
+      ],
+      "createdAt": "2026-03-10T14:19:24.920Z",
+      "updatedAt": "2026-03-10T14:34:38.675Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)",
+          "type": "CREATE",
+          "description": "블로그 라우트 그룹 디렉토리"
+        },
+        {
+          "path": "app/(blog)/posts/[slug]",
+          "type": "CREATE",
+          "description": "동적 라우팅 디렉토리"
+        },
+        {
+          "path": "components/blog",
+          "type": "CREATE",
+          "description": "블로그 컴포넌트 디렉토리"
+        }
+      ],
+      "implementationGuide": "1. mkdir -p app/(blog)/posts/[slug]\n2. mkdir -p components/blog\n3. 확인: find . -type d -name '(blog)' -o -path '*/components/blog'\n4. 각 디렉토리에 .gitkeep 파일 추가 (선택사항, 공 디렉토리 유지용)",
+      "verificationCriteria": "1. app/(blog)/ 디렉토리 존재\n2. app/(blog)/posts/[slug]/ 디렉토리 존재\n3. components/blog/ 디렉토리 존재\n4. ls -la app/(blog) 로 확인 가능",
+      "summary": "Task 1-3 완료: 블로그 디렉토리 구조 생성 및 검증 완료. app/(blog)/, app/(blog)/posts/[slug]/, components/blog/ 세 개의 디렉토리가 모두 정상 존재함. 이전 Task들에서 이미 생성된 상태로 확인됨. 기존 (marketing), (docs) 라우트 그룹 및 components/layout/, components/common/ 구조 무손상 확인. Task 1-4, 1-5에서 실제 파일 내용 구현을 위한 디렉토리 골격이 준비됨.",
+      "completedAt": "2026-03-10T14:34:38.673Z"
+    }
+  ]
+}

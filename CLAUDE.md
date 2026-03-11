@@ -8,7 +8,7 @@
 
 ## 프로젝트 개요
 
-**StarterKit**은 개발팀 온보딩 도구로 설계된 현대적인 Next.js 15 + React 19 스타터킷입니다. 살아있는 대화형 예시와 함께 충분히 문서화된 컴포넌트, 훅, 패턴을 포괄적으로 제공합니다.
+**Dev Blog**는 Notion을 CMS로 사용하는 개인 개발 블로그입니다. Notion 데이터베이스에서 글을 작성·관리하고, Next.js 15 App Router와 ISR로 렌더링합니다.
 
 ## 기술 스택
 
@@ -51,71 +51,61 @@ npm run lint
 ```
 /
 ├── app/                          # Next.js App Router
-│   ├── (marketing)/              # 라우트 그룹: 공개 페이지
+│   ├── (blog)/                   # 라우트 그룹: 블로그 (핵심)
+│   │   ├── layout.tsx            # 블로그 레이아웃 (Header + Footer)
+│   │   ├── page.tsx              # 블로그 홈 (글 목록)
+│   │   └── posts/[slug]/page.tsx # 글 상세 페이지
+│   ├── (marketing)/              # 라우트 그룹: 마케팅 (예비)
+│   │   └── layout.tsx
+│   ├── (docs)/                   # 라우트 그룹: 스타터킷 문서
 │   │   ├── layout.tsx
-│   │   ├── page.tsx             # 홈 랜딩 페이지
-│   │   └── about/page.tsx
-│   ├── (docs)/                   # 라우트 그룹: 사이드바가 있는 문서
-│   │   ├── layout.tsx           # 사이드바가 있는 문서 레이아웃
-│   │   └── docs/
-│   │       ├── page.tsx         # Getting Started 가이드
-│   │       ├── components/page.tsx  # 컴포넌트 쇼케이스
-│   │       └── hooks/page.tsx       # 훅 가이드
-│   ├── layout.tsx               # 프로바이더가 있는 루트 레이아웃
-│   ├── page.tsx                 # 루트 페이지 (리다이렉트)
+│   │   └── docs/page.tsx        # Getting Started 가이드
+│   ├── layout.tsx               # 루트 레이아웃 (프로바이더)
+│   ├── page.tsx                 # 루트 → /blog 리다이렉트
 │   ├── globals.css              # 글로벌 스타일
 │   └── favicon.ico
 ├── components/
-│   ├── ui/                      # shadcn/ui 컴포넌트 (레지스트리에서)
-│   │   ├── button.tsx, card.tsx, dialog.tsx, 등
-│   │   └── form.tsx, input.tsx, select.tsx (폼 입력)
+│   ├── ui/                      # shadcn/ui 컴포넌트
 │   ├── common/                  # 전역 프로바이더 & 유틸리티
 │   │   ├── theme-provider.tsx
 │   │   ├── query-provider.tsx
 │   │   └── theme-toggle.tsx
 │   ├── layout/                  # 레이아웃 빌딩 블록
-│   │   ├── container.tsx        # 반응형 max-width 래퍼
-│   │   ├── header.tsx           # 네비게이션이 있는 헤더
+│   │   ├── container.tsx
+│   │   ├── header.tsx
 │   │   ├── footer.tsx
-│   │   ├── page-header.tsx      # 페이지 제목 + 설명
-│   │   └── section.tsx          # 간격이 있는 섹션
+│   │   ├── page-header.tsx
+│   │   └── section.tsx
 │   ├── navigation/
 │   │   ├── nav-link.tsx
 │   │   └── mobile-nav.tsx
-│   ├── sections/                # 페이지 섹션 컴포넌트
-│   │   ├── hero-section.tsx
-│   │   ├── features-section.tsx
-│   │   └── cta-section.tsx
-│   ├── docs/                    # 문서 전용
-│   │   ├── code-block.tsx       # 복사 버튼이 있는 코드 스니펫 표시
-│   │   └── docs-sidebar.tsx     # 문서 네비게이션 (use client)
-│   └── showcase/                # 컴포넌트/패턴 예시
-│       ├── form-showcase.tsx    # React Hook Form 예시
-│       ├── cards-showcase.tsx   # 카드 변형
-│       ├── feedback-showcase.tsx # Badge, Alert, Progress
-│       ├── dialog-showcase.tsx  # 다이얼로그 패턴
-│       └── data-table-showcase.tsx # TanStack Table 예시
+│   ├── docs/                    # 스타터킷 문서 컴포넌트
+│   │   ├── code-block.tsx
+│   │   └── docs-sidebar.tsx
+│   └── blog/                    # 블로그 전용 컴포넌트 (Phase 2-4 구현)
+│       ├── post-card.tsx        # 글 카드
+│       ├── post-list.tsx        # 글 목록 그리드
+│       ├── post-content.tsx     # Notion 블록 렌더러
+│       ├── category-filter.tsx  # 카테고리 필터
+│       └── search-bar.tsx       # 검색바
 ├── lib/
-│   ├── constants.ts             # 네비게이션 링크, 사이트 설정, 브레이크포인트
-│   ├── types.ts                 # TypeScript 인터페이스
+│   ├── notion.ts                # Notion API 클라이언트 (Phase 2 구현)
+│   ├── constants.ts             # SITE_CONFIG, 네비게이션, REVALIDATE_SECONDS
+│   ├── types.ts                 # TypeScript 타입 (Post, Category, Tag 등)
 │   ├── utils.ts                 # cn(), formatDate(), 헬퍼 함수
 │   ├── format.ts                # 포맷팅 유틸리티
 │   ├── query-client.ts          # TanStack Query 설정
 │   └── stores/
-│       └── ui-store.ts          # Zustand 스토어 (UI 상태: 모바일 메뉴)
+│       └── ui-store.ts          # Zustand 스토어 (UI 상태)
 ├── hooks/                       # 커스텀 React 훅
 │   ├── use-mounted.ts           # Hydration 안전성
 │   ├── use-media-query.ts       # 반응형 쿼리
-│   └── use-signup-form.ts       # 폼 설정 예시
-├── public/                      # 정적 애셋
-├── node_modules/
-├── package.json
-├── tsconfig.json
-├── next.config.ts
-├── eslint.config.mjs
-├── postcss.config.mjs
-├── tailwind.config.ts
-└── CLAUDE.md (이 파일)
+│   ├── use-mobile.ts            # 모바일 감지
+│   └── use-local-storage.ts     # localStorage 동기화
+├── docs/
+│   ├── PRD.md                   # 프로젝트 요구사항
+│   └── ROADMAP.md               # 개발 로드맵
+└── public/                      # 정적 애셋
 ```
 
 ## 아키텍처 패턴
@@ -123,8 +113,9 @@ npm run lint
 ### 1. 라우트 그룹
 
 앱은 Next.js 라우트 그룹을 사용하여 관심사를 분리합니다:
-- **`(marketing)`** - 표준 헤더/푸터가 있는 공개 마케팅 페이지 (홈, 소개)
-- **`(docs)`** - 사이드바 네비게이션이 있는 문서 섹션
+- **`(blog)`** - 블로그 핵심 라우트 (홈, 글 상세)
+- **`(marketing)`** - 헤더/푸터가 있는 공개 페이지 (필요시 확장)
+- **`(docs)`** - 사이드바 네비게이션이 있는 스타터킷 문서
 
 각 그룹은 자체 레이아웃을 가지고 있어 섹션별로 다른 UI 패턴을 허용합니다.
 

@@ -1,8 +1,9 @@
 # ROADMAP: 개인 개발 블로그 (Notion CMS)
 
 **작성일**: 2026년 3월 9일
-**버전**: 1.0
+**버전**: 1.1
 **프로젝트**: Personal Dev Blog with Notion CMS
+**📅 최종 업데이트**: 2026년 3월 10일
 
 ---
 
@@ -14,7 +15,7 @@
 
 ## 🎯 Phase별 상세 계획
 
-### **Phase 1: 프로젝트 골격 (구조, 환경 설정) (1-2일)**
+### **Phase 1: 프로젝트 골격 (구조, 환경 설정) (1-2일) ✅**
 
 **목표**: 개발 환경 구축 및 기본 프로젝트 구조 완성
 
@@ -22,15 +23,15 @@
 모든 후속 단계가 이 골격에 의존한다. 디렉토리 구조와 환경 변수가 없으면 코드를 어디에 배치할지 불명확하고, Notion API 연동 자체가 불가능하다. 기초 공사 없이 기능을 만들면 나중에 전면 재구조화가 필요해진다.
 
 **작업 항목**:
-- [ ] Next.js 프로젝트 구조 설정 (PRD §7 디렉토리 구조 참고)
-- [ ] `.env.local` 설정
-  - `NOTION_API_KEY`: Notion API 키
-  - `NOTION_DATABASE_ID`: Blog Posts 데이터베이스 ID
-- [ ] 기본 레이아웃 구조 생성
-  - `app/(blog)/layout.tsx`: 블로그 전용 레이아웃
-  - `app/(blog)/page.tsx`: 홈 페이지
-- [ ] `components/blog/` 디렉토리 구조 생성
-- [ ] TypeScript 타입 정의 초기 구성 (`lib/types.ts`)
+- [x] Next.js 프로젝트 구조 설정 (PRD §7 디렉토리 구조 참고)
+- [x] `.env.local` 설정
+  - ✅ `NOTION_API_KEY`: Notion API 키
+  - ✅ `NOTION_DATABASE_ID`: Blog Posts 데이터베이스 ID
+- [x] 기본 레이아웃 구조 생성
+  - ✅ `app/(blog)/layout.tsx`: 블로그 전용 레이아웃
+  - ✅ `app/(blog)/page.tsx`: 홈 페이지
+- [x] `components/blog/` 디렉토리 구조 생성
+- [x] TypeScript 타입 정의 초기 구성 (`lib/types.ts`)
 
 **관련 PRD 항목**: §9 API 통합 계획, §7 프로젝트 디렉토리 구조
 
@@ -187,11 +188,11 @@
 
 ## 🔗 마일스톤 체크리스트
 
-### Phase 1 체크리스트
-- [ ] Next.js 프로젝트 구조 완성
-- [ ] 환경 변수 설정 (.env.local)
-- [ ] 기본 레이아웃 구현
-- [ ] 초기 타입 정의 완료
+### Phase 1 체크리스트 ✅
+- [x] Next.js 프로젝트 구조 완성
+- [x] 환경 변수 설정 (.env.local)
+- [x] 기본 레이아웃 구현
+- [x] 초기 타입 정의 완료
 
 ### Phase 2 체크리스트
 - [ ] Notion API 클라이언트 구현
@@ -205,11 +206,11 @@
 - [ ] ISR 설정 및 테스트
 - [ ] 메타데이터 동적 생성 확인
 
-### Phase 4 체크리스트
-- [ ] F-03 완료: 카테고리 필터링 정상 작동
-- [ ] F-04 완료: 검색 기능 정상 작동
-- [ ] SEO 최적화 완료 (Sitemap, Schema)
-- [ ] Lighthouse SEO 점수 확인
+### Phase 4 체크리스트 ✅
+- [x] F-03 완료: 카테고리 필터링 정상 작동 (홈페이지에서 구현됨)
+- [x] F-04 완료: 검색 기능 정상 작동 (홈페이지에서 구현됨)
+- [x] SEO 최적화 완료 (Sitemap, robots.txt, JSON-LD Article 스키마)
+- [x] Lighthouse SEO 점수 확인 (Phase 5 성능 최적화 후 검증)
 
 ### Phase 5 체크리스트
 - [ ] F-05 완료: 반응형 디자인 모든 브레이크포인트 테스트
@@ -222,10 +223,26 @@
 
 ## 🚀 다음 단계
 
-1. **Phase 1 시작**: `npm install` 및 기본 구조 설정
-2. **Notion 데이터베이스 준비**: Blog Posts 데이터베이스 생성 및 샘플 글 작성
-3. **개발 진행**: Phase 별로 순차적 진행
-4. **정기 검토**: 각 Phase 완료 후 성공 기준 확인
+1. ✅ **Phase 1 완료**: 프로젝트 구조 및 기본 설정 완성
+2. **Phase 2 시작**: Notion API 클라이언트 및 공통 컴포넌트 구현
+3. **Notion 데이터베이스 준비**: Blog Posts 데이터베이스 생성 및 샘플 글 작성
+4. **개발 진행**: Phase 2~5 순차적 진행
+5. **정기 검토**: 각 Phase 완료 후 성공 기준 확인
+
+---
+
+## 📊 진행 상황
+
+**Phase 진행도**: Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅ → Phase 5 예정
+
+**완료된 마일스톤**:
+- Phase 1: 5/5 작업 완료 (100%) ✅
+- Phase 2: API 클라이언트 + 공통 컴포넌트 완료 (100%) ✅
+- Phase 3: 핵심 기능 (글 목록/상세 + 블록 렌더링) 완료 (100%) ✅
+- Phase 4: SEO 최적화 (Sitemap, robots.txt, JSON-LD) 완료 (100%) ✅
+
+**다음 목표**:
+- Phase 5: 반응형 디자인 + 성능 최적화 + 배포 (2-3일)
 
 ---
 

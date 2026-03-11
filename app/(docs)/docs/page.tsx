@@ -35,30 +35,30 @@ npm install`}
       <CodeBlock
         language="bash"
         code={`app/                           # Next.js App Router
-├── layout.tsx                 # 루트 레이아웃
-├── page.tsx                   # 홈 페이지
-├── (marketing)/               # 마케팅 라우트 그룹
-│   ├── layout.tsx
-│   └── about/page.tsx
-└── (docs)/                    # 문서 라우트 그룹
+├── layout.tsx                 # 루트 레이아웃 (프로바이더 설정)
+├── page.tsx                   # 루트 페이지 → /blog 리다이렉트
+├── (blog)/                    # 블로그 라우트 그룹
+│   ├── layout.tsx             # 블로그 레이아웃
+│   ├── page.tsx               # 블로그 홈 (글 목록)
+│   └── posts/[slug]/page.tsx  # 글 상세 페이지
+├── (marketing)/               # 마케팅 라우트 그룹 (예비)
+│   └── layout.tsx
+└── (docs)/                    # 문서 라우트 그룹 (스타터킷 문서)
     ├── layout.tsx
-    └── docs/
-        ├── page.tsx           # Getting Started
-        ├── components/page.tsx
-        └── hooks/page.tsx
+    └── docs/page.tsx
 
 components/                    # React 컴포넌트
 ├── ui/                        # shadcn/ui 컴포넌트
-├── common/                    # 공통 컴포넌트
-├── layout/                    # 레이아웃 컴포넌트
+├── common/                    # 공통 컴포넌트 (프로바이더, 테마)
+├── layout/                    # 레이아웃 컴포넌트 (헤더, 푸터)
 ├── navigation/                # 네비게이션
-├── sections/                  # 랜딩 페이지 섹션
 ├── docs/                      # 문서 컴포넌트
-└── showcase/                  # 컴포넌트 예시
+└── blog/                      # 블로그 전용 컴포넌트
 
 hooks/                         # 커스텀 훅
 lib/                           # 유틸리티 및 설정
-public/                        # 정적 자산`}
+├── notion.ts                  # Notion API 클라이언트
+└── types.ts                   # 블로그 타입 정의`}
       />
 
       {/* 4. 기술 스택 */}
@@ -133,13 +133,13 @@ public/                        # 정적 자산`}
       <h2>6. 다음 단계</h2>
       <ul>
         <li>
-          <a href="/docs/components">컴포넌트 예시</a>를 보고 shadcn/ui 컴포넌트 사용법을 배우세요.
+          <code>components/blog/</code> 폴더에서 블로그 컴포넌트를 구현하세요.
         </li>
         <li>
-          <a href="/docs/hooks">커스텀 훅 가이드</a>를 통해 자주 사용되는 패턴을 알아보세요.
+          <code>lib/notion.ts</code>에서 Notion API 연동을 설정하세요.
         </li>
         <li>
-          <code>components/</code> 폴더에서 레이아웃과 섹션 컴포넌트를 참고하세요.
+          <code>docs/PRD.md</code>와 <code>docs/ROADMAP.md</code>를 참고하여 개발을 진행하세요.
         </li>
       </ul>
     </div>
