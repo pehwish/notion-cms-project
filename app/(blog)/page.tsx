@@ -42,15 +42,15 @@ interface BlogHomePageProps {
 
 /**
  * 탭 아이템 스타일 헬퍼 함수
- * 활성 탭: 굵은 텍스트 + 하단 언더라인, 비활성 탭: 흐린 텍스트
+ * 활성 탭: 중간 굵기 텍스트 + 하단 언더라인, 비활성 탭: 흐린 텍스트
  */
 function getTabClassName(isActive: boolean): string {
   const base =
-    'inline-block whitespace-nowrap px-4 py-3.5 text-sm transition-colors duration-150';
+    'inline-block whitespace-nowrap px-4 py-3 text-sm font-medium transition-all duration-150';
   if (isActive) {
-    return `${base} font-semibold text-foreground border-b-2 border-foreground`;
+    return `${base} text-foreground border-b-2 border-foreground`;
   }
-  return `${base} font-medium text-muted-foreground hover:text-foreground`;
+  return `${base} text-muted-foreground hover:text-foreground`;
 }
 
 export default async function BlogHomePage({
@@ -66,21 +66,21 @@ export default async function BlogHomePage({
     console.error('홈 페이지 글 목록 조회 실패:', error);
   }
 
-  /* 기술 스택 목록 추출 (중복 제거, 빈 값 제외) */
-  const technologies = Array.from(
+  /* 역할 목록 추출 (중복 제거, 빈 값 제외) */
+  const roles = Array.from(
     new Set(
       allPosts
-        .flatMap(p => p.technologies || [])
-        .filter((t): t is string => Boolean(t))
+        .flatMap(p => p.roles || [])
+        .filter((r): r is string => Boolean(r))
     )
   ).sort();
 
-  /* 필터링 로직: category(기술), q 쿼리 파라미터 적용 */
+  /* 필터링 로직: category(역할), q 쿼리 파라미터 적용 */
   let posts: Post[] = allPosts;
 
   if (category) {
     posts = posts.filter(p =>
-      p.technologies?.some(t => t === category)
+      p.roles?.some(r => r === category)
     );
   }
 
@@ -133,9 +133,9 @@ export default async function BlogHomePage({
       <div className='border-b border-border bg-background'>
         <Container>
           <div className='flex items-stretch gap-4'>
-            {/* 카테고리 탭 목록: 가로 스크롤 지원 */}
+            {/* 역할 탭 목록: 가로 스크롤 지원 */}
             <nav
-              aria-label='카테고리 필터'
+              aria-label='역할 필터'
               className='min-w-0 flex-1 overflow-x-auto'
             >
               <ul className='flex' role='list'>
@@ -150,20 +150,20 @@ export default async function BlogHomePage({
                   </Link>
                 </li>
 
-                {/* 개별 기술 스택 탭 */}
-                {technologies.map(tech => {
-                  const isActive = category === tech;
+                {/* 개별 역할 탭 */}
+                {roles.map(role => {
+                  const isActive = category === role;
                   const href = q
-                    ? `/?category=${encodeURIComponent(tech)}&q=${encodeURIComponent(q)}`
-                    : `/?category=${encodeURIComponent(tech)}`;
+                    ? `/?category=${encodeURIComponent(role)}&q=${encodeURIComponent(q)}`
+                    : `/?category=${encodeURIComponent(role)}`;
                   return (
-                    <li key={tech}>
+                    <li key={role}>
                       <Link
                         href={href}
                         aria-current={isActive ? 'page' : undefined}
                         className={getTabClassName(isActive)}
                       >
-                        {tech}
+                        {role}
                       </Link>
                     </li>
                   );
@@ -214,7 +214,7 @@ export default async function BlogHomePage({
                 {q && category && ' · '}
                 {category && (
                   <>
-                    기술:{' '}
+                    역할:{' '}
                     <span className='font-medium text-foreground'>
                       {category}
                     </span>
