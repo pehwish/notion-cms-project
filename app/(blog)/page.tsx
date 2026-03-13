@@ -41,6 +41,31 @@ interface BlogHomePageProps {
 }
 
 /**
+ * 한글 역할을 영어로 변환하는 매핑 함수
+ */
+function translateRoleToEnglish(role: string): string {
+  const roleMap: Record<string, string> = {
+    '프론트엔드': 'Frontend',
+    '프론트엔드 개발자': 'Frontend Developer',
+    '웹 퍼블리셔': 'Web Publisher',
+    '백엔드': 'Backend',
+    '백엔드 개발자': 'Backend Developer',
+    '풀스택': 'Full Stack',
+    '풀스택 개발자': 'Full Stack Developer',
+    'PM': 'PM',
+    '제품 관리자': 'Product Manager',
+    '디자이너': 'Designer',
+    'UI/UX 디자이너': 'UI/UX Designer',
+    '마케팅': 'Marketing',
+    '마케팅 담당자': 'Marketing Manager',
+    '개발팀': 'Developer',
+    '리더': 'Lead',
+    '팀장': 'Team Lead',
+  };
+  return roleMap[role] ?? role; // 매핑이 없으면 원본 반환
+}
+
+/**
  * 탭 아이템 스타일 헬퍼 함수
  * 활성 탭: 중간 굵기 텍스트 + 하단 언더라인, 비활성 탭: 흐린 텍스트
  */
@@ -66,14 +91,17 @@ export default async function BlogHomePage({
     console.error('홈 페이지 글 목록 조회 실패:', error);
   }
 
-  /* 역할 목록 추출 (중복 제거, 빈 값 제외) */
-  const roles = Array.from(
-    new Set(
-      allPosts
-        .flatMap(p => p.roles || [])
-        .filter((r): r is string => Boolean(r))
-    )
-  ).sort();
+  /* 역할 목록 추출 (중복 제거, 빈 값 제외, 사용 횟수로 내림차순 정렬) */
+  const roleCountMap = new Map<string, number>();
+  allPosts.forEach(p => {
+    p.roles?.forEach(role => {
+      roleCountMap.set(role, (roleCountMap.get(role) ?? 0) + 1);
+    });
+  });
+
+  const roles = Array.from(roleCountMap)
+    .sort((a, b) => b[1] - a[1]) // 카운트 많은 순서로 정렬
+    .map(([role]) => role);
 
   /* 필터링 로직: category(역할), q 쿼리 파라미터 적용 */
   let posts: Post[] = allPosts;
@@ -139,14 +167,14 @@ export default async function BlogHomePage({
               className='min-w-0 flex-1 overflow-x-auto'
             >
               <ul className='flex' role='list'>
-                {/* 전체 탭 */}
+                {/* View all 탭 */}
                 <li>
                   <Link
                     href={q ? `/?q=${encodeURIComponent(q)}` : '/'}
                     aria-current={!category ? 'page' : undefined}
                     className={getTabClassName(!category)}
                   >
-                    전체
+                    View all
                   </Link>
                 </li>
 
@@ -156,6 +184,7 @@ export default async function BlogHomePage({
                   const href = q
                     ? `/?category=${encodeURIComponent(role)}&q=${encodeURIComponent(q)}`
                     : `/?category=${encodeURIComponent(role)}`;
+                  const displayRole = translateRoleToEnglish(role);
                   return (
                     <li key={role}>
                       <Link
@@ -163,7 +192,7 @@ export default async function BlogHomePage({
                         aria-current={isActive ? 'page' : undefined}
                         className={getTabClassName(isActive)}
                       >
-                        {role}
+                        {displayRole}
                       </Link>
                     </li>
                   );
@@ -214,9 +243,9 @@ export default async function BlogHomePage({
                 {q && category && ' · '}
                 {category && (
                   <>
-                    역할:{' '}
+                    Role:{' '}
                     <span className='font-medium text-foreground'>
-                      {category}
+                      {translateRoleToEnglish(category)}
                     </span>
                   </>
                 )}{' '}
