@@ -8,9 +8,9 @@
 
 import Link from "next/link";
 import { SITE_CONFIG, MARKETING_NAV_LINKS } from "@/lib/constants";
-import { ThemeToggle } from "@/components/common/theme-toggle";
-import { MobileNav } from "@/components/navigation/mobile-nav";
-import { NavLink } from "@/components/navigation/nav-link";
+import { ThemeToggle } from "@/components/common/ThemeToggle";
+import { MobileNav } from "@/components/navigation/MobileNav";
+import { NavLink } from "@/components/navigation/NavLink";
 import { Button } from "@/components/ui/button";
 import { Container } from "./container";
 

@@ -1,4 +1,4 @@
-import { CodeBlock } from '@/components/docs/code-block';
+import { CodeBlock } from '@/components/docs/CodeBlock';
 
 export default function GettingStarted() {
   return (

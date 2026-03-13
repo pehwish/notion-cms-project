@@ -30,10 +30,13 @@ interface NotionProperty {
   select?: { name: string };
   multi_select?: Array<{ name: string }>;
   date?: { start: string };
-  files?: Array<{ type: string; external?: { url: string }; file?: { url: string } }>;
+  files?: Array<{
+    type: string;
+    external?: { url: string };
+    file?: { url: string };
+  }>;
   id: string;
 }
-
 
 /**
  * 쉼표로 구분된 문자열을 배열로 파싱
@@ -101,7 +104,9 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
   // 기술 스택: multi_select 또는 rich_text 타입 모두 지원
   let technologies: string[] = [];
   if (techField?.type === 'multi_select' && techField.multi_select) {
-    technologies = techField.multi_select.map((item: { name: string }) => item.name);
+    technologies = techField.multi_select.map(
+      (item: { name: string }) => item.name
+    );
   } else if (techField?.type === 'rich_text') {
     const technologiesStr = techField.rich_text?.[0]?.plain_text || '';
     technologies = parseCommaSeparatedString(technologiesStr);
@@ -116,9 +121,10 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
     roles = parseCommaSeparatedString(rolesStr);
   }
 
-  const periodStr = periodField?.type === 'rich_text'
-    ? periodField.rich_text?.[0]?.plain_text || ''
-    : '';
+  const periodStr =
+    periodField?.type === 'rich_text'
+      ? periodField.rich_text?.[0]?.plain_text || ''
+      : '';
   const periodParsed = parsePeriodString(periodStr);
 
   // 이미지 추출 (Files & media 필드 또는 커버)
@@ -130,7 +136,11 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
   let imageUrl: string | undefined;
 
   // 1. 이미지 필드에서 추출 (Files & media 타입)
-  if (imageField?.type === 'files' && imageField.files && imageField.files.length > 0) {
+  if (
+    imageField?.type === 'files' &&
+    imageField.files &&
+    imageField.files.length > 0
+  ) {
     const firstFile = imageField.files[0] as FileObject;
     if (firstFile.type === 'external' && firstFile.external?.url) {
       imageUrl = firstFile.external.url;
@@ -300,7 +310,9 @@ export async function fetchPageBlocks(pageId: string): Promise<unknown[]> {
     );
 
     if (!response.ok) {
-      throw new Error(`Notion API 요청 실패: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `Notion API 요청 실패: ${response.status} ${response.statusText}`
+      );
     }
 
     interface BlocksResponse {

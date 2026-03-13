@@ -38,7 +38,10 @@ export function PostContent({ blocks }: PostContentProps) {
 
   return (
     <article
-      className="prose prose-neutral dark:prose-invert max-w-none"
+      // prose: globals.css에 직접 정의된 커스텀 타이포그래피 스타일
+      // prose-invert: 다크모드에서 색상 반전 적용
+      // max-w-none: 부모 컨테이너(max-w-3xl)가 너비를 제어하므로 prose 자체 너비 제한 해제
+      className="prose prose-invert max-w-none"
       // 보안: isSafeUrl + escapeHtml로 XSS 위험 최소화 후 주입
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />

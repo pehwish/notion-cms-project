@@ -7,12 +7,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Calendar, Tag, FolderOpen } from "lucide-react";
-import { Container } from "@/components/layout/container";
+import { Container } from "@/components/layout/Container";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { SITE_CONFIG } from "@/lib/constants";
 import { fetchPublishedPosts, fetchPostBySlug, fetchPageBlocks } from "@/lib/notion";
-import { PostContent } from "@/components/blog/post-content";
+import { PostContent } from "@/components/blog/PostContent";
 import { type NotionBlock } from "@/lib/notion-blocks";
 
 /**
@@ -177,29 +177,35 @@ export default async function PostPage({ params }: PostPageProps) {
               {post.title}
             </h1>
 
-            {/* 투입 기간 */}
+            {/* 투입 기간: time 태그로 기계 판독 가능한 날짜 마크업 */}
             {periodLabel && (
               <div className="mt-4 flex items-center gap-1.5 text-sm text-muted-foreground">
                 <Calendar className="h-4 w-4" aria-hidden="true" />
-                <span>{periodLabel}</span>
+                <time aria-label={`투입 기간: ${periodLabel}`}>
+                  {periodLabel}
+                </time>
               </div>
             )}
 
-            {/* 태그 목록 */}
+            {/* 태그 목록: ul/li 구조로 시맨틱 마크업 강화 */}
             {post.tags && post.tags.length > 0 && (
-              <div
-                className="mt-4 flex flex-wrap items-center gap-2"
-                aria-label="글 태그"
-              >
+              <div className="mt-4 flex flex-wrap items-center gap-2">
                 <Tag
                   className="h-4 w-4 text-muted-foreground"
                   aria-hidden="true"
                 />
-                {post.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
+                <ul
+                  className="flex flex-wrap gap-2"
+                  aria-label="글 태그 목록"
+                >
+                  {post.tags.map((tag) => (
+                    <li key={tag}>
+                      <Badge variant="secondary" className="text-xs">
+                        {tag}
+                      </Badge>
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </header>

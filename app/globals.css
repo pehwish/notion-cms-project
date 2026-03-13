@@ -123,4 +123,141 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* 부드러운 스크롤: 앵커 이동 시 CLS 없이 애니메이션 */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* focus-visible: 키보드 탐색 시에만 포커스 링 표시 (마우스 클릭 시 미표시) */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  /* 이미지 반응형 기본값: 레이아웃 시프트(CLS) 방지 */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ==========================================================================
+   prose: @tailwindcss/typography 미설치 환경에서 글 본문 스타일 직접 정의
+   post-content.tsx의 prose 클래스에 적용됨
+   ========================================================================== */
+@layer components {
+  .prose {
+    @apply text-foreground leading-relaxed;
+
+    /* 단락 */
+    p {
+      @apply mb-4 text-base leading-7;
+    }
+
+    /* 제목 계층 */
+    h1 {
+      @apply mb-4 mt-8 text-3xl font-bold tracking-tight;
+    }
+    h2 {
+      @apply mb-3 mt-8 text-2xl font-semibold tracking-tight;
+    }
+    h3 {
+      @apply mb-3 mt-6 text-xl font-semibold;
+    }
+    h4 {
+      @apply mb-2 mt-6 text-lg font-semibold;
+    }
+
+    /* 목록 */
+    ul {
+      @apply mb-4 ml-6 list-disc space-y-1;
+    }
+    ol {
+      @apply mb-4 ml-6 list-decimal space-y-1;
+    }
+    li {
+      @apply text-base leading-7;
+    }
+
+    /* 링크 */
+    a {
+      @apply font-medium underline underline-offset-4 decoration-muted-foreground/50 hover:decoration-foreground transition-colors;
+    }
+
+    /* 인용구 */
+    blockquote {
+      @apply border-l-4 border-border pl-4 italic text-muted-foreground my-6;
+    }
+
+    /* 인라인 코드 */
+    code {
+      @apply rounded bg-muted px-1.5 py-0.5 text-sm font-mono font-medium;
+    }
+
+    /* 코드 블록 */
+    pre {
+      @apply mb-4 overflow-x-auto rounded-lg bg-muted p-4;
+
+      code {
+        @apply bg-transparent p-0 text-sm;
+      }
+    }
+
+    /* 구분선 */
+    hr {
+      @apply my-8 border-border;
+    }
+
+    /* 표 */
+    table {
+      @apply w-full text-sm border-collapse mb-4;
+    }
+    th {
+      @apply border border-border bg-muted px-4 py-2 text-left font-semibold;
+    }
+    td {
+      @apply border border-border px-4 py-2;
+    }
+
+    /* 이미지 */
+    img {
+      @apply rounded-lg my-6 w-full;
+    }
+
+    /* 첫 번째 자식 요소 상단 마진 제거 */
+    > *:first-child {
+      @apply mt-0;
+    }
+
+    /* 마지막 자식 요소 하단 마진 제거 */
+    > *:last-child {
+      @apply mb-0;
+    }
+  }
+
+  /* prose 다크모드 변형 */
+  .prose-invert {
+    @apply text-foreground;
+
+    a {
+      @apply decoration-muted-foreground/60 hover:decoration-foreground;
+    }
+
+    blockquote {
+      @apply border-border text-muted-foreground;
+    }
+
+    code {
+      @apply bg-muted text-foreground;
+    }
+
+    pre {
+      @apply bg-muted;
+    }
+  }
+
+  /* prose 최대 너비 해제 (post-content에서 max-w-none 대체) */
+  .prose.max-w-none {
+    max-width: none;
+  }
 }

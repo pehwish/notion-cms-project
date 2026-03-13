@@ -1,5 +1,5 @@
-import { DocsSidebar } from '@/components/docs/docs-sidebar';
-import { Container } from '@/components/layout/container';
+import { DocsSidebar } from '@/components/docs/DocsSidebar';
+import { Container } from '@/components/layout/Container';
 
 /**
  * Docs 레이아웃

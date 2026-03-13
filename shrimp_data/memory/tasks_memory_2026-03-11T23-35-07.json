@@ -1,0 +1,135 @@
+{
+  "tasks": [
+    {
+      "id": "c148893a-c512-48cc-ac16-a10d58505540",
+      "name": "Task 3-1: 홈 페이지에 Notion API 연동 (F-01 글 목록 조회)",
+      "description": "app/(blog)/page.tsx에서 fetchPublishedPosts() 호출하여 발행된 글 목록 조회 및 렌더링. 카테고리와 검색 쿼리 파라미터로 필터링. 카테고리 목록 추출. 에러 처리 포함.",
+      "notes": "ISR revalidate=3600은 이미 설정됨. 에러 시 console.error로 로깅. Phase 4에서 페이지네이션 추가 예정.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T15:33:02.764Z",
+      "updatedAt": "2026-03-11T13:20:39.469Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "Notion API 연동, 글 목록 조회 및 필터링 로직 추가",
+          "lineStart": 40,
+          "lineEnd": 150
+        },
+        {
+          "path": "lib/notion.ts",
+          "type": "REFERENCE",
+          "description": "fetchPublishedPosts() 함수 참고"
+        },
+        {
+          "path": "lib/types.ts",
+          "type": "REFERENCE",
+          "description": "Post 타입 정의 참고"
+        }
+      ],
+      "implementationGuide": "1. fetchPublishedPosts() import\n2. try-catch로 함수 호출, 에러 시 빈 배열 반환\n3. 카테고리 목록 추출: const categories = Array.from(new Set(posts.map(p => p.category)))\n4. 검색 필터링: category 쿼리 파라미터로 필터 (posts.filter(p => p.category === category))\n5. 검색 필터링: q 쿼리 파라미터로 제목/태그 검색 (posts.filter(p => p.title.includes(q) || p.tags?.some(...)))\n6. PostList, CategoryFilter 컴포넌트에 필터링된 posts, categories prop 전달\n7. 빈 상태(posts.length === 0)에서 플레이스홀더 표시\n8. TypeScript: Post[] 타입, searchParams 타입 strict 모드 준수",
+      "verificationCriteria": "1. 홈 페이지 로드 시 Notion API 호출 확인\n2. 글 목록이 최신순으로 정렬되어 표시됨\n3. category 쿼리 파라미터로 필터링 정상 작동\n4. q 쿼리 파라미터로 검색 정상 작동\n5. 두 필터 동시 적용 가능\n6. 에러 발생 시 빈 상태로 안전하게 표시\n7. TypeScript strict 오류 0개\n8. ESLint 통과",
+      "analysisResult": "Phase 3: 핵심 기능 개발 - F-01(글 목록) & F-02(글 상세) 완성\\n\\n목표: Notion API 연동으로 실제 블로그 글 목록과 상세 페이지 렌더링\\n- 홈 페이지: fetchPublishedPosts() 호출, 글 목록 렌더링, 카테고리/검색 필터링\\n- 상세 페이지: fetchPostBySlug() 호출, 메타데이터 동적 생성, ISR 정적 생성\\n- 블록 변환: Notion 블록을 HTML로 재귀 변환\\n- 예상 기간: 3-4일\\n\\n아키텍처 결정:\\n- lib/notion.ts 함수 재사용 (fetchPublishedPosts, fetchPostBySlug)\\n- lib/notion-blocks.ts에 convertBlockToHTML() 함수 추가\\n- components/blog/post-content.tsx에 블록 렌더링 로직 연결\\n- app/(blog)/page.tsx, app/(blog)/posts/[slug]/page.tsx에 Notion API 연동\\n- TypeScript strict 모드, 에러 처리 필수",
+      "summary": "홈 페이지 완벽 구현. fetchPublishedPosts() 호출, 카테고리 목록 추출, category/q 쿼리 필터링 모두 정상. PostList, CategoryFilter, SearchBar 컴포넌트 연동. 에러 처리, 빈 상태 안내, ISR revalidate=3600 설정 완료. TypeScript strict 준수.",
+      "completedAt": "2026-03-11T13:20:39.468Z"
+    },
+    {
+      "id": "4959e6fb-c212-4b64-a6a7-0289b8754e21",
+      "name": "Task 3-2: Notion 블록 변환 로직 구현 (lib/notion-blocks.ts)",
+      "description": "NotionBlock을 HTML로 변환하는 convertBlockToHTML() 함수 및 블록 타입별 변환 함수 구현. 재귀 처리, 깊이 제한(10), RichText 포맷팅 포함. 9가지 블록 타입 지원: Paragraph, Heading, BulletedList, OrderedList, Code, Image, Quote, Divider, Toggle.",
+      "notes": "Notion 블록 문서: https://developers.notion.com/reference/block. RichText 타입 guard 함수 활용. 색상: Notion 기본 색상 목록만 사용.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T15:33:02.764Z",
+      "updatedAt": "2026-03-11T13:19:48.349Z",
+      "relatedFiles": [
+        {
+          "path": "lib/notion-blocks.ts",
+          "type": "TO_MODIFY",
+          "description": "convertBlockToHTML, convertRichText 함수 구현",
+          "lineStart": 1,
+          "lineEnd": 626
+        },
+        {
+          "path": "lib/notion.ts",
+          "type": "REFERENCE",
+          "description": "fetchPageBlocks() 반환 타입 참고"
+        }
+      ],
+      "implementationGuide": "1. convertBlockToHTML(block: NotionBlock, depth: number = 0): string 구현\n2. 깊이 검증: depth > 10이면 return '' (재귀 무한 루프 방지)\n3. switch(block.type)로 블록 타입별 처리\n   - 'paragraph': convertParagraph() → <p>RichText</p>\n   - 'heading_1/2/3': convertHeading() → <h1/h2/h3>\n   - 'bulleted_list_item': convertBulletedList() + children 재귀\n   - 'numbered_list_item': convertOrderedList() + children 재귀\n   - 'code': convertCode() → <pre><code>...</code></pre>\n   - 'image': convertImage() → <img src alt />\n   - 'quote': convertQuote() → <blockquote>\n   - 'divider': convertDivider() → <hr />\n   - 'toggle': convertToggle() → <details><summary>...</details>\n   - default: return '' (알 수 없는 타입은 skip)\n4. convertRichText(richText: NotionRichText[]): string 구현\n   - 각 RichText 항목에 annotations 적용\n   - bold: <strong>, italic: <em>, code: <code>, strikethrough: <del>, color: <span style=\"color:...\">\n   - link: <a href=\"...\">text</a> (URL 검증: http/https만 허용)\n5. 재귀: block.children?.map(child => convertBlockToHTML(child, depth + 1))",
+      "verificationCriteria": "1. convertBlockToHTML() 함수가 NotionBlock을 HTML 문자열로 변환\n2. 모든 9가지 블록 타입 처리 확인\n3. 재귀 깊이 10 이상 시 빈 문자열 반환\n4. RichText 포맷팅 (bold, italic, code, strikethrough) 정상 적용\n5. children 블록 재귀 처리 정상\n6. link URL 검증 (http/https만)\n7. TypeScript strict 준수 (any 금지)\n8. 단위 테스트 또는 수동 테스트 통과",
+      "analysisResult": "Phase 3: 핵심 기능 개발 - F-01(글 목록) & F-02(글 상세) 완성\\n\\n목표: Notion API 연동으로 실제 블로그 글 목록과 상세 페이지 렌더링\\n- 홈 페이지: fetchPublishedPosts() 호출, 글 목록 렌더링, 카테고리/검색 필터링\\n- 상세 페이지: fetchPostBySlug() 호출, 메타데이터 동적 생성, ISR 정적 생성\\n- 블록 변환: Notion 블록을 HTML로 재귀 변환\\n- 예상 기간: 3-4일\\n\\n아키텍처 결정:\\n- lib/notion.ts 함수 재사용 (fetchPublishedPosts, fetchPostBySlug)\\n- lib/notion-blocks.ts에 convertBlockToHTML() 함수 추가\\n- components/blog/post-content.tsx에 블록 렌더링 로직 연결\\n- app/(blog)/page.tsx, app/(blog)/posts/[slug]/page.tsx에 Notion API 연동\\n- TypeScript strict 모드, 에러 처리 필수",
+      "summary": "Notion 블록 변환 로직 완벽 구현. convertRichText, convertBlockToHtml, blocksToHtml 함수 모두 9가지 블록 타입 지원. 재귀 깊이 제한(10), RichText 포맷팅 완전 구현. 리스트 재귀 버그 수정, Next.js 빌드 에러 해결. ESLint/TypeScript/빌드 모두 통과. 프로덕션 준비 완료.",
+      "completedAt": "2026-03-11T13:19:48.342Z"
+    },
+    {
+      "id": "b0337e96-eef6-415c-99ce-4b2bd43ab0e2",
+      "name": "Task 3-3: 글 상세 페이지 구현 (F-02 개별 글 상세)",
+      "description": "app/(blog)/posts/[slug]/page.tsx에서 fetchPostBySlug() 호출하여 글 조회. generateStaticParams()로 정적 경로 생성. generateMetadata()로 동적 메타데이터 생성. PostContent 컴포넌트에 블록 전달.",
+      "notes": "ISR revalidate=3600 이미 설정됨. 에러 처리: try-catch 필수. 메타데이터는 slug별 동적 생성으로 SEO 최적화.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T15:33:02.764Z",
+      "updatedAt": "2026-03-11T13:23:20.878Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/posts/[slug]/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "generateStaticParams, generateMetadata, 페이지 구현",
+          "lineStart": 20,
+          "lineEnd": 210
+        },
+        {
+          "path": "lib/notion.ts",
+          "type": "REFERENCE",
+          "description": "fetchPostBySlug(), fetchPublishedPosts() 함수 참고"
+        },
+        {
+          "path": "components/blog/post-content.tsx",
+          "type": "REFERENCE",
+          "description": "PostContent 컴포넌트에 blocks 전달"
+        }
+      ],
+      "implementationGuide": "1. generateStaticParams() 구현:\n   - fetchPublishedPosts() 호출\n   - posts.map(post => ({ slug: post.slug })) 반환\n   - 에러 시 빈 배열 반환 (빌드 실패 방지)\n2. generateMetadata({ params }: PostPageProps) 구현:\n   - const { slug } = await params\n   - fetchPostBySlug(slug) 호출\n   - 글이 없으면 { title: '글을 찾을 수 없습니다' } 반환\n   - 글이 있으면 openGraph (og:title, og:description, og:type:article, og:published_time) 포함\n3. default export 함수:\n   - fetchPostBySlug(slug) 호출\n   - 글이 없으면 notFound() 호출\n   - 글 메타정보(title, publishedAt, category, tags) 렌더링\n   - PostContent 컴포넌트에 blocks prop 전달\n4. 이전/다음 글 네비게이션: Phase 4에서 구현 (TODO로 유지)",
+      "verificationCriteria": "1. generateStaticParams() 정상 작동 (빌드 시 정적 경로 생성)\n2. generateMetadata() 글별 메타데이터 정상 생성\n3. 존재하는 slug로 접근 시 글 정보 표시\n4. 존재하지 않는 slug로 접근 시 404 페이지 표시\n5. 메타데이터: og:title, og:description, og:type 포함\n6. PostContent 컴포넌트에 blocks 정상 전달\n7. TypeScript strict 준수\n8. ESLint 통과",
+      "analysisResult": "Phase 3: 핵심 기능 개발 - F-01(글 목록) & F-02(글 상세) 완성\\n\\n목표: Notion API 연동으로 실제 블로그 글 목록과 상세 페이지 렌더링\\n- 홈 페이지: fetchPublishedPosts() 호출, 글 목록 렌더링, 카테고리/검색 필터링\\n- 상세 페이지: fetchPostBySlug() 호출, 메타데이터 동적 생성, ISR 정적 생성\\n- 블록 변환: Notion 블록을 HTML로 재귀 변환\\n- 예상 기간: 3-4일\\n\\n아키텍처 결정:\\n- lib/notion.ts 함수 재사용 (fetchPublishedPosts, fetchPostBySlug)\\n- lib/notion-blocks.ts에 convertBlockToHTML() 함수 추가\\n- components/blog/post-content.tsx에 블록 렌더링 로직 연결\\n- app/(blog)/page.tsx, app/(blog)/posts/[slug]/page.tsx에 Notion API 연동\\n- TypeScript strict 모드, 에러 처리 필수",
+      "summary": "글 상세 페이지 완벽 구현. generateStaticParams()로 정적 경로 사전 생성, generateMetadata()로 동적 메타데이터(openGraph 포함), PostPage에서 fetchPostBySlug/fetchPageBlocks 호출로 실제 글/블록 조회. PostContent 컴포넌트 연동. 에러 처리, 404 처리, 시맨틱 마크업 완료. 빌드 성공.",
+      "completedAt": "2026-03-11T13:23:20.875Z"
+    },
+    {
+      "id": "eeb862a4-36cf-4850-be81-3fdcbee2cc1c",
+      "name": "Task 3-4: PostContent 컴포넌트 구현 (블록 렌더링)",
+      "description": "components/blog/post-content.tsx에서 NotionBlock[]을 받아 convertBlockToHTML()로 변환하여 렌더링. 서버 컴포넌트 기반.",
+      "notes": "Notion API 응답은 이미 sanitized이지만, URL 검증(http/https) 추가 권장. 장기적으로 Notion 블록별 React 컴포넌트로 변환하는 것이 더 안전.",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-10T15:33:02.764Z",
+      "updatedAt": "2026-03-11T13:23:34.727Z",
+      "relatedFiles": [
+        {
+          "path": "components/blog/post-content.tsx",
+          "type": "TO_MODIFY",
+          "description": "블록 렌더링 로직 구현",
+          "lineStart": 1,
+          "lineEnd": 50
+        },
+        {
+          "path": "lib/notion-blocks.ts",
+          "type": "REFERENCE",
+          "description": "convertBlockToHTML() 함수 사용"
+        },
+        {
+          "path": "lib/types.ts",
+          "type": "REFERENCE",
+          "description": "NotionBlock 타입 참고"
+        }
+      ],
+      "implementationGuide": "1. PostContent 컴포넌트 signature:\n   export async function PostContent({ blocks }: { blocks: NotionBlock[] })\n2. 서버 컴포넌트 기반 (async function 사용)\n3. blocks.map(block => convertBlockToHTML(block)) 또는 블록별 React 컴포넌트 사용\n4. article className=\"prose prose-neutral dark:prose-invert\" 적용\n5. 각 블록을 key={block.id}와 함께 렌더링\n6. dangerouslySetInnerHTML 사용 시 XSS 검증 필요 (또는 React 컴포넌트 권장)\n7. 빈 blocks 배열 시: 빈 상태 플레이스홀더 표시\n8. 에러 처리: blocks 변환 실패 시 에러 메시지 표시",
+      "verificationCriteria": "1. PostContent가 NotionBlock[]을 받아 HTML 렌더링\n2. 모든 블록 타입이 정상 렌더링\n3. 제목, 단락, 리스트, 코드, 이미지 등 시각적 확인\n4. prose 클래스로 마크다운 스타일 적용\n5. 다크 모드에서도 정상 표시 (prose-invert)\n6. 빈 blocks 시 적절한 상태 표시\n7. 링크 클릭 정상 작동\n8. TypeScript strict 준수",
+      "analysisResult": "Phase 3: 핵심 기능 개발 - F-01(글 목록) & F-02(글 상세) 완성\\n\\n목표: Notion API 연동으로 실제 블로그 글 목록과 상세 페이지 렌더링\\n- 홈 페이지: fetchPublishedPosts() 호출, 글 목록 렌더링, 카테고리/검색 필터링\\n- 상세 페이지: fetchPostBySlug() 호출, 메타데이터 동적 생성, ISR 정적 생성\\n- 블록 변환: Notion 블록을 HTML로 재귀 변환\\n- 예상 기간: 3-4일\\n\\n아키텍처 결정:\\n- lib/notion.ts 함수 재사용 (fetchPublishedPosts, fetchPostBySlug)\\n- lib/notion-blocks.ts에 convertBlockToHTML() 함수 추가\\n- components/blog/post-content.tsx에 블록 렌더링 로직 연결\\n- app/(blog)/page.tsx, app/(blog)/posts/[slug]/page.tsx에 Notion API 연동\\n- TypeScript strict 모드, 에러 처리 필수",
+      "summary": "PostContent 컴포넌트 완벽 구현. NotionBlock[]을 blocksToHtml()로 HTML 변환 후 dangerouslySetInnerHTML로 렌더링. prose 클래스로 마크다운 스타일(다크모드 지원). 빈 상태 처리. XSS 방지를 위한 escapeHtml + isSafeUrl 검증. 서버 컴포넌트. TypeScript strict 준수.",
+      "completedAt": "2026-03-11T13:23:34.722Z"
+    }
+  ]
+}
