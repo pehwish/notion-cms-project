@@ -33,7 +33,7 @@ export const revalidate = 3600;
 /** 홈 페이지 검색 파라미터 타입 */
 interface BlogHomePageProps {
   searchParams: Promise<{
-    /** 카테고리 필터: /?category=React */
+    /** 기술 스택 필터: /?category=React */
     category?: string;
     /** 키워드 검색: /?q=typescript */
     q?: string;
@@ -66,18 +66,22 @@ export default async function BlogHomePage({
     console.error('홈 페이지 글 목록 조회 실패:', error);
   }
 
-  /* 카테고리 목록 추출 (중복 제거, 빈 값 제외) */
-  const categories = Array.from(
+  /* 기술 스택 목록 추출 (중복 제거, 빈 값 제외) */
+  const technologies = Array.from(
     new Set(
-      allPosts.map(p => p.category).filter((c): c is string => Boolean(c))
+      allPosts
+        .flatMap(p => p.technologies || [])
+        .filter((t): t is string => Boolean(t))
     )
-  );
+  ).sort();
 
-  /* 필터링 로직: category, q 쿼리 파라미터 적용 */
+  /* 필터링 로직: category(기술), q 쿼리 파라미터 적용 */
   let posts: Post[] = allPosts;
 
   if (category) {
-    posts = posts.filter(p => p.category === category);
+    posts = posts.filter(p =>
+      p.technologies?.some(t => t === category)
+    );
   }
 
   if (q) {
@@ -146,20 +150,20 @@ export default async function BlogHomePage({
                   </Link>
                 </li>
 
-                {/* 개별 카테고리 탭 */}
-                {categories.map(cat => {
-                  const isActive = category === cat;
+                {/* 개별 기술 스택 탭 */}
+                {technologies.map(tech => {
+                  const isActive = category === tech;
                   const href = q
-                    ? `/?category=${encodeURIComponent(cat)}&q=${encodeURIComponent(q)}`
-                    : `/?category=${encodeURIComponent(cat)}`;
+                    ? `/?category=${encodeURIComponent(tech)}&q=${encodeURIComponent(q)}`
+                    : `/?category=${encodeURIComponent(tech)}`;
                   return (
-                    <li key={cat}>
+                    <li key={tech}>
                       <Link
                         href={href}
                         aria-current={isActive ? 'page' : undefined}
                         className={getTabClassName(isActive)}
                       >
-                        {cat}
+                        {tech}
                       </Link>
                     </li>
                   );
@@ -210,7 +214,7 @@ export default async function BlogHomePage({
                 {q && category && ' · '}
                 {category && (
                   <>
-                    카테고리:{' '}
+                    기술:{' '}
                     <span className='font-medium text-foreground'>
                       {category}
                     </span>
@@ -256,8 +260,8 @@ export default async function BlogHomePage({
               <h2 className='text-lg font-semibold'>아직 글이 없습니다</h2>
               <p className='mt-2 max-w-sm text-sm text-muted-foreground'>
                 {q || category
-                  ? '검색 조건에 맞는 글을 찾지 못했습니다. 다른 조건으로 검색해 보세요.'
-                  : 'Notion에서 글을 작성하고 발행하면 여기에 표시됩니다.'}
+                  ? '검색/필터 조건에 맞는 프로젝트를 찾지 못했습니다. 다른 조건으로 검색해 보세요.'
+                  : 'Notion에서 포트폴리오를 추가하면 여기에 표시됩니다.'}
               </p>
               {(q || category) && (
                 <Link
