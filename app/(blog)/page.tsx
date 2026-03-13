@@ -5,14 +5,13 @@
  * F-04: 키워드 검색 (/?q=keyword)
  */
 
+import { Container } from '@/components/layout/Container';
+import { Input } from '@/components/ui/input';
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { PenLine, ArrowRight } from 'lucide-react';
+import { PenLine } from 'lucide-react';
 import type { Post } from '@/lib/types';
 import { PostCard } from '@/components/blog/PostCard';
-import { Container } from '@/components/layout/Container';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { SITE_CONFIG } from '@/lib/constants';
 import { fetchPublishedPosts } from '@/lib/notion';
 
@@ -122,44 +121,6 @@ export default async function BlogHomePage({
                 </p>
               )}
             </div>
-
-            {/* 우측: 뉴스레터 구독 폼 */}
-            <div className='flex flex-col justify-center'>
-              <div className='rounded-xl border border-border bg-muted/40 p-6 lg:p-8'>
-                <h2 className='text-lg font-semibold'>뉴스레터 구독</h2>
-                <p className='mt-2 text-sm leading-relaxed text-muted-foreground'>
-                  새 글이 발행되면 이메일로 알려드립니다. 스팸 없이 글 소식만
-                  전달합니다.
-                </p>
-
-                {/* TODO: 구독 폼 백엔드 통합 필요 (이메일 수집 서비스 연동) */}
-                <form
-                  className='mt-5 flex flex-col gap-2 sm:flex-row'
-                  action='#'
-                  method='post'
-                >
-                  <Input
-                    type='email'
-                    name='email'
-                    placeholder='이메일 주소를 입력하세요'
-                    className='h-10 flex-1'
-                    aria-label='구독 이메일 주소'
-                    required
-                  />
-                  <Button
-                    type='submit'
-                    className='h-10 shrink-0'
-                  >
-                    Subscribe
-                    <ArrowRight className='ml-1.5 h-3.5 w-3.5' aria-hidden='true' />
-                  </Button>
-                </form>
-
-                <p className='mt-3 text-xs text-muted-foreground'>
-                  언제든지 구독 취소할 수 있습니다.
-                </p>
-              </div>
-            </div>
           </div>
         </Container>
       </section>
@@ -254,8 +215,7 @@ export default async function BlogHomePage({
                       {category}
                     </span>
                   </>
-                )}
-                {' '}
+                )}{' '}
                 <span className='text-muted-foreground'>
                   ({posts.length}편)
                 </span>

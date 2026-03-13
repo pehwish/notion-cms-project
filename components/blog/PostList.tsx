@@ -4,7 +4,7 @@
  * PRD F-05: 모바일 1열 / 태블릿 2열 / 데스크탑 3열
  */
 
-import { PostCard } from "./post-card";
+import { PostCard } from "./PostCard";
 import type { Post } from "@/lib/types";
 
 interface PostListProps {

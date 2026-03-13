@@ -11,8 +11,7 @@ import { SITE_CONFIG, MARKETING_NAV_LINKS } from "@/lib/constants";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { MobileNav } from "@/components/navigation/MobileNav";
 import { NavLink } from "@/components/navigation/NavLink";
-import { Button } from "@/components/ui/button";
-import { Container } from "./container";
+import { Container } from "./Container";
 
 export function Header() {
   return (
@@ -43,9 +42,6 @@ export function Header() {
           {/* 액션 버튼들 */}
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button asChild className="hidden md:inline-flex" size="sm">
-              <Link href="/docs">시작하기</Link>
-            </Button>
             {/* 모바일 메뉴 */}
             <MobileNav />
           </div>

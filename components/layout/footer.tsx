@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { SITE_CONFIG } from "@/lib/constants";
-import { Container } from "./container";
+import { Container } from "./Container";
 
 const FOOTER_LINKS = [
   { label: "개인정보처리방침", href: "/privacy" },

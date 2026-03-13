@@ -5,14 +5,14 @@
  */
 
 import type { MetadataRoute } from 'next';
-import { SITE_CONFIG, REVALIDATE_SECONDS } from '@/lib/constants';
+import { SITE_CONFIG } from '@/lib/constants';
 import { fetchPublishedPosts } from '@/lib/notion';
 
 /**
  * ISR: 3600초(1시간) 주기로 Sitemap 재검증
  * 새 글 발행 시 자동으로 sitemap 업데이트됨
  */
-export const revalidate = REVALIDATE_SECONDS;
+export const revalidate = 3600;
 
 /**
  * 동적 Sitemap 생성
