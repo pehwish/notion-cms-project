@@ -29,7 +29,7 @@ interface NotionProperty {
   url?: string;
   select?: { name: string };
   multi_select?: Array<{ name: string }>;
-  date?: { start: string };
+  date?: { start: string; end?: string };
   files?: Array<{
     type: string;
     external?: { url: string };
@@ -78,18 +78,44 @@ function parsePeriodString(periodStr: unknown): {
 }
 
 /**
+ * 투입기간 문자열을 포맷팅된 형식으로 변환
+ * 예: "2021/03/09 → 2021/05/25" → "2021-03-09~2021-05-25"
+ * 예: "2023/12/09" → "2023-12-09"
+ */
+function formatPeriodString(periodStr: unknown): string {
+  if (!periodStr || typeof periodStr !== 'string') return '';
+
+  const parts = periodStr.split('→').map(p => p.trim());
+
+  if (parts.length === 2) {
+    // 슬래시를 하이픈으로 변환하고 ~ 연결
+    const startDate = parts[0].replace(/\//g, '-');
+    const endDate = parts[1].replace(/\//g, '-');
+    return `${startDate}~${endDate}`;
+  } else if (parts.length === 1) {
+    // 한 날짜만 있는 경우
+    return parts[0].replace(/\//g, '-');
+  }
+
+  return '';
+}
+
+/**
  * Notion 페이지 응답을 Post 타입으로 변환 (포트폴리오)
  * 기존 Database 스키마: 이름, URL, 사용언어, 업무포지션, 투입기간
  */
 function transformNotionPageToPost(page: Record<string, unknown>): Post {
   const props = page.properties as Record<string, NotionProperty>;
 
+  // 디버깅: 모든 필드 키 출력 (문제 진단용)
+  // console.log('Notion 페이지 필드:', Object.keys(props));
+
   // 필드 이름이 데이터베이스와 다를 수 있으므로 동적 추출
   const titleField = props.이름 || props.Name || props.Title;
   const urlField = props.URL;
   const techField = props.사용언어;
   const roleField = props.업무포지션;
-  const periodField = props.투입기간;
+  const periodField = props.투입기간 || props.Period || props.기간;
   const imageField = props.이미지 || props.Image;
 
   const title =
@@ -121,10 +147,19 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
     roles = parseCommaSeparatedString(rolesStr);
   }
 
-  const periodStr =
-    periodField?.type === 'rich_text'
-      ? periodField.rich_text?.[0]?.plain_text || ''
-      : '';
+  // 투입기간 추출 (rich_text, text, 또는 date 타입 모두 지원)
+  let periodStr = '';
+  if (periodField) {
+    if (periodField.type === 'rich_text' && periodField.rich_text) {
+      periodStr = periodField.rich_text[0]?.plain_text || '';
+    } else if (periodField.type === 'text' && periodField.rich_text) {
+      periodStr = periodField.rich_text[0]?.plain_text || '';
+    } else if (periodField.type === 'date' && periodField.date) {
+      const startDate = periodField.date.start || '';
+      const endDate = periodField.date.end || '';
+      periodStr = endDate ? `${startDate} → ${endDate}` : startDate;
+    }
+  }
   const periodParsed = parsePeriodString(periodStr);
 
   // 이미지 추출 (Files & media 필드 또는 커버)
@@ -171,7 +206,7 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
     url,
     technologies: technologies.length > 0 ? technologies : [],
     roles: roles.length > 0 ? roles : [],
-    period: periodStr,
+    period: periodStr ? formatPeriodString(periodStr) : undefined,
     periodParsed: periodParsed || undefined,
     lastEditedAt: (page.last_edited_time as string) || '',
     slug: title
