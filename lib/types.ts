@@ -38,7 +38,7 @@ export interface Post {
   /** 담당 역할/포지션 배열 (쉼표로 구분된 문자열을 파싱) */
   roles: string[];
   /** 투입 기간 (원본 문자열: "2021/03/09 → 2021/05/25" 또는 "2023/12/09") */
-  period: string;
+  period?: string;
   /** 투입 기간 파싱됨 */
   periodParsed?: {
     startDate: string; // YYYY/MM/DD
