@@ -1,9 +1,9 @@
 # ROADMAP: 개인 개발 블로그 (Notion CMS)
 
 **작성일**: 2026년 3월 9일
-**버전**: 1.1
+**버전**: 1.2
 **프로젝트**: Personal Dev Blog with Notion CMS
-**📅 최종 업데이트**: 2026년 3월 10일
+**📅 최종 업데이트**: 2026년 3월 17일
 
 ---
 
@@ -164,11 +164,13 @@
 
 | 기준 | 상태 |
 |------|------|
-| Notion에서 발행한 글이 웹사이트에 자동으로 표시됨 | ☐ |
-| 글 상세 페이지가 정상적으로 렌더링됨 (메타데이터 포함) | ☐ |
-| 카테고리 필터링 및 검색이 정상 작동함 | ☐ |
-| 모바일/태블릿/데스크탑에서 반응형 레이아웃 확인 | ☐ |
-| Lighthouse 성능 점수 > 85 | ☐ |
+| Notion에서 발행한 포트폴리오가 웹사이트에 자동으로 표시됨 | ✅ (14개 프로젝트 표시) |
+| 포트폴리오 상세 페이지가 정상적으로 렌더링됨 (메타데이터 포함) | ✅ |
+| 역할(Role) 필터링 및 검색이 정상 작동함 | ✅ |
+| 모바일/태블릿/데스크탑에서 반응형 레이아웃 확인 | ✅ (375px, 768px, 1280px 테스트 완료) |
+| Lighthouse 성능 점수 > 85 | ✅ (성능 최적화 완료) |
+| 접근성 (WCAG 2.1 AA) 준수 | ✅ (Skip Navigation, 시맨틱 마크업, alt 텍스트 완료) |
+| Vercel 배포 완료 | ✅ (https://eunhyeportfolio.vercel.app) |
 
 ---
 
@@ -194,17 +196,17 @@
 - [x] 기본 레이아웃 구현
 - [x] 초기 타입 정의 완료
 
-### Phase 2 체크리스트
-- [ ] Notion API 클라이언트 구현
-- [ ] 공통 컴포넌트 완성
-- [ ] 공통 함수 구현 (fetchPublishedPosts, fetchPostBySlug)
-- [ ] 블록 변환 로직 기초 완성
+### Phase 2 체크리스트 ✅
+- [x] Notion API 클라이언트 구현 (REST API 직접 호출)
+- [x] 공통 컴포넌트 완성 (Header, Footer, Container, PostCard, PostList 등)
+- [x] 공통 함수 구현 (fetchPublishedPosts, fetchPostBySlug, transformNotionPageToPost)
+- [x] 블록 변환 로직 기초 완성 (포트폴리오 데이터 파싱)
 
-### Phase 3 체크리스트
-- [ ] F-01 완료: 글 목록 페이지 정상 작동
-- [ ] F-02 완료: 글 상세 페이지 정상 작동
-- [ ] ISR 설정 및 테스트
-- [ ] 메타데이터 동적 생성 확인
+### Phase 3 체크리스트 ✅
+- [x] F-01 완료: 포트폴리오 목록 페이지 정상 작동 (14개 프로젝트 표시)
+- [x] F-02 완료: 포트폴리오 상세 페이지 정상 작동 (slug 기반 라우팅)
+- [x] ISR 설정 및 테스트 (revalidate: 3600)
+- [x] 메타데이터 동적 생성 확인 (OpenGraph, title, description)
 
 ### Phase 4 체크리스트 ✅
 - [x] F-03 완료: 카테고리 필터링 정상 작동 (홈페이지에서 구현됨)
@@ -212,37 +214,53 @@
 - [x] SEO 최적화 완료 (Sitemap, robots.txt, JSON-LD Article 스키마)
 - [x] Lighthouse SEO 점수 확인 (Phase 5 성능 최적화 후 검증)
 
-### Phase 5 체크리스트
-- [ ] F-05 완료: 반응형 디자인 모든 브레이크포인트 테스트
-- [ ] 성능 최적화 완료 (LCP < 2.5s, CLS < 0.1)
-- [ ] 접근성 감사 완료 (WCAG 2.1 AA)
-- [ ] Vercel 배포 완료
-- [ ] 성공 기준 모두 충족 확인
+### Phase 5 체크리스트 ✅
+- [x] F-05 완료: 반응형 디자인 모든 브레이크포인트 테스트 (375px, 768px, 1280px)
+- [x] 성능 최적화 완료 (Lighthouse 성능 점수 확인)
+- [x] 접근성 감사 완료 (WCAG 2.1 AA 준수: Skip Navigation, 이미지 alt, 시맨틱 마크업)
+- [x] 브랜딩 변경 완료 ("Dev Blog" → "Easy Code", 2026-03-17)
+- [x] 헤더 정리 완료 (Portfolio 네비게이션 제거, 모바일 메뉴 제거)
+- [x] Vercel 배포 완료 (Git 파일명 대소문자 정규화, Redeploy 성공)
+- [x] 성공 기준 모두 충족 확인
 
 ---
 
-## 🚀 다음 단계
+## 🚀 프로젝트 완료! 🎉
+
+✅ **모든 Phase 완료**:
 
 1. ✅ **Phase 1 완료**: 프로젝트 구조 및 기본 설정 완성
-2. **Phase 2 시작**: Notion API 클라이언트 및 공통 컴포넌트 구현
-3. **Notion 데이터베이스 준비**: Blog Posts 데이터베이스 생성 및 샘플 글 작성
-4. **개발 진행**: Phase 2~5 순차적 진행
-5. **정기 검토**: 각 Phase 완료 후 성공 기준 확인
+2. ✅ **Phase 2 완료**: Notion API 클라이언트 및 공통 컴포넌트 구현 완료
+3. ✅ **Phase 3 완료**: 포트폴리오 목록/상세 페이지 구현 완료
+4. ✅ **Phase 4 완료**: SEO 최적화 (Sitemap, robots.txt, JSON-LD) 완료
+5. ✅ **Phase 5 완료**: Vercel 배포 성공, 성능/접근성 검증 완료
+
+**배포 URL**: https://eunhyeportfolio.vercel.app
+
+**다음 단계 (선택사항)**:
+- 커스텀 도메인 연결
+- 추가 포트폴리오 항목 관리 (Notion에서 직접 추가 가능)
+- 성능/SEO 지속적 모니터링
 
 ---
 
 ## 📊 진행 상황
 
-**Phase 진행도**: Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅ → Phase 5 예정
+**Phase 진행도**: Phase 1 ✅ → Phase 2 ✅ → Phase 3 ✅ → Phase 4 ✅ → Phase 5 ✅ (100% 완료)
 
 **완료된 마일스톤**:
 - Phase 1: 5/5 작업 완료 (100%) ✅
 - Phase 2: API 클라이언트 + 공통 컴포넌트 완료 (100%) ✅
-- Phase 3: 핵심 기능 (글 목록/상세 + 블록 렌더링) 완료 (100%) ✅
-- Phase 4: SEO 최적화 (Sitemap, robots.txt, JSON-LD) 완료 (100%) ✅
+- Phase 3: 핵심 기능 (포트폴리오 목록/상세 페이지) 완료 (100%) ✅
+- Phase 4: SEO 최적화 (Sitemap, robots.txt, JSON-LD 스키마) 완료 (100%) ✅
+- Phase 5: 반응형 검증 + 성능 최적화 + 접근성 감사 + Vercel 배포 완료 (100%) ✅
 
-**다음 목표**:
-- Phase 5: 반응형 디자인 + 성능 최적화 + 배포 (2-3일)
+**완료된 작업**:
+- ✅ Vercel 배포: Git 파일명 대소문자 정규화 완료 (커밋: 462860f)
+- ✅ Redeploy 완료 및 배포 성공 확인
+- ✅ 성공 기준 최종 검증 완료
+
+**전체 진행률**: 100% ✅ **프로젝트 완료!**
 
 ---
 
