@@ -3,6 +3,7 @@
 이 파일은 Claude Code (claude.ai/code)가 이 저장소의 코드를 작업할 때 필요한 지침을 제공합니다.
 
 # Project Context
+
 - PRD 문서: @docs/PRD.md
 - 개발 로드맵: @docs/ROADMAP.md
 
@@ -113,6 +114,7 @@ npm run lint
 ### 1. 라우트 그룹
 
 앱은 Next.js 라우트 그룹을 사용하여 관심사를 분리합니다:
+
 - **`(blog)`** - 블로그 핵심 라우트 (홈, 글 상세)
 - **`(marketing)`** - 헤더/푸터가 있는 공개 페이지 (필요시 확장)
 - **`(docs)`** - 사이드바 네비게이션이 있는 스타터킷 문서
@@ -122,10 +124,17 @@ npm run lint
 ### 2. 프로바이더 패턴
 
 루트 레이아웃 (`app/layout.tsx`)은 다음과 같이 전체 앱을 래핑합니다:
+
 ```tsx
-<ThemeProvider>           // 다크모드 지원
-  <QueryProvider>         // TanStack Query 설정
-    <TooltipProvider>     // Radix 툴팁 컨텍스트
+<ThemeProvider>
+  {' '}
+  // 다크모드 지원
+  <QueryProvider>
+    {' '}
+    // TanStack Query 설정
+    <TooltipProvider>
+      {' '}
+      // Radix 툴팁 컨텍스트
       {children}
     </TooltipProvider>
   </QueryProvider>
@@ -142,17 +151,18 @@ npm run lint
 ### 4. 폼 패턴
 
 폼은 **React Hook Form + Zod**를 사용합니다:
+
 ```tsx
 // Zod로 스키마 정의
 const schema = z.object({
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string().min(8)
 });
 
 // React Hook Form과 함께 사용
 const form = useForm<z.infer<typeof schema>>({
   resolver: zodResolver(schema),
-  defaultValues: { email: '', password: '' },
+  defaultValues: { email: '', password: '' }
 });
 ```
 
@@ -168,6 +178,7 @@ const form = useForm<z.infer<typeof schema>>({
 ### 6. 반응형 디자인
 
 두 가지 접근 방식:
+
 ```tsx
 // 1. Tailwind를 통한 CSS 미디어 쿼리 (권장)
 <div className="hidden lg:block">데스크탑만</div>
@@ -191,6 +202,7 @@ const isDesktop = useMediaQuery('(min-width: 1024px)');
 ### 다크모드
 
 `next-themes`를 통해 설정됨:
+
 - 사용자 선호도는 localStorage에 저장됨
 - 클래스 기반 테마 전환
 - 다크모드 스타일에 `dark:` 접두사 사용: `bg-white dark:bg-slate-950`
@@ -198,32 +210,43 @@ const isDesktop = useMediaQuery('(min-width: 1024px)');
 ## 핵심 파일 & 유틸리티
 
 ### 상수
+
 **`lib/constants.ts`**
+
 - `SITE_CONFIG`: 사이트 이름, 설명, URL
 - `MARKETING_NAV_LINKS`: 홈/소개 네비게이션
 - `DOCS_NAV_LINKS`: 문서 사이드바 링크
 - `BREAKPOINTS`: 반응형 브레이크포인트
 
 ### 유틸리티
+
 **`lib/utils.ts`**
+
 - `cn()`: Tailwind 클래스 병합 (clsx + tailwind-merge)
 - `formatDate()`: 날짜 포맷팅 헬퍼
 
 **`lib/format.ts`**
+
 - 추가 포맷팅 유틸리티
 
 ### 타입
+
 **`lib/types.ts`**
+
 - 공유되는 TypeScript 인터페이스 및 타입
 
 ### 훅
+
 **`hooks/use-mounted.ts`**
+
 - Hydration 후 true 반환 (hydration 불일치 방지)
 
 **`hooks/use-media-query.ts`**
+
 - 반응형 로직용 미디어 쿼리 훅
 
 **`hooks/use-signup-form.ts`**
+
 - React Hook Form + Zod를 사용한 폼 설정 예시
 
 ## 일반적인 개발 작업
@@ -274,12 +297,15 @@ const isDesktop = useMediaQuery('(min-width: 1024px)');
 ## 중요 사항
 
 ### 클라이언트/서버 컴포넌트
+
 - 대화형 컴포넌트에 `'use client'` 표시
 - 쇼케이스 컴포넌트, mobile-nav, docs-sidebar는 클라이언트 전용
 - 대부분의 페이지는 성능을 위해 서버 컴포넌트로 유지
 
 ### Hydration 안전성
+
 서버에서 클라이언트 전용 콘텐츠를 렌더링할 때 `useMounted` 훅 사용:
+
 ```tsx
 const mounted = useMounted();
 if (!mounted) return null;
@@ -287,14 +313,17 @@ if (!mounted) return null;
 ```
 
 ### 쿼리 클라이언트
+
 TanStack Query는 `components/common/query-provider.tsx`에서 미리 설정되어 있습니다. API 호출에 필요하면 확장하세요.
 
 ### ESLint 설정
+
 - TypeScript 지원을 포함한 `eslint-config-next` 사용
 - Next.js 모범 사례 및 웹 바이탈 강제
 - 커밋 전에 `npm run lint` 실행
 
 ### 알려진 문제
+
 - `sidebar.tsx`, `use-media-query.ts`, `use-mounted.ts`는 의존성 구조로 인해 React Compiler 경고가 있을 수 있지만 기능에는 영향이 없습니다
 
 ## 테스트 & 배포

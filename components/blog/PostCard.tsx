@@ -7,12 +7,13 @@
 'use client';
 
 import { Card, CardFooter } from '@/components/ui/card';
+
 import { Badge } from '@/components/ui/badge';
 import type { Post } from '@/lib/types';
 import { ArrowUpRight } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
 
 /**
  * 기술별 상징 색상 매핑
@@ -81,7 +82,8 @@ interface PostCardProps {
  */
 export function PostCard({ post }: PostCardProps) {
   const { theme, systemTheme } = useTheme();
-  const isDark = theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
+  const isDark =
+    theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
 
   return (
     <article>
@@ -123,10 +125,10 @@ export function PostCard({ post }: PostCardProps) {
                 {
                   width: '0px !important',
                   height: '0px !important',
-                  borderLeft: `20px solid ${isDark ? '#ffffff' : '#1f2937'}`,
-                  borderBottom: `20px solid ${isDark ? '#ffffff' : '#1f2937'}`,
-                  borderTop: `20px solid ${isDark ? '#1f2937' : '#fff'}`,
-                  borderRight: `20px solid ${isDark ? '#1f2937' : '#fff'}`
+                  borderLeft: '20px solid #1f2937',
+                  borderBottom: '20px solid #1f2937',
+                  borderTop: `20px solid ${isDark ? 'lab(2.75381% 0 0)' : '#ffffff'}`,
+                  borderRight: `20px solid ${isDark ? 'lab(2.75381% 0 0)' : '#ffffff'}`
                 } as React.CSSProperties
               }
               aria-hidden='true'
