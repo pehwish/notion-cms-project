@@ -310,9 +310,12 @@ export async function fetchPostBySlug(slug: string): Promise<Post | null> {
       throw new Error('NOTION_API_KEY 환경 변수가 설정되지 않았습니다');
     }
 
+    // URL 인코딩된 slug 디코딩 (한글 포함 프로젝트명 지원)
+    const decodedSlug = decodeURIComponent(slug);
+
     // 모든 포트폴리오 조회 후 slug로 필터링 (Notion은 자동 생성 필드로 필터링 불가)
     const allPosts = await fetchPublishedPosts();
-    const post = allPosts.find(p => p.slug === slug);
+    const post = allPosts.find(p => p.slug === decodedSlug);
 
     return post || null;
   } catch (error) {
