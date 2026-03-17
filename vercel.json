@@ -3,10 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "env": [
-    "NOTION_API_KEY",
-    "NOTION_DATABASE_ID"
-  ],
   "regions": ["icn1"],
   "functions": {
     "api/**": {
