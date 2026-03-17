@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import { QueryProvider } from "@/components/common/QueryProvider";
+import { SITE_CONFIG } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,10 +22,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Dev Blog",
-    template: "%s | Dev Blog",
+    default: SITE_CONFIG.name,
+    template: `%s | ${SITE_CONFIG.name}`,
   },
-  description: "Notion CMS 기반 개인 개발 블로그",
+  description: SITE_CONFIG.description,
 };
 
 export default function RootLayout({

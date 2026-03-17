@@ -3,14 +3,14 @@
  */
 
 export const SITE_CONFIG = {
-  name: "Dev Blog",
-  description: "Notion CMS 기반 개인 개발 블로그",
+  name: "Easy Code",
+  description: "사용자가 원하는 경험을 만들어내는 프론트엔드 개발자 박은혜의 포트폴리오",
   url: "https://example.com",
 } as const;
 
 /** 블로그 헤더 네비게이션 링크 */
 export const MARKETING_NAV_LINKS = [
-  { label: "블로그", href: "/blog" },
+  { label: "Portfolio", href: "/" },
 ] as const;
 
 /** Docs 사이드바 링크 (스타터킷 문서용 - 필요시 제거 가능) */

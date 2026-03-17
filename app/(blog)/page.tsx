@@ -16,11 +16,11 @@ import { SITE_CONFIG } from '@/lib/constants';
 import { fetchPublishedPosts } from '@/lib/notion';
 
 export const metadata: Metadata = {
-  title: '블로그',
-  description: `${SITE_CONFIG.description} — 모든 글 목록`,
+  title: '포트폴리오',
+  description: `${SITE_CONFIG.description} — 모든 프로젝트`,
   openGraph: {
-    title: `블로그 | ${SITE_CONFIG.name}`,
-    description: `${SITE_CONFIG.description} — 모든 글 목록`
+    title: `포트폴리오 | ${SITE_CONFIG.name}`,
+    description: `${SITE_CONFIG.description} — 모든 프로젝트`
   }
 };
 
@@ -125,33 +125,60 @@ export default async function BlogHomePage({
     <div>
       {/* ── Hero 섹션 ─────────────────────────────────────────────── */}
       <section
-        aria-labelledby='blog-hero-title'
+        aria-labelledby='portfolio-hero-title'
         className='border-b border-border'
       >
         <Container>
-          <div className='grid grid-cols-1 gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24'>
-            {/* 좌측: 대형 타이틀 */}
-            <div className='flex flex-col justify-center'>
+          <div className='py-16 lg:py-24'>
+            {/* 대형 타이틀 */}
+            <div className='flex flex-col'>
               <h1
-                id='blog-hero-title'
+                id='portfolio-hero-title'
                 className='text-6xl font-bold leading-none tracking-tight sm:text-7xl lg:text-8xl'
               >
-                블로그
+                Easy Code
               </h1>
-              <p className='mt-6 max-w-sm text-lg leading-relaxed text-muted-foreground'>
-                개발 경험과 지식을 기록하고 공유합니다. 실무에서 배운 것들을
-                솔직하게 써내려갑니다.
+              <p className='mt-4 text-xl font-medium text-foreground'>
+                박은혜 · Frontend Developer
               </p>
-              {/* 총 글 수 표시 */}
-              {allPosts.length > 0 && (
-                <p className='mt-4 text-sm text-muted-foreground'>
-                  총{' '}
-                  <span className='font-semibold text-foreground'>
-                    {allPosts.length}
+
+              {/* 소개 텍스트 */}
+              <p className='mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground'>
+                사용자가 원하는 경험을 만들어내는 프론트엔드 개발자입니다.
+                <br />
+                React, Vue.js, React Native를 활용한 웹/앱 개발과 웹 접근성을 전문으로 합니다.
+              </p>
+
+              {/* 기술 스택 뱃지 */}
+              <div className='mt-8 flex flex-wrap gap-2'>
+                {['React', 'Vue.js', 'React Native', 'TypeScript'].map(tech => (
+                  <span
+                    key={tech}
+                    className='inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary'
+                  >
+                    {tech}
                   </span>
-                  편의 글
+                ))}
+              </div>
+
+              {/* 프로젝트 수 + 경력 표시 */}
+              <div className='mt-8 flex flex-col gap-2 text-sm text-muted-foreground'>
+                {allPosts.length > 0 && (
+                  <p>
+                    총{' '}
+                    <span className='font-semibold text-foreground'>
+                      {allPosts.length}
+                    </span>
+                    개의 프로젝트
+                  </p>
+                )}
+                <p>
+                  경력{' '}
+                  <span className='font-semibold text-foreground'>
+                    8년 6개월+
+                  </span>
                 </p>
-              )}
+              </div>
             </div>
           </div>
         </Container>
@@ -250,7 +277,7 @@ export default async function BlogHomePage({
                   </>
                 )}{' '}
                 <span className='text-muted-foreground'>
-                  ({posts.length}편)
+                  ({posts.length}개)
                 </span>
               </span>
               <Link
@@ -286,7 +313,7 @@ export default async function BlogHomePage({
                 className='mb-4 h-10 w-10 text-muted-foreground'
                 aria-hidden='true'
               />
-              <h2 className='text-lg font-semibold'>아직 글이 없습니다</h2>
+              <h2 className='text-lg font-semibold'>아직 프로젝트가 없습니다</h2>
               <p className='mt-2 max-w-sm text-sm text-muted-foreground'>
                 {q || category
                   ? '검색/필터 조건에 맞는 프로젝트를 찾지 못했습니다. 다른 조건으로 검색해 보세요.'
@@ -297,7 +324,7 @@ export default async function BlogHomePage({
                   href='/'
                   className='mt-4 text-sm font-medium text-primary underline-offset-4 hover:underline'
                 >
-                  전체 글 보기
+                  전체 프로젝트 보기
                 </Link>
               )}
             </div>
