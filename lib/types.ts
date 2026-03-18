@@ -96,3 +96,57 @@ export interface Period {
   /** 진행 중 여부 */
   isOngoing?: boolean;
 }
+
+// =============================================================================
+// Phase 6: About/Contact 페이지 타입 정의 (Task 002)
+// =============================================================================
+
+/** 기술 스택 정보 */
+export interface Skill {
+  /** 기술명 */
+  name: string;
+  /** 기술 카테고리 (Frontend, Backend, Tools 등) */
+  category: string;
+  /** 숙련도 (0-100) */
+  proficiency: number;
+  /** Tailwind 배경 색상 클래스 */
+  color: string;
+}
+
+/** 연락처 정보 */
+export interface ContactInfo {
+  /** 연락처 타입 (Phone, Email 등) */
+  type: string;
+  /** 연락처 레이블 */
+  label: string;
+  /** 연락처 값 (전화번호, 이메일 주소 등) */
+  value: string;
+  /** 연락처 URL (tel:, mailto: 등) */
+  url: string;
+  /** lucide-react 아이콘명 */
+  iconName: string;
+}
+
+/** 프로필 정보 */
+export interface ProfileInfo {
+  /** 이름 */
+  name: string;
+  /** 직무/직책 */
+  role: string;
+  /** 자기소개 (한 줄 설명) */
+  bio: string;
+  /** 위치 (도시, 나라 등) */
+  location: string;
+  /** 프로필 이미지 URL (선택사항) */
+  imageUrl?: string;
+}
+
+/** 개발 철학 */
+export interface Philosophy {
+  /** 철학 제목 */
+  title: string;
+  /** 철학 설명 */
+  description: string;
+  /** lucide-react 아이콘명 */
+  iconName: string;
+}

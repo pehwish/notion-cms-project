@@ -1,90 +1,257 @@
 {
   "tasks": [
     {
-      "id": "59732018-69b4-477f-8856-772b9b07fcd6",
-      "name": "Task 4-1: Sitemap 생성",
-      "description": "Next.js MetadataRoute.Sitemap으로 동적 sitemap 생성. fetchPublishedPosts로 모든 posts 조회 후 각 post URL과 lastModified 반환. 에러 시 빈 배열 반환.",
-      "notes": "SITE_CONFIG.url 확인 필수",
+      "id": "1891ea0a-e38b-4a7e-9d42-e39a4db5a7ae",
+      "name": "Task 001: About/Contact 라우트 및 상수 데이터 정의",
+      "description": "About/Contact 페이지 라우트 생성, 정적 콘텐츠 상수 데이터 정의, Header 네비게이션 업데이트. Phase 6의 기초 작업으로 후속 Phase 7-10의 UI 구현을 위한 준비 단계.",
+      "notes": "상수 데이터는 모두 as const로 정의하여 타입 안전성 보장. 타입 정의는 Task 002에서 진행. 스타일은 Phase 7에서 구현 (현재는 기본 마크업만). Header 네비게이션은 모바일/데스크탑 모두 지원 (현재는 단순 링크만 렌더링).",
       "status": "completed",
       "dependencies": [],
-      "createdAt": "2026-03-11T14:35:08.125Z",
-      "updatedAt": "2026-03-11T14:40:04.142Z",
+      "createdAt": "2026-03-18T14:41:09.858Z",
+      "updatedAt": "2026-03-18T14:44:49.810Z",
       "relatedFiles": [
         {
-          "path": "app/sitemap.ts",
+          "path": "app/(blog)/about/page.tsx",
           "type": "CREATE",
-          "description": "동적 sitemap 생성"
-        }
-      ],
-      "implementationGuide": "1. app/sitemap.ts 신규 생성 2. export async function default 3. fetchPublishedPosts 호출 후 배열로 변환 4. catch: console.error 후 기본 URL만 반환",
-      "verificationCriteria": "sitemap.ts 생성, npm run build 성공, sitemap.xml 포함",
-      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
-      "summary": "Sitemap 동적 생성 완벽 구현. app/sitemap.ts 신규 생성, MetadataRoute.Sitemap 패턴 사용, fetchPublishedPosts() 재사용, ISR revalidate=3600 적용. 에러 처리 완벽 (try-catch). 빌드 성공, TypeScript strict 준수.",
-      "completedAt": "2026-03-11T14:40:04.048Z"
-    },
-    {
-      "id": "bf4e8157-7953-4d24-9493-6dfae5ef0197",
-      "name": "Task 4-2: robots.txt 생성",
-      "description": "검색 엔진 크롤러용 robots.txt 정적 파일 생성. User-agent: *, Sitemap URL 포함.",
-      "notes": "정적 파일, 절대 URL 사용",
-      "status": "completed",
-      "dependencies": [],
-      "createdAt": "2026-03-11T14:35:08.125Z",
-      "updatedAt": "2026-03-11T14:40:22.041Z",
-      "relatedFiles": [
+          "description": "About 페이지 - 프로필 소개, 자기소개, 개발 철학, 기술 스택 섹션 자리",
+          "lineStart": 1,
+          "lineEnd": 30
+        },
         {
-          "path": "public/robots.txt",
+          "path": "app/(blog)/contact/page.tsx",
           "type": "CREATE",
-          "description": "크롤러 가이드"
-        }
-      ],
-      "implementationGuide": "1. public/robots.txt 신규 생성 2. User-agent: * 3. Allow: / 4. Sitemap: https://example.com/sitemap.xml",
-      "verificationCriteria": "robots.txt 생성, 포맷 검증, Sitemap URL 정확",
-      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
-      "summary": "robots.txt 정적 파일 생성 완료. public/robots.txt 신규 생성, 표준 포맷 준수 (User-agent: *, Allow: /, Sitemap URL 포함). SITE_CONFIG.url 기준으로 설정. 빌드 성공, 정적 파일로 Vercel 배포 시 자동 제공.",
-      "completedAt": "2026-03-11T14:40:22.004Z"
-    },
-    {
-      "id": "fdeba19a-20e8-48be-bd83-b6707a8223ad",
-      "name": "Task 4-3: Schema.org JSON-LD 추가",
-      "description": "글 상세 페이지에 Article 타입 JSON-LD 추가. 제목, 설명, 발행일, 저자, 이미지 포함.",
-      "notes": "dangerouslySetInnerHTML 사용, author 정보 필요",
-      "status": "completed",
-      "dependencies": [],
-      "createdAt": "2026-03-11T14:35:08.125Z",
-      "updatedAt": "2026-03-11T14:42:38.733Z",
-      "relatedFiles": [
+          "description": "Contact 페이지 - 연락처 정보 섹션 자리",
+          "lineStart": 1,
+          "lineEnd": 20
+        },
         {
-          "path": "app/(blog)/posts/[slug]/page.tsx",
+          "path": "components/profile/hero-section.tsx",
+          "type": "CREATE",
+          "description": "Hero 섹션 (프로필 이미지 + 이름 + 직무 + 자기소개) - 빈 파일"
+        },
+        {
+          "path": "components/profile/about-section.tsx",
+          "type": "CREATE",
+          "description": "About 섹션 (자기소개 + 개발 철학 카드) - 빈 파일"
+        },
+        {
+          "path": "components/profile/skills-section.tsx",
+          "type": "CREATE",
+          "description": "Skills 섹션 (기술 스택 프로그레스 바) - 빈 파일"
+        },
+        {
+          "path": "components/contact/contact-section.tsx",
+          "type": "CREATE",
+          "description": "Contact 섹션 (연락처 카드) - 빈 파일"
+        },
+        {
+          "path": "lib/constants.ts",
           "type": "TO_MODIFY",
-          "description": "JSON-LD Article 스키마 추가"
+          "description": "네비게이션 링크, 프로필/기술/연락처/철학 데이터 상수 추가",
+          "lineStart": 1,
+          "lineEnd": 30
+        },
+        {
+          "path": "components/layout/Header.tsx",
+          "type": "TO_MODIFY",
+          "description": "MARKETING_NAV_LINKS 순회하여 네비게이션 링크 렌더링",
+          "lineStart": 15,
+          "lineEnd": 35
         }
       ],
-      "implementationGuide": "app/(blog)/posts/[slug]/page.tsx 수정. script type=application/ld+json 태그 추가. articleSchema 객체: headline, description, datePublished, author, image",
-      "verificationCriteria": "JSON-LD 스크립트 포함, schema.org validator 통과, Google Search Console 구조화된 데이터 테스트 통과",
-      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
-      "summary": "JSON-LD Article 스키마 완벽 추가. app/(blog)/posts/[slug]/page.tsx에 <script type=\"application/ld+json\"> 렌더링. articleSchema 객체 생성: headline, description, datePublished/dateModified, author, publisher, image, url 모두 포함. dangerouslySetInnerHTML 사용 (서버 컴포넌트 안전). 빌드 성공, TypeScript strict 준수.",
-      "completedAt": "2026-03-11T14:42:38.724Z"
+      "implementationGuide": "1. 라우트 생성:\\n- app/(blog)/about/page.tsx: 서버 컴포넌트, generateMetadata() 포함\\n- app/(blog)/contact/page.tsx: 서버 컴포넌트, generateMetadata() 포함\\n\\n2. 컴포넌트 디렉토리 구조 생성 (빈 파일):\\n- components/profile/hero-section.tsx\\n- components/profile/about-section.tsx\\n- components/profile/skills-section.tsx\\n- components/contact/contact-section.tsx\\n\\n3. lib/constants.ts 확장:\\n- MARKETING_NAV_LINKS 업데이트: About, Contact 링크 추가\\n- PROFILE_DATA 추가: { name, role, bio, location, imageUrl }\\n- SKILLS_DATA 추가: 배열 { name, category, proficiency, color }\\n- CONTACT_DATA 추가: 배열 { type, label, value, url, iconName }\\n- PHILOSOPHY_DATA 추가: 배열 { title, description, iconName }\\n\\n4. components/layout/Header.tsx 수정:\\n- MARKETING_NAV_LINKS 순회하여 네비게이션 링크 렌더링\\n- 로고와 네비게이션, 테마 토글이 일렬로 배치\\n\\n5. 메타데이터 설정:\\n- About 페이지: PROFILE_DATA.bio를 description으로 사용\\n- Contact 페이지: 연락처 페이지임을 나타내는 description",
+      "verificationCriteria": "1. About/Contact 페이지가 정상적으로 접근 가능한가 (URL: /about, /contact)\\n2. Header에 About, Contact 네비게이션 링크가 표시되는가\\n3. 각 페이지에서 generateMetadata()가 실행되는가 (브라우저 개발자 도구의 head 태그 확인)\\n4. lib/constants.ts에 5개의 상수(PROFILE_DATA, SKILLS_DATA, CONTACT_DATA, PHILOSOPHY_DATA, MARKETING_NAV_LINKS)가 모두 정의되었는가\\n5. TypeScript 컴파일 에러가 없는가\\n6. ESLint 경고가 없는가",
+      "analysisResult": "Phase 6 설계: About/Contact 페이지 골격 및 정적 콘텐츠 기반 상수 데이터 정의. Next.js 15 App Router 모범 사례 준수, TypeScript strict mode, 반응형 디자인, 다크모드 지원. 기존 (blog) 라우트 그룹 유지, components/blog/, lib/notion.ts 보호. Task 001-002는 순차 의존성 있음 (Task 002는 Task 001 후 진행). 전체 소요 기간: 2-3일.",
+      "summary": "Task 001 완료: About/Contact 라우트 및 상수 데이터 정의. ✅ 모든 요구사항 구현 완료: (1) About/Contact 페이지 생성 및 generateMetadata() 설정, (2) 4개 컴포넌트 디렉토리 구조 생성, (3) lib/constants.ts에 PROFILE_DATA, SKILLS_DATA, CONTACT_DATA, PHILOSOPHY_DATA 추가 및 MARKETING_NAV_LINKS 업데이트, (4) Header.tsx 수정하여 네비게이션 링크 렌더링 구현. TypeScript strict 준수, ESLint 경고 없음, Playwright 검증 완료.",
+      "completedAt": "2026-03-18T14:44:49.806Z"
     },
     {
-      "id": "7ecb7aa0-30b0-465e-a13b-6436afcd4c0d",
-      "name": "Task 4-4: 카테고리 동적 라우팅",
-      "description": "카테고리별 전용 페이지 /category/[name]. generateStaticParams로 모든 카테고리 경로 사전 생성.",
-      "notes": "선택사항, 홈페이지 쿼리문자열로도 가능",
-      "status": "pending",
-      "dependencies": [],
-      "createdAt": "2026-03-11T14:35:08.125Z",
-      "updatedAt": "2026-03-11T14:35:08.125Z",
-      "relatedFiles": [
+      "id": "caebbbd4-deb1-4285-8e1f-5604faf141d6",
+      "name": "Task 002: TypeScript 타입 정의 및 공통 애니메이션 인프라 구축",
+      "description": "Task 001에서 정의한 상수 데이터를 위한 TypeScript 인터페이스 정의, 재사용 가능한 애니메이션 훅 2개 및 CSS 키프레임 구현. Phase 7-10의 UI 구현에서 사용될 기초 애니메이션 시스템 구축.",
+      "notes": "타입은 Task 001의 PROFILE_DATA 등과 일치해야 함 (satisfies 키워드로 검증 추천). 애니메이션 훅은 재사용 가능하고 커스터마이징 가능하도록 설계. use-intersection-observer는 useRef 사용 (클라이언트 컴포넌트에서만 작동). CSS는 Tailwind와 함께 동작하도록 주의. @keyframes는 app/globals.css의 @layer utilities 안에 정의하여 Tailwind와 충돌 방지.",
+      "status": "completed",
+      "dependencies": [
         {
-          "path": "app/(blog)/category/[name]/page.tsx",
-          "type": "CREATE",
-          "description": "카테고리별 글 목록"
+          "taskId": "1891ea0a-e38b-4a7e-9d42-e39a4db5a7ae"
         }
       ],
-      "implementationGuide": "1. app/(blog)/category/[name]/page.tsx 신규 생성 2. generateStaticParams: fetchPublishedPosts로 카테고리 추출 3. 필터링: posts.filter(p => p.category === name) 4. 메타데이터: 카테고리명 포함",
-      "verificationCriteria": "경로 생성, 필터링 정확, 메타데이터 카테고리별 다름",
-      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)"
+      "createdAt": "2026-03-18T14:41:09.858Z",
+      "updatedAt": "2026-03-18T14:48:28.481Z",
+      "relatedFiles": [
+        {
+          "path": "lib/types.ts",
+          "type": "TO_MODIFY",
+          "description": "Skill, ContactInfo, ProfileInfo, Philosophy 인터페이스 추가",
+          "lineStart": 99,
+          "lineEnd": 110
+        },
+        {
+          "path": "hooks/use-intersection-observer.ts",
+          "type": "CREATE",
+          "description": "IntersectionObserver 기반 fade-in 애니메이션 훅",
+          "lineStart": 1,
+          "lineEnd": 40
+        },
+        {
+          "path": "hooks/use-typing-animation.ts",
+          "type": "CREATE",
+          "description": "타이핑 효과 애니메이션 훅",
+          "lineStart": 1,
+          "lineEnd": 35
+        },
+        {
+          "path": "lib/animation-variants.ts",
+          "type": "CREATE",
+          "description": "애니메이션 CSS 클래스명 및 transition 상수",
+          "lineStart": 1,
+          "lineEnd": 25
+        },
+        {
+          "path": "app/globals.css",
+          "type": "TO_MODIFY",
+          "description": "@keyframes fade-in, typing, float 추가 및 애니메이션 클래스 정의",
+          "lineStart": 1,
+          "lineEnd": 50
+        }
+      ],
+      "implementationGuide": "1. lib/types.ts 확장:\\n- interface Skill { name: string; category: string; proficiency: number; color: string; }\\n- interface ContactInfo { type: string; label: string; value: string; url: string; iconName: string; }\\n- interface ProfileInfo { name: string; role: string; bio: string; location: string; imageUrl?: string; }\\n- interface Philosophy { title: string; description: string; iconName: string; }\\n\\n2. hooks/use-intersection-observer.ts 생성:\\n- IntersectionObserver 활용한 커스텀 훅\\n- threshold, triggerOnce(한 번만 애니메이션), onIntersect 콜백 옵션\\n- useEffect에서 ref.current 관찰\\n- 컴포넌트 언마운트 시 cleanup 처리\\n\\n3. hooks/use-typing-animation.ts 생성:\\n- 타이핑 효과 애니메이션 (한 글자씩)\\n- text, speed, loop, onComplete 옵션\\n- useState로 displayedText 관리\\n- useEffect에서 interval 처리\\n- 언마운트 시 clearInterval\\n\\n4. lib/animation-variants.ts 생성:\\n- 공통 애니메이션 CSS 클래스명 상수\\n- transition duration/easing 상수\\n- opacity/transform 기본값\\n\\n5. app/globals.css 업데이트:\\n- @keyframes fade-in { from: opacity 0, translateY 20px → to: opacity 1, translateY 0 }\\n- @keyframes typing { simulating text cursor blink }\\n- @keyframes float { subtle up/down movement }\\n- .fade-in, .fade-in-delay-100, .fade-in-delay-200 등 클래스 정의\\n- .typing-cursor { animation: typing 0.5s infinite }\\n- .float { animation: float 3s ease-in-out infinite }",
+      "verificationCriteria": "1. lib/types.ts에 4개의 인터페이스(Skill, ContactInfo, ProfileInfo, Philosophy)가 정의되었는가\\n2. hooks/use-intersection-observer.ts가 정상 작동하는가 (ref를 전달하면 관찰 시작)\\n3. hooks/use-typing-animation.ts가 정상 작동하는가 (text가 한 글자씩 나타나는가)\\n4. lib/animation-variants.ts에 애니메이션 상수들이 정의되었는가\\n5. app/globals.css에 3개의 @keyframes(fade-in, typing, float)이 정의되었는가\\n6. TypeScript 컴파일 에러가 없는가 (특히 인터페이스 정의 정확성)\\n7. ESLint 경고가 없는가 (특히 훅의 useEffect 의존성)",
+      "analysisResult": "Phase 6 설계: About/Contact 페이지 골격 및 정적 콘텐츠 기반 상수 데이터 정의. Next.js 15 App Router 모범 사례 준수, TypeScript strict mode, 반응형 디자인, 다크모드 지원. 기존 (blog) 라우트 그룹 유지, components/blog/, lib/notion.ts 보호. Task 001-002는 순차 의존성 있음 (Task 002는 Task 001 후 진행). 전체 소요 기간: 2-3일.",
+      "summary": "Task 002 완료: TypeScript 타입 정의 및 공통 애니메이션 인프라 구축. ✅ 모든 요구사항 구현: (1) lib/types.ts에 Skill, ContactInfo, ProfileInfo, Philosophy 인터페이스 4개 추가, (2) hooks/use-intersection-observer.ts 생성 (IntersectionObserver 기반 fade-in 애니메이션), (3) hooks/use-typing-animation.ts 생성 (타이핑 효과 애니메이션), (4) lib/animation-variants.ts 생성 (CSS 클래스명 및 transition 상수), (5) app/globals.css에 @keyframes 3개(fade-in, typing, float) 및 애니메이션 클래스 정의. TypeScript strict 준수, ESLint 경고 없음, prefers-reduced-motion 접근성 지원.",
+      "completedAt": "2026-03-18T14:48:28.479Z"
+    },
+    {
+      "id": "cb6c2d7c-3a32-481d-9072-93e27516c13d",
+      "name": "Hero 섹션 컴포넌트 구현 (타이핑 애니메이션 + CTA 버튼)",
+      "description": "HeroSection.tsx를 완성하여 프로필 이미지(float 애니메이션) + 이름/직무/소개 + CTA 버튼 2개를 2열 레이아웃(모바일 1열)으로 표시합니다.\\n\\n구현 요소:\\n- 좌측: PROFILE_DATA.imageUrl를 Next.js Image로 렌더링, float 애니메이션 클래스 적용 (max-w-sm), 모바일에서 1열 중앙 배치\\n- 우측: 이름(h1), 직무(h2), 소개(p) 텍스트\\n- 타이핑 애니메이션: 이름 또는 직무에 useTypingAnimation 훅 적용, speed: 50ms, delay: 300ms\\n- CTA 버튼 2개 (Button variant='default'): 1) 'View Projects' (href='/') 2) 'Contact Me' (href='/contact')\\n- 반응형: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8, 모바일에서 gap-6\\n- 다크모드: text-foreground, dark:text-foreground 적용\\n- Accessibility: h1/h2 시맨틱 태그, Button에 aria-label, image에 alt 텍스트",
+      "notes": "- Section 컴포넌트 재사용: 기본 py-16 md:py-24 패딩 적용\\n- lucide-react 아이콘 활용 (ChevronRight 또는 ArrowRight)\\n- PROFILE_DATA.imageUrl 없으면 기본 placeholder 사용\\n- useTypingAnimation은 이미 Phase 6에서 구현됨",
+      "status": "in_progress",
+      "dependencies": [],
+      "createdAt": "2026-03-18T14:53:00.844Z",
+      "updatedAt": "2026-03-18T14:53:07.378Z",
+      "relatedFiles": [
+        {
+          "path": "components/profile/HeroSection.tsx",
+          "type": "TO_MODIFY",
+          "description": "HeroSection 컴포넌트 구현"
+        },
+        {
+          "path": "lib/constants.ts",
+          "type": "REFERENCE",
+          "description": "PROFILE_DATA 상수 참조"
+        },
+        {
+          "path": "app/globals.css",
+          "type": "REFERENCE",
+          "description": ".float 애니메이션 클래스 참조"
+        }
+      ],
+      "implementationGuide": "1) HeroSection.tsx를 'use client' 클라이언트 컴포넌트로 작성\\n2) PROFILE_DATA에서 name, role, bio, imageUrl 구조분해\\n3) useTypingAnimation(\\{ text: name, speed: 50, delay: 300 \\}) 훅 사용해 displayedText 가져오기\\n4) 레이아웃: Section 래퍼 사용, containerClassName='grid grid-cols-1 md:grid-cols-2 gap-8'\\n5) 이미지: <Image src={imageUrl} alt={name} width={400} height={400} className='rounded-lg float' />\\n6) 텍스트: <h1 className='text-4xl md:text-5xl font-bold'>{displayedText}</h1>, <h2 className='text-xl text-muted-foreground'>{role}</h2>, <p className='text-lg leading-relaxed'>{bio}</p>\\n7) 버튼: <div className='flex gap-4'>\\n    <Button asChild><Link href='/'>{아이콘} View Projects</Link></Button>\\n    <Button variant='outline' asChild><Link href='/contact'>{아이콘} Contact Me</Link></Button>\\n  </div>\\n8) float 애니메이션: Image에 className='... float' 적용 (globals.css에서 정의됨)\\n9) 테스트: 모바일(375px), 태블릿(768px), 데스크탑(1280px)에서 레이아웃 확인",
+      "verificationCriteria": "1) TypeScript strict 컴파일 성공 (tsc --noEmit)\\n2) ESLint 통과 (npm run lint)\\n3) Playwright로 About 페이지 렌더링 확인\\n4) 모바일/태블릿/데스크탑 레이아웃 시각적 확인\\n5) 타이핑 애니메이션이 delay 후 시작하고 정상 동작\\n6) 'View Projects' 버튼 클릭 시 '/'로 이동, 'Contact Me' 버튼 클릭 시 '/contact'으로 이동\\n7) 다크모드에서 텍스트 색상 가시성 확인\\n8) 접근성: 버튼에 aria-label 있고, 이미지에 alt 텍스트 있음"
+    },
+    {
+      "id": "e845b4c5-59c1-4094-adb7-266cb0a65775",
+      "name": "About 섹션 컴포넌트 구현 (개발 철학 카드)",
+      "description": "AboutSection.tsx를 완성하여 자기소개 텍스트 + 개발 철학 3개 카드를 표시합니다.\\n\\n구현 요소:\\n- 레이아웃: 2열 (md 이상), 모바일 1열\\n  - 좌측: 배경 타이포그래피 \"About Me!\" (opacity-10, fixed/sticky 포지셀 X) + 텍스트\\n  - 우측: 철학 카드 3개 그리드\\n- 자기소개: PROFILE_DATA.bio를 확장한 두 문장 정도의 텍스트 (한국어)\\n- 철학 카드: PHILOSOPHY_DATA.map() → Card 컴포넌트\\n  - 각 카드: 아이콘(lucide-react, PHILOSOPHY_DATA.iconName) + 제목 + 설명\\n  - 호버 시: translateY(-8px) + shadow 확대 (Tailwind hover:shadow-lg hover:-translate-y-2)\\n- Fade-in 애니메이션: 카드들에 useIntersectionObserver 적용, staggered delay (0/100/200ms)\\n- 다크모드: Card bg-white dark:bg-slate-950, border 색상 조정",
+      "notes": "- useIntersectionObserver 훅: Phase 6에서 구현됨, triggerOnce: true 기본값\\n- Card 컴포넌트: shadcn/ui (components/ui/card.tsx)\\n- 아이콘 매핑: lucide-react의 Code, User, GraduationCap 등\\n- Stagger delay 구현: Math.random() 대신 idx * 100으로 순차 적용",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-18T14:53:00.844Z",
+      "updatedAt": "2026-03-18T15:32:15.959Z",
+      "relatedFiles": [
+        {
+          "path": "components/profile/AboutSection.tsx",
+          "type": "TO_MODIFY",
+          "description": "AboutSection 컴포넌트 구현"
+        },
+        {
+          "path": "lib/constants.ts",
+          "type": "REFERENCE",
+          "description": "PHILOSOPHY_DATA 상수 참조"
+        },
+        {
+          "path": "lib/types.ts",
+          "type": "REFERENCE",
+          "description": "Philosophy 타입 참조"
+        },
+        {
+          "path": "hooks/use-intersection-observer.ts",
+          "type": "REFERENCE",
+          "description": "useIntersectionObserver 훅 사용"
+        }
+      ],
+      "implementationGuide": "1) AboutSection.tsx를 'use client' 클라이언트 컴포넌트로 작성\\n2) 레이아웃: <Section><div className='grid grid-cols-1 md:grid-cols-2 gap-12'>\\n3) 좌측: <div className='relative flex flex-col justify-center'>\\n    <div className='text-6xl md:text-7xl font-bold text-foreground/10 -ml-4'>About Me!</div>\\n    <div className='text-lg leading-relaxed'>{PROFILE_DATA.bio}</div>\\n  </div>\\n4) 우측: <div className='grid gap-6 md:gap-8'>\\n5) 철학 카드 루프:\\nPHILOSOPHY_DATA.map((philosophy, idx) => {\\n  const { ref, isVisible } = useIntersectionObserver({ delay: idx * 100 });\\n  return (\\n    <Card ref={ref} className={cn('p-6 transition-all duration-300', isVisible ? 'fade-in' : 'opacity-0')} key={philosophy.title}>\\n      <IconComponent className='h-8 w-8 text-primary mb-4' />\\n      <h3 className='text-xl font-semibold mb-2'>{philosophy.title}</h3>\\n      <p className='text-sm text-muted-foreground'>{philosophy.description}</p>\\n    </Card>\\n  );\\n})\\n6) 호버 효과: Card className에 'hover:shadow-lg hover:-translate-y-2' 추가\\n7) 아이콘: lucide-react에서 동적 import 또는 PHILOSOPHY_DATA.iconName에 매핑 객체 생성\\n8) 테스트: 모바일/태블릿/데스크탑에서 2열 레이아웃 확인",
+      "verificationCriteria": "1) TypeScript strict 컴파일 성공\\n2) ESLint 통과\\n3) 카드가 뷰포트 진입 시 fade-in 애니메이션 적용됨 (Playwright로 스크롤 후 확인)\\n4) 카드 호버 시 translateY(-8px) + shadow 변화 확인\\n5) PHILOSOPHY_DATA 3개 카드 모두 표시\\n6) 모바일에서 1열, 데스크탑에서 2열 레이아웃 확인\\n7) 다크모드에서 배경/텍스트 색상 가시성 확인\\n8) 아이콘이 올바르게 렌더링됨",
+      "summary": "AboutSection.tsx 완료: 배경 타이포그래피 + 자기소개 텍스트 + 철학 카드 3개(Clean Code, User-Centered, Always Growing). Fade-in 애니메이션 + Stagger delay (0/100/200ms) + 호버 효과(translateY -8px + shadow) + 다크모드 지원. useIntersectionObserver 활용. 모바일 1열, 데스크탑 2열 반응형 레이아웃. 타입 안전 & 접근성 완벽.\"",
+      "completedAt": "2026-03-18T15:32:15.956Z"
+    },
+    {
+      "id": "4dab9ff0-121a-4497-94e0-ca58315a5b0d",
+      "name": "Skills 섹션 컴포넌트 구현 (프로그레스 바)",
+      "description": "SkillsSection.tsx를 완성하여 기술 스택을 프로그레스 바로 시각화합니다.\\n\\n구현 요소:\\n- 레이아웃: 카테고리별 그룹화 + 각 기술의 프로그레스 바\\n- 각 기술 항목: [기술명 아이콘] [기술명] [숙련도 %] [프로그레스 바]\\n- 프로그레스 바: shadcn/ui Progress 컴포넌트 (height: h-2)\\n- 애니메이션: useIntersectionObserver 감지 후\\n  - 프로그레스 바 채워지기: CSS animation (0% → proficiency%)\\n  - 숫자 카운트업: 0 → proficiency (duration: 600ms)\\n- 색상: SKILLS_DATA.color로 바 배경색 지정\\n- 반응형: grid grid-cols-1 md:grid-cols-2 gap-8 (카테고리별)\\n- 다크모드: 배경, 텍스트 색상 조정",
+      "notes": "- shadcn/ui Progress 컴포넌트 사용 (components/ui/progress.tsx)\\n- 카운트업 애니메이션: JS interval 사용 (CSS 대신), duration 약 600ms\\n- SKILLS_DATA.color 활용: Tailwind 클래스명 (e.g., 'bg-orange-400') 직접 사용 가능\\n- 아이콘: 선택적 (기술명만으로도 충분), lucide-react 사용 가능",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-18T14:53:00.844Z",
+      "updatedAt": "2026-03-18T15:32:22.184Z",
+      "relatedFiles": [
+        {
+          "path": "components/profile/SkillsSection.tsx",
+          "type": "TO_MODIFY",
+          "description": "SkillsSection 컴포넌트 구현"
+        },
+        {
+          "path": "lib/constants.ts",
+          "type": "REFERENCE",
+          "description": "SKILLS_DATA 상수 참조"
+        },
+        {
+          "path": "components/ui/progress.tsx",
+          "type": "REFERENCE",
+          "description": "shadcn Progress 컴포넌트"
+        }
+      ],
+      "implementationGuide": "1) SkillsSection.tsx를 'use client' 클라이언트 컴포넌트로 작성\\n2) 카테고리 그룹화: const skillsByCategory = SKILLS_DATA.reduce((acc, skill) => { ... }) → Map<category, Skill[]>\\n3) 레이아웃: <Section><div className='grid grid-cols-1 md:grid-cols-2 gap-8'>\\n4) 각 카테고리: <div key={category}><h3 className='text-lg font-semibold mb-6'>{category}</h3>\\n5) 각 기술: \\nconst { ref, isVisible } = useIntersectionObserver({ triggerOnce: true });\\nconst [displayValue, setDisplayValue] = useState(0);\\n\\nuseEffect(() => {\\n  if (isVisible) {\\n    let current = 0;\\n    const interval = setInterval(() => {\\n      current += proficiency / 12;\\n      setDisplayValue(Math.min(current, proficiency));\\n      if (current >= proficiency) clearInterval(interval);\\n    }, 50);\\n  }\\n}, [isVisible]);\\n\\nreturn (\\n  <div ref={ref} className='mb-6'>\\n    <div className='flex items-center justify-between mb-2'>\\n      <span className='font-medium'>{name}</span>\\n      <span className='text-sm text-muted-foreground'>{Math.round(displayValue)}%</span>\\n    </div>\\n    <Progress value={displayValue} className='h-2' />\\n  </div>\\n);\\n6) 프로그레스 바 색상: 기본값은 primary 사용, 선택적으로 color 클래스 적용 (e.g., background-gradient)\\n7) 반응형 테스트: 모바일/태블릿/데스크탑에서 1/2열 전환 확인",
+      "verificationCriteria": "1) TypeScript strict 컴파일 성공\\n2) ESLint 통과\\n3) 기술이 카테고리별로 그룹화되어 표시됨\\n4) 뷰포트 진입 시 프로그레스 바가 0%에서 proficiency%로 채워짐 (Playwright 스크롤로 확인)\\n5) 숫자 카운트업이 부드럽게 동작 (0 → proficiency)\\n6) 모바일 1열, 데스크탑 2열 레이아웃 확인\\n7) 다크모드에서 바/텍스트 가시성 확인\\n8) SKILLS_DATA의 모든 기술이 표시됨 (10개)",
+      "summary": "SkillsSection.tsx 완료: 카테고리별 기술 그룹화(Frontend/Tools) + 프로그레스 바. useSkillAnimation 훅(requestAnimationFrame 기반 easeOut 커브) + 카운트업 애니메이션(0→proficiency %). SkillCategory/SkillItem 컴포넌트. Stagger delay (카테고리 150ms + 항목 80ms). 호버 효과 + 다크모드. 반응형 1열→2열. 10개 기술 모두 표시. 콘솔 에러 0개.\"",
+      "completedAt": "2026-03-18T15:32:22.182Z"
+    },
+    {
+      "id": "0be6a6f0-4d52-43cf-9985-4e43f6e6c0fb",
+      "name": "About 페이지 섹션 조합 및 전체 플로우 검증",
+      "description": "app/(blog)/about/page.tsx에서 HeroSection, AboutSection, SkillsSection 3개 섹션을 조합하여 완성된 About 페이지를 만들고 전체 플로우를 검증합니다.\\n\\n구현 요소:\\n- 페이지 구성: <HeroSection /> → <Separator /> → <AboutSection /> → <Separator /> → <SkillsSection />\\n- 전체 레이아웃: max-w-7xl mx-auto px-4\\n- Separator: shadcn/ui Separator (my-16) 으로 섹션 구분\\n- 부드러운 스크롤: html { scroll-behavior: smooth } (이미 globals.css에 적용됨)\\n- Dark Mode 검증: 각 섹션이 다크모드에서도 정상 표시\\n- 접근성: 전체 heading 계층 검증 (h1은 HeroSection, h2/h3은 AboutSection/SkillsSection)",
+      "notes": "- 서버 컴포넌트 유지 (page.tsx는 기본 서버 컴포넌트)\\n- Separator: shadcn/ui 컴포넌트 (components/ui/separator.tsx)\\n- ISR revalidate = 3600 유지\\n- Metadata는 이미 Phase 6에서 정의됨",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-18T14:53:00.844Z",
+      "updatedAt": "2026-03-18T15:32:27.414Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/about/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "About 페이지 완성"
+        },
+        {
+          "path": "components/profile/HeroSection.tsx",
+          "type": "REFERENCE",
+          "description": "Hero 섹션 임포트"
+        },
+        {
+          "path": "components/profile/AboutSection.tsx",
+          "type": "REFERENCE",
+          "description": "About 섹션 임포트"
+        },
+        {
+          "path": "components/profile/SkillsSection.tsx",
+          "type": "REFERENCE",
+          "description": "Skills 섹션 임포트"
+        }
+      ],
+      "implementationGuide": "1) app/(blog)/about/page.tsx 기존 구조 유지, 메인 콘텐츠 영역 수정\\n2) 기본 구조:\\n'use server';\\n\\nimport { HeroSection } from '@/components/profile/HeroSection';\\nimport { AboutSection } from '@/components/profile/AboutSection';\\nimport { SkillsSection } from '@/components/profile/SkillsSection';\\nimport { Separator } from '@/components/ui/separator';\\n\\nexport const metadata = { ... };\\nexport const revalidate = 3600;\\n\\nexport default function AboutPage() {\\n  return (\\n    <>\\n      <HeroSection />\\n      <Separator className='my-16' />\\n      <AboutSection />\\n      <Separator className='my-16' />\\n      <SkillsSection />\\n    </>\\n  );\\n}\\n3) Container 제거 (각 Section이 자체적으로 Container 포함)\\n4) 부드러운 스크롤 테스트: 페이지 내 링크 클릭 시 smooth scroll 확인\\n5) Playwright로 전체 페이지 렌더링 + 반응형 테스트\\n6) 성능 측정: Lighthouse Score 확인 (Performance > 85)",
+      "verificationCriteria": "1) About 페이지 렌더링 성공 (404 에러 없음)\\n2) 3개 섹션이 순서대로 표시됨 (Hero → About → Skills)\\n3) Separator가 섹션 간 시각적 구분 역할\\n4) 모바일/태블릿/데스크탑 반응형 레이아웃 검증 (Playwright)\\n5) 다크/라이트 모드 전환 시 모든 섹션이 정상 표시\\n6) Heading 계층 정확 (h1 1개, h2+ 다중) - 접근성 검증\\n7) 페이지 내 링크(CTA 버튼) 정상 작동 ('View Projects', 'Contact Me')\\n8) Lighthouse 성능 Score > 85 (npm run build 후 측정)\\n9) 콘솔 에러 0개 (브라우저 DevTools 확인)",
+      "summary": "About 페이지 완성: HeroSection → Separator → AboutSection → Separator → SkillsSection 조합. 메타데이터 설정(OpenGraph 포함) + ISR 3600초. Playwright 렌더링 검증: 페이지 제목 정확, 3개 섹션 순서대로 표시, Separator 시각적 구분 역할. 모바일/태블릿/데스크탑 반응형 정상. Heading 계층 정확(h1 1개, h2+ 다중). CTA 링크 정상. 콘솔 에러 0개. 다크모드 완벽.\"",
+      "completedAt": "2026-03-18T15:32:27.412Z"
     }
   ]
 }

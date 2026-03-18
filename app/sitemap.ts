@@ -31,6 +31,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'daily',
       priority: 0.9,
     },
+    {
+      url: `${SITE_CONFIG.url}/about`,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_CONFIG.url}/contact`,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
   ];
 
   // Notion API에서 발행된 posts 조회

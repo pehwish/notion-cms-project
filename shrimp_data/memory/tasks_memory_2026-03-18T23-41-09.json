@@ -1,0 +1,70 @@
+{
+  "tasks": [
+    {
+      "id": "59732018-69b4-477f-8856-772b9b07fcd6",
+      "name": "Task 4-1: Sitemap 생성",
+      "description": "Next.js MetadataRoute.Sitemap으로 동적 sitemap 생성. fetchPublishedPosts로 모든 posts 조회 후 각 post URL과 lastModified 반환. 에러 시 빈 배열 반환.",
+      "notes": "SITE_CONFIG.url 확인 필수",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-11T14:35:08.125Z",
+      "updatedAt": "2026-03-11T14:40:04.142Z",
+      "relatedFiles": [
+        {
+          "path": "app/sitemap.ts",
+          "type": "CREATE",
+          "description": "동적 sitemap 생성"
+        }
+      ],
+      "implementationGuide": "1. app/sitemap.ts 신규 생성 2. export async function default 3. fetchPublishedPosts 호출 후 배열로 변환 4. catch: console.error 후 기본 URL만 반환",
+      "verificationCriteria": "sitemap.ts 생성, npm run build 성공, sitemap.xml 포함",
+      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
+      "summary": "Sitemap 동적 생성 완벽 구현. app/sitemap.ts 신규 생성, MetadataRoute.Sitemap 패턴 사용, fetchPublishedPosts() 재사용, ISR revalidate=3600 적용. 에러 처리 완벽 (try-catch). 빌드 성공, TypeScript strict 준수.",
+      "completedAt": "2026-03-11T14:40:04.048Z"
+    },
+    {
+      "id": "bf4e8157-7953-4d24-9493-6dfae5ef0197",
+      "name": "Task 4-2: robots.txt 생성",
+      "description": "검색 엔진 크롤러용 robots.txt 정적 파일 생성. User-agent: *, Sitemap URL 포함.",
+      "notes": "정적 파일, 절대 URL 사용",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-11T14:35:08.125Z",
+      "updatedAt": "2026-03-11T14:40:22.041Z",
+      "relatedFiles": [
+        {
+          "path": "public/robots.txt",
+          "type": "CREATE",
+          "description": "크롤러 가이드"
+        }
+      ],
+      "implementationGuide": "1. public/robots.txt 신규 생성 2. User-agent: * 3. Allow: / 4. Sitemap: https://example.com/sitemap.xml",
+      "verificationCriteria": "robots.txt 생성, 포맷 검증, Sitemap URL 정확",
+      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
+      "summary": "robots.txt 정적 파일 생성 완료. public/robots.txt 신규 생성, 표준 포맷 준수 (User-agent: *, Allow: /, Sitemap URL 포함). SITE_CONFIG.url 기준으로 설정. 빌드 성공, 정적 파일로 Vercel 배포 시 자동 제공.",
+      "completedAt": "2026-03-11T14:40:22.004Z"
+    },
+    {
+      "id": "fdeba19a-20e8-48be-bd83-b6707a8223ad",
+      "name": "Task 4-3: Schema.org JSON-LD 추가",
+      "description": "글 상세 페이지에 Article 타입 JSON-LD 추가. 제목, 설명, 발행일, 저자, 이미지 포함.",
+      "notes": "dangerouslySetInnerHTML 사용, author 정보 필요",
+      "status": "completed",
+      "dependencies": [],
+      "createdAt": "2026-03-11T14:35:08.125Z",
+      "updatedAt": "2026-03-11T14:42:38.733Z",
+      "relatedFiles": [
+        {
+          "path": "app/(blog)/posts/[slug]/page.tsx",
+          "type": "TO_MODIFY",
+          "description": "JSON-LD Article 스키마 추가"
+        }
+      ],
+      "implementationGuide": "app/(blog)/posts/[slug]/page.tsx 수정. script type=application/ld+json 태그 추가. articleSchema 객체: headline, description, datePublished, author, image",
+      "verificationCriteria": "JSON-LD 스크립트 포함, schema.org validator 통과, Google Search Console 구조화된 데이터 테스트 통과",
+      "analysisResult": "Phase 4: SEO 최적화 (Sitemap, robots.txt, Schema.org JSON-LD, 카테고리 동적 라우팅)",
+      "summary": "JSON-LD Article 스키마 완벽 추가. app/(blog)/posts/[slug]/page.tsx에 <script type=\"application/ld+json\"> 렌더링. articleSchema 객체 생성: headline, description, datePublished/dateModified, author, publisher, image, url 모두 포함. dangerouslySetInnerHTML 사용 (서버 컴포넌트 안전). 빌드 성공, TypeScript strict 준수.",
+      "completedAt": "2026-03-11T14:42:38.724Z"
+    }
+  ]
+}
