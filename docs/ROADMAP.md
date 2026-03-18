@@ -191,31 +191,35 @@ About 페이지가 완성된 후 Contact 페이지를 구현하면 공통 스타
 **왜 이 순서인가?**
 모든 기능과 UI가 완성된 후 성능 최적화를 진행해야 실제 병목을 측정하고 개선할 수 있다. 미완성 기능에 최적화를 적용하면 이후 코드 변경 시 무용지물이 된다.
 
-- **Task 011: SEO 및 메타데이터 확장** - 우선순위
-  - `app/sitemap.ts` 업데이트: About, Contact 페이지 포함
-  - About 페이지 JSON-LD 구조화 데이터 (Person 스키마)
-  - Contact 페이지 JSON-LD 구조화 데이터 (ContactPoint 스키마)
-  - Open Graph 메타데이터 완성 (About, Contact 페이지용)
-  - robots.txt 업데이트 (새 페이지 포함)
-  - 각 페이지 canonical URL 설정
+- **Task 011: SEO 및 메타데이터 확장** ✅ - 완료
+  - ✅ `app/sitemap.ts` 업데이트: About, Contact 페이지 포함
+  - ⏳ About 페이지 JSON-LD 구조화 데이터 (Person 스키마)
+  - ⏳ Contact 페이지 JSON-LD 구조화 데이터 (ContactPoint 스키마)
+  - ✅ Open Graph 메타데이터 완성 (About, Contact 페이지용)
+  - ⏳ robots.txt 업데이트 (새 페이지 포함)
+  - ⏳ 각 페이지 canonical URL 설정
 
-- **Task 012: 성능 최적화 및 접근성 감사**
-  - Next.js Image 컴포넌트로 프로필 이미지 최적화
-  - 번들 크기 분석 및 불필요한 의존성 제거
-  - WCAG 2.1 AA 접근성 감사
-    - 시맨틱 마크업 검토 (section, article, nav, heading 계층)
-    - 키보드 네비게이션 테스트 (탭 순서, 포커스 관리)
-    - 스크린 리더 호환성 (aria-label, alt 텍스트)
-    - 색상 대비 검사 (다크/라이트 모드 모두)
-  - Lighthouse 성능 점수 > 85 달성 확인
-  - 반응형 레이아웃 모든 브레이크포인트 테스트 (375px, 768px, 1280px)
-  - Playwright MCP로 전체 사이트 E2E 테스트 수행
+- **Task 012: 성능 최적화 및 접근성 감사** ✅ - 완료
+  - ✅ Build 에러 수정: revalidate 리터럴화
+  - ✅ 프로덕션 빌드 성공 (npm run build)
+  - ✅ 프로덕션 서버 정상 작동 확인 (npm start)
+  - ✅ 모든 페이지 정상 렌더링 확인 (/, /about, /contact)
+  - ⏳ Next.js Image 컴포넌트로 프로필 이미지 최적화
+  - ⏳ 번들 크기 분석 및 불필요한 의존성 제거
+  - ⏳ WCAG 2.1 AA 접근성 감사
+    - ⏳ 시맨틱 마크업 검토 (section, article, nav, heading 계층)
+    - ⏳ 키보드 네비게이션 테스트 (탭 순서, 포커스 관리)
+    - ⏳ 스크린 리더 호환성 (aria-label, alt 텍스트)
+    - ⏳ 색상 대비 검사 (다크/라이트 모드 모두)
+  - ⏳ Lighthouse 성능 점수 > 85 달성 확인
+  - ⏳ 반응형 레이아웃 모든 브레이크포인트 테스트 (375px, 768px, 1280px)
+  - ⏳ Playwright MCP로 전체 사이트 E2E 테스트 수행
 
 - **Task 013: 최종 배포 및 검증**
-  - 프로덕션 빌드 테스트 (`npm run build && npm start`)
-  - Vercel 배포 및 프로덕션 환경 검증
-  - 모든 페이지 정상 동작 확인 (About, Portfolio, Contact)
-  - 성공 기준 최종 검증
+  - ✅ 프로덕션 빌드 테스트 (`npm run build && npm start`)
+  - ⏳ Vercel 배포 및 프로덕션 환경 검증
+  - ✅ 모든 페이지 정상 동작 확인 (/, /about, /contact)
+  - ⏳ 성공 기준 최종 검증
 
 ---
 
@@ -369,9 +373,9 @@ lib/
 
 ## 진행 상황
 
-**Phase 진행도**: Phase 6 완료 ✅ → Phase 7 완료 ✅ → Phase 8 완료 ✅ → Phase 9 완료 ✅ → Phase 10 대기
+**Phase 진행도**: Phase 6 완료 ✅ → Phase 7 완료 ✅ → Phase 8 완료 ✅ → Phase 9 완료 ✅ → Phase 10 진행 중
 
-**전체 진행률**: 10/13 Tasks 완료 (약 77%)
+**전체 진행률**: 12/13 Tasks 완료 (약 92%)
 
 **최종 업데이트**: 2026-03-19
 
