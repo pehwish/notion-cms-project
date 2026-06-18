@@ -464,11 +464,11 @@ function convertCodeToHtml(block: CodeBlock): string {
 }
 
 /**
- * 이미지 블록을 HTML <figure> 또는 <img> 태그로 변환
- * 캡션이 있을 경우 <figure><img><figcaption>...</figcaption></figure> 형태
+ * 이미지 블록을 HTML marker로 변환 (실제 렌더링은 PostContent 컴포넌트에서)
+ * data-image-url 속성으로 URL을 전달하여 PostContent에서 Next.js Image로 최적화
  *
  * @param block - ImageBlock
- * @returns HTML 이미지 태그 문자열
+ * @returns HTML 마커 문자열 (data 속성 포함)
  */
 function convertImageToHtml(block: ImageBlock): string {
   const imageUrl =
@@ -483,12 +483,17 @@ function convertImageToHtml(block: ImageBlock): string {
   const caption = block.image.caption
     ? convertRichText(block.image.caption)
     : "";
+  const altText = caption ? escapeHtml(caption.replace(/<[^>]*>/g, "")) : "";
+
+  // data 속성으로 URL과 캡션 전달 (PostContent에서 Next.js Image로 변환)
+  const dataUrl = escapeHtml(imageUrl);
+  const dataCaption = escapeHtml(JSON.stringify(caption));
 
   if (caption) {
-    return `<figure><img src="${safeUrl}" alt="${escapeHtml(caption.replace(/<[^>]*>/g, ""))}" /><figcaption>${caption}</figcaption></figure>`;
+    return `<figure data-image-url="${dataUrl}" data-image-caption="${dataCaption}" data-image-alt="${altText}"><figcaption>${caption}</figcaption></figure>`;
   }
 
-  return `<img src="${safeUrl}" alt="" />`;
+  return `<figure data-image-url="${dataUrl}" data-image-alt="${altText}"></figure>`;
 }
 
 /**

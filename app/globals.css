@@ -165,6 +165,21 @@
   img {
     max-width: 100%;
     height: auto;
+    display: block;
+  }
+
+  /* 이미지 로딩 최적화: fade-in 애니메이션 */
+  @keyframes image-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  img[loading="lazy"] {
+    animation: image-fade-in 300ms ease-in-out forwards;
   }
 }
 
@@ -248,7 +263,27 @@
 
     /* 이미지 */
     img {
-      @apply rounded-lg my-6 w-full;
+      @apply rounded-lg my-6 w-full h-auto block;
+    }
+
+    /* 이미지 컨테이너: 레이아웃 시프트(CLS) 방지 및 최적화 */
+    figure {
+      @apply my-6;
+
+      /* 이미지를 담는 div */
+      > div {
+        @apply relative w-full overflow-hidden rounded-lg bg-muted;
+      }
+
+      /* 이미지 로딩 중 플레이스홀더 */
+      img {
+        @apply w-full h-auto;
+      }
+
+      /* 이미지 캡션 */
+      figcaption {
+        @apply mt-3 text-center text-sm text-muted-foreground italic;
+      }
     }
 
     /* 첫 번째 자식 요소 상단 마진 제거 */
