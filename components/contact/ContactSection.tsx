@@ -57,11 +57,11 @@ function ContactCard({ item, delayClass, isVisible }: ContactCardProps) {
         isVisible ? delayClass : 'opacity-0 translate-y-5'
       )}
     >
-      <Card className="h-full border border-border bg-white dark:bg-slate-950">
+      <Card className="h-full border border-border bg-white dark:bg-slate-950 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
         <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
-          {/* 원형 아이콘 배경: 파란색 계열 */}
+          {/* 원형 아이콘 배경: 파란색 계열 + 호버 효과 */}
           <div
-            className="flex size-20 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500"
+            className="flex size-20 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500 group-hover:scale-110 transition-transform duration-300"
             aria-hidden="true"
           >
             <IconComponent className="size-9 text-white" />
