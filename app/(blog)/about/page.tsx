@@ -31,15 +31,20 @@ export default function AboutPage() {
   return (
     <>
       {/* 히어로 섹션: 이름 + 직무 + CTA */}
-      <HeroSection />
-      <Separator className="my-16" />
+      <div className='bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-slate-900/50 dark:to-transparent'>
+        <HeroSection />
+      </div>
 
       {/* 자기소개 + 개발 철학 카드 */}
-      <AboutSection />
+      <div className='bg-gradient-to-br from-blue-50/60 via-indigo-50/30 to-transparent dark:from-slate-900/60 dark:via-slate-800/30 dark:to-transparent'>
+        <AboutSection />
+      </div>
       <Separator className="my-16" />
 
       {/* 기술 스택 프로그레스 바 */}
-      <SkillsSection />
+      <div className='bg-gradient-to-b from-transparent to-indigo-50/30 dark:to-slate-900/30'>
+        <SkillsSection />
+      </div>
     </>
   );
 }

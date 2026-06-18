@@ -14,6 +14,7 @@
  */
 
 import { Post } from './types';
+import portfolioData from './portfolio-data.json';
 
 // 데이터베이스 ID는 환경 변수에서 로드
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
@@ -116,6 +117,7 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
   const techField = props.사용언어;
   const roleField = props.업무포지션;
   const periodField = props.투입기간 || props.Period || props.기간;
+  const descriptionField = props.Description || props.설명;
   const imageField = props.이미지 || props.Image;
 
   const title =
@@ -200,6 +202,24 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
     imageUrl = `https://ui-avatars.com/api/?name=${encodedTitle}&background=random&size=400&bold=true&font-size=0.4`;
   }
 
+  // Description 필드 추출 (rich_text 또는 text 타입)
+  let description = '';
+  if (descriptionField) {
+    if (
+      descriptionField.type === 'rich_text' &&
+      descriptionField.rich_text &&
+      descriptionField.rich_text.length > 0
+    ) {
+      description = descriptionField.rich_text[0].plain_text || '';
+    } else if (
+      descriptionField.type === 'text' &&
+      descriptionField.rich_text &&
+      descriptionField.rich_text.length > 0
+    ) {
+      description = descriptionField.rich_text[0].plain_text || '';
+    }
+  }
+
   return {
     id: (page.id as string) || '',
     title,
@@ -213,8 +233,8 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
       .toLowerCase()
       .replace(/[^a-z0-9가-힣]+/g, '-')
       .replace(/^-|-$/g, ''),
-    tags: [], // 포트폴리오는 태그 미지원
-    description: '', // 포트폴리오는 설명 미지원
+    tags: [],
+    description,
     imageUrl
   };
 }
@@ -231,7 +251,14 @@ export async function fetchPublishedPosts(): Promise<Post[]> {
   try {
     // 환경 변수 검증
     if (!DATABASE_ID) {
-      throw new Error('NOTION_DATABASE_ID 환경 변수가 설정되지 않았습니다');
+      console.warn('NOTION_DATABASE_ID 환경 변수가 설정되지 않았습니다. 로컬 데이터 사용');
+      const posts = portfolioData as Post[];
+      posts.sort((a, b) => {
+        const aStart = a.periodParsed?.startDate || '';
+        const bStart = b.periodParsed?.startDate || '';
+        return bStart.localeCompare(aStart);
+      });
+      return posts;
     }
 
     if (!API_KEY) {
@@ -249,12 +276,6 @@ export async function fetchPublishedPosts(): Promise<Post[]> {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          sorts: [
-            {
-              property: '투입기간',
-              direction: 'descending'
-            }
-          ],
           page_size: 100
         })
       }
@@ -262,10 +283,9 @@ export async function fetchPublishedPosts(): Promise<Post[]> {
 
     if (!response.ok) {
       const errorData = await response.json();
+      const errorMsg = (errorData as Record<string, unknown>).message || '';
       throw new Error(
-        `Notion API 요청 실패: ${response.status} ${response.statusText} - ${
-          (errorData as Record<string, unknown>).message || ''
-        }`
+        `Notion API 요청 실패: ${response.status} ${response.statusText} - ${errorMsg}`
       );
     }
 
@@ -282,6 +302,14 @@ export async function fetchPublishedPosts(): Promise<Post[]> {
       transformNotionPageToPost(page as Record<string, unknown>)
     );
 
+    // 클라이언트에서 투입기간 기준 내림차순 정렬
+    posts.sort((a, b) => {
+      const aStart = a.periodParsed?.startDate || '';
+      const bStart = b.periodParsed?.startDate || '';
+      return bStart.localeCompare(aStart);
+    });
+
+    console.log(`✓ Notion API에서 ${posts.length}개 포트폴리오 조회 완료`);
     return posts;
   } catch (error) {
     // 에러 처리 및 로깅

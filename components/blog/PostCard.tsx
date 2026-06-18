@@ -92,7 +92,7 @@ export function PostCard({ post }: PostCardProps) {
         className='group block h-full'
         aria-label={`${post.title} 글 읽기`}
       >
-        <Card className='flex h-full flex-col overflow-hidden transition-shadow duration-200 hover:shadow-md group-hover:shadow-lg relative rounded-none border-none pt-0 bg-white dark:bg-white'>
+        <Card className='flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl group-hover:shadow-2xl group-hover:-translate-y-2 relative rounded-lg border border-gray-200 dark:border-gray-800 pt-0 bg-white dark:bg-slate-950 hover:border-indigo-400 dark:hover:border-purple-500'>
           {/* 카드 상단: 썸네일 이미지 오버레이 영역 */}
           <figure className='relative m-0 h-56 sm:h-72 lg:h-80 w-full overflow-hidden bg-muted'>
             {/* 이미지 또는 폴백 배경 */}
@@ -156,11 +156,18 @@ export function PostCard({ post }: PostCardProps) {
             </figcaption>
           </figure>
 
-          <CardFooter className='flex flex-col items-start gap-2 bg-white dark:bg-white text-slate-900 dark:text-slate-900'>
+          <CardFooter className='flex flex-col items-start gap-3 bg-white dark:bg-white text-slate-900 dark:text-slate-900'>
+            {/* 프로젝트 설명 (2줄 제한) */}
+            {post.description && (
+              <p className='text-sm text-slate-700 line-clamp-2 leading-relaxed'>
+                {post.description}
+              </p>
+            )}
+
             {/* 기술 스택 표시 (포트폴리오) 또는 태그 (블로그) */}
             {post.technologies && post.technologies.length > 0 ? (
               <div className='flex flex-wrap gap-1.5' aria-label='사용 기술'>
-                {post.technologies.map(tech => (
+                {post.technologies.slice(0, 3).map(tech => (
                   <Badge
                     key={tech}
                     variant='secondary'
@@ -169,10 +176,18 @@ export function PostCard({ post }: PostCardProps) {
                     {tech}
                   </Badge>
                 ))}
+                {post.technologies.length > 3 && (
+                  <Badge
+                    variant='secondary'
+                    className='text-xs font-medium bg-slate-200 text-slate-700'
+                  >
+                    +{post.technologies.length - 3}
+                  </Badge>
+                )}
               </div>
             ) : post.tags && post.tags.length > 0 ? (
               <div className='flex flex-wrap gap-1.5' aria-label='태그'>
-                {post.tags.map(tag => (
+                {post.tags.slice(0, 3).map(tag => (
                   <Badge
                     key={tag}
                     variant='secondary'
@@ -181,6 +196,14 @@ export function PostCard({ post }: PostCardProps) {
                     {tag}
                   </Badge>
                 ))}
+                {post.tags.length > 3 && (
+                  <Badge
+                    variant='secondary'
+                    className='text-xs font-medium bg-slate-200 text-slate-700'
+                  >
+                    +{post.tags.length - 3}
+                  </Badge>
+                )}
               </div>
             ) : null}
 

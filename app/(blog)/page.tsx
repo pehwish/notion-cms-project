@@ -12,7 +12,8 @@ import type { Metadata } from 'next';
 import { PenLine } from 'lucide-react';
 import type { Post } from '@/lib/types';
 import { PostCard } from '@/components/blog/PostCard';
-import { SITE_CONFIG } from '@/lib/constants';
+import { SITE_CONFIG, PROFILE_DATA } from "@/lib/constants";
+import { calculateCareerYears, translateRoleToEnglish as translateRole } from "@/lib/utils";
 import { fetchPublishedPosts } from '@/lib/notion';
 
 export const metadata: Metadata = {
@@ -41,31 +42,6 @@ interface BlogHomePageProps {
 }
 
 /**
- * 한글 역할을 영어로 변환하는 매핑 함수
- */
-function translateRoleToEnglish(role: string): string {
-  const roleMap: Record<string, string> = {
-    '프론트엔드': 'Frontend',
-    '프론트엔드 개발자': 'Frontend Developer',
-    '웹 퍼블리셔': 'Web Publisher',
-    '백엔드': 'Backend',
-    '백엔드 개발자': 'Backend Developer',
-    '풀스택': 'Full Stack',
-    '풀스택 개발자': 'Full Stack Developer',
-    'PM': 'PM',
-    '제품 관리자': 'Product Manager',
-    '디자이너': 'Designer',
-    'UI/UX 디자이너': 'UI/UX Designer',
-    '마케팅': 'Marketing',
-    '마케팅 담당자': 'Marketing Manager',
-    '개발팀': 'Developer',
-    '리더': 'Lead',
-    '팀장': 'Team Lead',
-  };
-  return roleMap[role] ?? role; // 매핑이 없으면 원본 반환
-}
-
-/**
  * 탭 아이템 스타일 헬퍼 함수
  * 활성 탭: 중간 굵기 텍스트 + 하단 언더라인, 비활성 탭: 흐린 텍스트
  */
@@ -73,7 +49,7 @@ function getTabClassName(isActive: boolean): string {
   const base =
     'inline-block whitespace-nowrap px-4 py-3 text-sm font-medium transition-all duration-150';
   if (isActive) {
-    return `${base} text-foreground border-b-2 border-foreground`;
+    return `${base} text-foreground border-b-2 border-indigo-600 dark:border-purple-400`;
   }
   return `${base} text-muted-foreground hover:text-foreground`;
 }
@@ -123,38 +99,41 @@ export default async function BlogHomePage({
 
   return (
     <div>
-      {/* ── Hero 섹션 ─────────────────────────────────────────────── */}
+      {/* ── Hero 섹션: 연한 보라색 배경 + 배경 패턴 ─────────────────── */}
       <section
         aria-labelledby='portfolio-hero-title'
-        className='border-b border-border'
+        className='relative border-b border-border bg-indigo-50/60 dark:bg-slate-900/60'
       >
+        {/* 배경 패턴 (점) */}
+        <div className='absolute inset-0 bg-pattern-dots dark:opacity-20' aria-hidden='true' />
+        
         <Container>
-          <div className='py-16 lg:py-24'>
+          <div className='relative py-20 lg:py-32 z-10'>
             {/* 대형 타이틀 */}
             <div className='flex flex-col'>
               <h1
                 id='portfolio-hero-title'
-                className='text-6xl font-bold leading-none tracking-tight sm:text-7xl lg:text-8xl'
+                className='text-7xl sm:text-8xl lg:text-9xl font-bold leading-tight tracking-tight -tracking-wider'
               >
                 Easy Code
               </h1>
-              <p className='mt-4 text-xl font-medium text-foreground'>
+              <p className='mt-6 text-lg lg:text-xl font-semibold text-indigo-600 dark:text-purple-300'>
                 박은혜 · Frontend Developer
               </p>
 
               {/* 소개 텍스트 */}
-              <p className='mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground'>
+              <p className='mt-8 max-w-2xl text-lg lg:text-xl leading-relaxed text-muted-foreground'>
                 사용자가 원하는 경험을 만들어내는 프론트엔드 개발자입니다.
                 <br />
                 React, Vue.js, React Native를 활용한 웹/앱 개발과 웹 접근성을 전문으로 합니다.
               </p>
 
               {/* 기술 스택 뱃지 */}
-              <div className='mt-8 flex flex-wrap gap-2'>
+              <div className='mt-10 flex flex-wrap gap-2'>
                 {['React', 'Vue.js', 'React Native', 'TypeScript'].map(tech => (
                   <span
                     key={tech}
-                    className='inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary'
+                    className='inline-flex items-center rounded-full bg-indigo-100 dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-indigo-700 dark:text-purple-300 border border-indigo-300 dark:border-slate-700'
                   >
                     {tech}
                   </span>
@@ -162,7 +141,7 @@ export default async function BlogHomePage({
               </div>
 
               {/* 프로젝트 수 + 경력 표시 */}
-              <div className='mt-8 flex flex-col gap-2 text-sm text-muted-foreground'>
+              <div className='mt-10 flex flex-col gap-3 text-base lg:text-lg text-muted-foreground'>
                 {allPosts.length > 0 && (
                   <p>
                     총{' '}
@@ -175,7 +154,7 @@ export default async function BlogHomePage({
                 <p>
                   경력{' '}
                   <span className='font-semibold text-foreground'>
-                    8년 6개월+
+                    {calculateCareerYears(PROFILE_DATA.careerStartYear)}
                   </span>
                 </p>
               </div>
@@ -211,7 +190,7 @@ export default async function BlogHomePage({
                   const href = q
                     ? `/?category=${encodeURIComponent(role)}&q=${encodeURIComponent(q)}`
                     : `/?category=${encodeURIComponent(role)}`;
-                  const displayRole = translateRoleToEnglish(role);
+                  const displayRole = translateRole(role);
                   return (
                     <li key={role}>
                       <Link
@@ -252,9 +231,9 @@ export default async function BlogHomePage({
         </Container>
       </div>
 
-      {/* ── 글 목록 영역 ───────────────────────────────────────────── */}
+      {/* ── 글 목록 영역: 흰색 배경으로 명확한 구분 ──────────────────── */}
       <Container>
-        <section className='py-10 lg:py-14' aria-label='블로그 글 목록'>
+        <section className='py-16 lg:py-24' aria-label='블로그 글 목록'>
           {/* 활성 필터 상태 표시 */}
           {(category || q) && (
             <div className='mb-8 flex items-center gap-2 text-sm text-muted-foreground'>
@@ -272,7 +251,7 @@ export default async function BlogHomePage({
                   <>
                     Role:{' '}
                     <span className='font-medium text-foreground'>
-                      {translateRoleToEnglish(category)}
+                      {translateRole(category)}
                     </span>
                   </>
                 )}{' '}
@@ -290,10 +269,10 @@ export default async function BlogHomePage({
             </div>
           )}
 
-          {/* 글 카드 그리드: 모바일 1열 / sm 이상 2열 */}
+          {/* 글 카드 그리드: 모바일 1열 / sm 이상 2열 / lg 이상 3열 */}
           {posts.length > 0 ? (
             <ul
-              className='grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8'
+              className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8'
               aria-label='블로그 글 목록'
             >
               {posts.map(post => (
@@ -322,7 +301,7 @@ export default async function BlogHomePage({
               {(q || category) && (
                 <Link
                   href='/'
-                  className='mt-4 text-sm font-medium text-primary underline-offset-4 hover:underline'
+                  className='mt-4 text-sm font-medium text-indigo-600 dark:text-purple-300 underline-offset-4 hover:underline'
                 >
                   전체 프로젝트 보기
                 </Link>

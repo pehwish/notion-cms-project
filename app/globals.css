@@ -80,6 +80,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Phase 11: 브랜드 컬러 팔레트 */
+  --brand-primary: #4F46E5;
+  --brand-secondary: #7C3AED;
+  --brand-accent: #10B981;
+  --brand-light-bg: #DDD6FE;
+  --brand-light-border: #C7D2FE;
+  --brand-light-text: #4F46E5;
 }
 
 .dark {
@@ -114,14 +122,36 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Phase 11: 다크모드 브랜드 컬러 */
+  --brand-primary: #818CF8;
+  --brand-secondary: #A78BFA;
+  --brand-accent: #34D399;
+  --brand-dark-bg: #111827;
+  --brand-dark-surface: #1F2937;
+  --brand-dark-border: #374151;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  /* Phase 11: 타이포그래피 강화 - 폰트 스택 */
   body {
     @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', 'Noto Sans KR', var(--font-plus-jakarta-sans), var(--font-noto-sans-kr), system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* 제목에 Plus Jakarta Sans 적용 */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+  }
+
+  /* 한글 텍스트의 line-height 보정 */
+  p, li, span, div {
+    word-break: keep-all;
   }
 
   /* 부드러운 스크롤: 앵커 이동 시 CLS 없이 애니메이션 */
@@ -161,6 +191,21 @@
     @apply outline-2 outline-offset-2 outline-ring;
   }
 
+  /* Phase 11: 섹션 시각적 분리 - 배경 패턴 */
+  .bg-pattern-dots {
+    background-image:
+      radial-gradient(circle, currentColor 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+    opacity: 0.03;
+  }
+
+  .bg-pattern-grid {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
   /* 이미지 반응형 기본값: 레이아웃 시프트(CLS) 방지 */
   img {
     max-width: 100%;
@@ -191,23 +236,23 @@
   .prose {
     @apply text-foreground leading-relaxed;
 
-    /* 단락 */
+    /* 단락 - 읽기 편의성을 위해 line-height 확대 */
     p {
-      @apply mb-4 text-base leading-7;
+      @apply mb-4 text-base lg:text-lg leading-8 lg:leading-9;
     }
 
-    /* 제목 계층 */
+    /* Phase 11: 타이포그래피 강화 - 제목 크기 확대 및 굵기 강화 */
     h1 {
-      @apply mb-4 mt-8 text-3xl font-bold tracking-tight;
+      @apply mb-4 mt-8 text-4xl lg:text-5xl font-bold tracking-tight;
     }
     h2 {
-      @apply mb-3 mt-8 text-2xl font-semibold tracking-tight;
+      @apply mb-3 mt-8 text-3xl lg:text-4xl font-bold tracking-tight;
     }
     h3 {
-      @apply mb-3 mt-6 text-xl font-semibold;
+      @apply mb-3 mt-6 text-2xl font-semibold tracking-tight;
     }
     h4 {
-      @apply mb-2 mt-6 text-lg font-semibold;
+      @apply mb-2 mt-6 text-xl font-semibold;
     }
 
     /* 목록 */

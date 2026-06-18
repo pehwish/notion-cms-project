@@ -4,7 +4,7 @@ import { useTypingAnimation } from '@/hooks/use-typing-animation';
 import { PROFILE_DATA } from '@/lib/constants';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight, Mail, Github, Linkedin, Download } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -55,6 +55,35 @@ export function HeroSection() {
           {PROFILE_DATA.bio}
         </p>
 
+        {/* 소셜 링크 */}
+        <div className="flex gap-3 pt-2">
+          <a
+            href={PROFILE_DATA.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub 프로필"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:bg-accent transition-colors"
+          >
+            <Github className="h-5 w-5" />
+          </a>
+          <a
+            href={PROFILE_DATA.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn 프로필"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:bg-accent transition-colors"
+          >
+            <Linkedin className="h-5 w-5" />
+          </a>
+          <a
+            href={`mailto:${PROFILE_DATA.email}`}
+            aria-label="이메일 보내기"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:bg-accent transition-colors"
+          >
+            <Mail className="h-5 w-5" />
+          </a>
+        </div>
+
         {/* CTA 버튼 */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <Button
@@ -71,11 +100,22 @@ export function HeroSection() {
             asChild
             variant="outline"
             className="w-full sm:w-auto"
+            aria-label="이력서 다운로드"
+          >
+            <a href={PROFILE_DATA.resumeUrl} download="박은혜이력서.pdf">
+              <Download className="h-4 w-4" />
+              <span>Resume</span>
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            className="w-full sm:w-auto"
             aria-label="연락처 페이지로 이동"
           >
             <Link href="/contact">
               <Mail className="h-4 w-4" />
-              <span>Contact Me</span>
+              <span>Contact</span>
             </Link>
           </Button>
         </div>

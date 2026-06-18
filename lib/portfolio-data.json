@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1",
+    "title": "Easy Code Portfolio",
+    "url": "https://eunhyeportfolio.vercel.app",
+    "technologies": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Notion API"],
+    "roles": ["Full-stack Developer"],
+    "period": "2026-03-09~2026-06-18",
+    "periodParsed": {
+      "startDate": "2026-03-09",
+      "endDate": "2026-06-18"
+    },
+    "description": "Notion을 CMS로 사용하는 개인 포트폴리오 웹사이트",
+    "slug": "easy-code-portfolio",
+    "tags": [],
+    "imageUrl": "https://ui-avatars.com/api/?name=Easy+Code+Portfolio&background=0066cc&color=fff&size=400&bold=true",
+    "lastEditedAt": "2026-06-18T00:00:00.000Z"
+  }
+]

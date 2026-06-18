@@ -1,23 +1,27 @@
 'use client';
 
-import { Phone, Mail, type LucideIcon } from 'lucide-react';
+import { Phone, Mail, Github, Linkedin, type LucideIcon } from 'lucide-react';
 import { Section } from '@/components/layout/Section';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { CONTACT_DATA } from '@/lib/constants';
+import { CONTACT_DATA, PROFILE_DATA } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { ContactInfo } from '@/lib/types';
 
 /** iconName → Lucide 아이콘 컴포넌트 매핑 */
 const ICON_MAP: Record<string, LucideIcon> = {
   Phone,
-  Mail
+  Mail,
+  Github,
+  Linkedin
 };
 
 /** stagger delay 클래스 목록 (카드 순서대로 매핑) */
 const STAGGER_DELAY_CLASSES = [
   'fade-in-delay-100',
-  'fade-in-delay-200'
+  'fade-in-delay-200',
+  'fade-in-delay-300',
+  'fade-in-delay-400'
 ] as const;
 
 // =============================================================================
@@ -123,7 +127,7 @@ export function ContactSection() {
       </div>
 
       {/* 연락처 카드 그리드 */}
-      <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 lg:grid-cols-2">
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {CONTACT_DATA.map((item, index) => (
           <ContactCard
             key={item.type}
@@ -132,6 +136,66 @@ export function ContactSection() {
             isVisible={isVisible}
           />
         ))}
+
+        {/* GitHub 카드 */}
+        <a
+          href={PROFILE_DATA.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub 프로필"
+          className={cn(
+            'block transition-all duration-300',
+            'hover:-translate-y-2 hover:shadow-lg',
+            isVisible ? STAGGER_DELAY_CLASSES[2] : 'opacity-0 translate-y-5'
+          )}
+        >
+          <Card className="h-full border border-border bg-white dark:bg-slate-950">
+            <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
+              <div
+                className="flex size-20 items-center justify-center rounded-full bg-gray-700 dark:bg-gray-600"
+                aria-hidden="true"
+              >
+                <Github className="size-9 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground">
+                GitHub
+              </h3>
+              <p className="text-base text-muted-foreground">
+                @pehwish
+              </p>
+            </CardContent>
+          </Card>
+        </a>
+
+        {/* LinkedIn 카드 */}
+        <a
+          href={PROFILE_DATA.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn 프로필"
+          className={cn(
+            'block transition-all duration-300',
+            'hover:-translate-y-2 hover:shadow-lg',
+            isVisible ? STAGGER_DELAY_CLASSES[3] : 'opacity-0 translate-y-5'
+          )}
+        >
+          <Card className="h-full border border-border bg-white dark:bg-slate-950">
+            <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
+              <div
+                className="flex size-20 items-center justify-center rounded-full bg-blue-700 dark:bg-blue-600"
+                aria-hidden="true"
+              >
+                <Linkedin className="size-9 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground">
+                LinkedIn
+              </h3>
+              <p className="text-base text-muted-foreground">
+                은혜 박
+              </p>
+            </CardContent>
+          </Card>
+        </a>
       </div>
     </Section>
   );

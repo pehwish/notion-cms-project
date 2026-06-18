@@ -6,7 +6,7 @@ export const SITE_CONFIG = {
   name: 'Easy Code',
   description:
     '사용자가 원하는 경험을 만들어내는 프론트엔드 개발자 박은혜의 포트폴리오',
-  url: 'https://example.com'
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://eunhyeportfolio.vercel.app'
 } as const;
 
 /** 블로그 헤더 네비게이션 링크 */
@@ -33,6 +33,35 @@ export const BREAKPOINTS = {
 export const REVALIDATE_SECONDS = 3600 as const;
 
 // =============================================================================
+// Phase 11: 색상 시스템 강화 (Task 001)
+// =============================================================================
+
+/** 브랜드 컬러 팔레트 */
+export const BRAND_COLORS = {
+  primary: '#4F46E5', // 인디고 블루 (메인 색상)
+  secondary: '#7C3AED', // 보라색 (포인트)
+  accent: '#10B981', // 에메랄드 그린 (보조 강조)
+  light: {
+    bg: '#DDD6FE', // 연한 라벤더 (배경)
+    border: '#C7D2FE', // 라벤더 (테두리)
+    text: '#4F46E5', // 인디고 (텍스트 강조)
+  },
+  dark: {
+    bg: '#111827', // 거의 검정 (다크모드 배경)
+    surface: '#1F2937', // 다크그레이 (다크모드 카드)
+    border: '#374151', // 라이트 그레이 (다크모드 테두리)
+  },
+  neutral: {
+    50: '#F9FAFB',
+    100: '#F3F4F6',
+    200: '#E5E7EB',
+    600: '#4B5563',
+    700: '#374151',
+    900: '#111827',
+  },
+} as const;
+
+// =============================================================================
 // Phase 6: About/Contact 페이지 정적 콘텐츠 (Task 001)
 // =============================================================================
 
@@ -42,7 +71,12 @@ export const PROFILE_DATA = {
   role: 'Frontend Developer',
   bio: '사용자가 원하는 경험을 만들어내는 프론트엔드 개발자',
   location: 'Seoul, Korea',
-  imageUrl: '/assets/images/hero-developer.png'
+  imageUrl: '/assets/images/hero-developer.png',
+  github: 'https://github.com/pehwish',
+  linkedin: 'https://www.linkedin.com/in/%EC%9D%80%ED%98%9C-%EB%B0%95-633096252',
+  email: 'pehwish@gmail.com',
+  resumeUrl: '/resume.pdf',
+  careerStartYear: 2015
 } as const;
 
 /** 기술 스택 데이터 */
