@@ -57,7 +57,7 @@ function ContactCard({ item, delayClass, isVisible }: ContactCardProps) {
         isVisible ? delayClass : 'opacity-0 translate-y-5'
       )}
     >
-      <Card className="h-full border border-border bg-white dark:bg-slate-950 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
+      <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
         <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
           {/* 원형 아이콘 배경: 파란색 계열 + 호버 효과 */}
           <div
@@ -149,7 +149,7 @@ export function ContactSection() {
             isVisible ? STAGGER_DELAY_CLASSES[2] : 'opacity-0 translate-y-5'
           )}
         >
-          <Card className="h-full border border-border bg-white dark:bg-slate-950">
+          <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
             <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
               <div
                 className="flex size-20 items-center justify-center rounded-full bg-gray-700 dark:bg-gray-600"
@@ -179,7 +179,7 @@ export function ContactSection() {
             isVisible ? STAGGER_DELAY_CLASSES[3] : 'opacity-0 translate-y-5'
           )}
         >
-          <Card className="h-full border border-border bg-white dark:bg-slate-950">
+          <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
             <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
               <div
                 className="flex size-20 items-center justify-center rounded-full bg-blue-700 dark:bg-blue-600"

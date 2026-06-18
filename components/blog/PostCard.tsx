@@ -92,7 +92,7 @@ export function PostCard({ post }: PostCardProps) {
         className='group block h-full'
         aria-label={`${post.title} 글 읽기`}
       >
-        <Card className='flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl group-hover:shadow-2xl group-hover:-translate-y-2 relative rounded-lg border border-gray-200 dark:border-gray-800 pt-0 bg-white dark:bg-slate-950 hover:border-indigo-400 dark:hover:border-purple-500'>
+        <Card className='flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl group-hover:shadow-2xl group-hover:-translate-y-2 relative rounded-lg border border-gray-200 dark:border-gray-800 pt-0 bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500'>
           {/* 카드 상단: 썸네일 이미지 오버레이 영역 */}
           <figure className='relative m-0 h-56 sm:h-72 lg:h-80 w-full overflow-hidden bg-muted'>
             {/* 이미지 또는 폴백 배경 */}

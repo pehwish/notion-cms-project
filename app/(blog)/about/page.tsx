@@ -31,18 +31,18 @@ export default function AboutPage() {
   return (
     <>
       {/* 히어로 섹션: 이름 + 직무 + CTA */}
-      <div className='bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-slate-900/50 dark:to-transparent'>
+      <div className='relative bg-gradient-to-b from-indigo-50/50 to-transparent dark:from-slate-900/50 dark:to-slate-950/0 dark:bg-gradient-to-b dark:from-slate-900/60 dark:via-slate-900/30 dark:to-transparent'>
         <HeroSection />
       </div>
 
       {/* 자기소개 + 개발 철학 카드 */}
-      <div className='bg-gradient-to-br from-blue-50/60 via-indigo-50/30 to-transparent dark:from-slate-900/60 dark:via-slate-800/30 dark:to-transparent'>
+      <div className='relative bg-gradient-to-br from-blue-50/60 via-indigo-50/30 to-transparent dark:from-slate-900/60 dark:via-slate-800/30 dark:to-transparent'>
         <AboutSection />
       </div>
       <Separator className="my-16" />
 
       {/* 기술 스택 프로그레스 바 */}
-      <div className='bg-gradient-to-b from-transparent to-indigo-50/30 dark:to-slate-900/30'>
+      <div className='relative bg-gradient-to-b from-transparent to-indigo-50/30 dark:from-transparent dark:to-slate-900/30'>
         <SkillsSection />
       </div>
     </>

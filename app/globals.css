@@ -374,6 +374,8 @@
    About/Contact 페이지의 fade-in, typing, float 애니메이션
    ========================================================================== */
 @layer utilities {
+  /* Phase 11-5: 모션 및 애니메이션 강화 */
+
   /* Fade-in 스크롤 애니메이션: 요소가 뷰포트에 진입할 때 발동 */
   @keyframes fade-in {
     from {
@@ -383,6 +385,42 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* Fade-in 상단에서: 위에서 아래로 부드럽게 들어오기 */
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Fade-in 좌측에서: 좌측에서 우측으로 들어오기 */
+  @keyframes fade-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Fade-in 우측에서: 우측에서 좌측으로 들어오기 */
+  @keyframes fade-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 
@@ -406,9 +444,49 @@
     }
   }
 
+  /* Pulse 애니메이션: 신중한 점멸 (호버/강조용) */
+  @keyframes subtle-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  /* Scale-in 애니메이션: 작게 시작해서 원래 크기로 (버튼, 카드용) */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   /* Fade-in 애니메이션 클래스 */
   .fade-in {
     animation: fade-in 0.6s ease-out forwards;
+  }
+
+  /* Phase 11-5: 다양한 방향 fade-in 클래스 */
+  .fade-in-down {
+    animation: fade-in-down 0.6s ease-out forwards;
+  }
+
+  .fade-in-left {
+    animation: fade-in-left 0.6s ease-out forwards;
+  }
+
+  .fade-in-right {
+    animation: fade-in-right 0.6s ease-out forwards;
+  }
+
+  /* Scale-in 애니메이션 클래스 */
+  .scale-in {
+    animation: scale-in 0.6s ease-out forwards;
   }
 
   /* Stagger delay를 위한 변형 클래스들 */
@@ -437,6 +515,11 @@
     opacity: 0;
   }
 
+  /* Subtle pulse 클래스 (강조 효과용) */
+  .subtle-pulse {
+    animation: subtle-pulse 2s ease-in-out infinite;
+  }
+
   /* Typing 커서 애니메이션 클래스 */
   .typing-cursor {
     animation: typing 0.5s infinite;
@@ -452,14 +535,19 @@
   /* prefers-reduced-motion: 애니메이션 감소 선호 사용자 대응 */
   @media (prefers-reduced-motion: reduce) {
     .fade-in,
+    .fade-in-down,
+    .fade-in-left,
+    .fade-in-right,
+    .scale-in,
     .fade-in-delay-100,
     .fade-in-delay-200,
     .fade-in-delay-300,
     .fade-in-delay-400,
     .fade-in-delay-500,
     .typing-cursor,
-    .float {
-      animation: none;
+    .float,
+    .subtle-pulse {
+      animation: none !important;
       opacity: 1;
       transform: none;
     }

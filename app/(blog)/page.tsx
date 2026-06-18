@@ -99,16 +99,16 @@ export default async function BlogHomePage({
 
   return (
     <div>
-      {/* ── Hero 섹션: 연한 보라색 배경 + 배경 패턴 ─────────────────── */}
+      {/* ── Hero 섹션: Phase 6 - 확대된 패딩과 배경 패턴 ─────────────── */}
       <section
         aria-labelledby='portfolio-hero-title'
-        className='relative border-b border-border bg-indigo-50/60 dark:bg-slate-900/60'
+        className='relative border-b border-border bg-indigo-50/60 dark:bg-slate-900/60 min-h-screen flex items-center'
       >
         {/* 배경 패턴 (점) */}
         <div className='absolute inset-0 bg-pattern-dots dark:opacity-20' aria-hidden='true' />
         
         <Container>
-          <div className='relative py-20 lg:py-32 z-10'>
+          <div className='relative py-20 lg:py-28 z-10'>
             {/* 대형 타이틀 */}
             <div className='flex flex-col'>
               <h1
@@ -117,19 +117,19 @@ export default async function BlogHomePage({
               >
                 Easy Code
               </h1>
-              <p className='mt-6 text-lg lg:text-xl font-semibold text-indigo-600 dark:text-purple-300'>
+              <p className='mt-8 text-lg lg:text-xl font-semibold text-indigo-600 dark:text-purple-300'>
                 박은혜 · Frontend Developer
               </p>
 
               {/* 소개 텍스트 */}
-              <p className='mt-8 max-w-2xl text-lg lg:text-xl leading-relaxed text-muted-foreground'>
+              <p className='mt-10 max-w-2xl text-lg lg:text-xl leading-relaxed text-muted-foreground'>
                 사용자가 원하는 경험을 만들어내는 프론트엔드 개발자입니다.
                 <br />
                 React, Vue.js, React Native를 활용한 웹/앱 개발과 웹 접근성을 전문으로 합니다.
               </p>
 
               {/* 기술 스택 뱃지 */}
-              <div className='mt-10 flex flex-wrap gap-2'>
+              <div className='mt-12 flex flex-wrap gap-3'>
                 {['React', 'Vue.js', 'React Native', 'TypeScript'].map(tech => (
                   <span
                     key={tech}
@@ -141,7 +141,7 @@ export default async function BlogHomePage({
               </div>
 
               {/* 프로젝트 수 + 경력 표시 */}
-              <div className='mt-10 flex flex-col gap-3 text-base lg:text-lg text-muted-foreground'>
+              <div className='mt-12 flex flex-col gap-4 text-base lg:text-lg text-muted-foreground'>
                 {allPosts.length > 0 && (
                   <p>
                     총{' '}
@@ -231,12 +231,12 @@ export default async function BlogHomePage({
         </Container>
       </div>
 
-      {/* ── 글 목록 영역: 흰색 배경으로 명확한 구분 ──────────────────── */}
+      {/* ── 글 목록 영역: Phase 6 - 확대된 패딩 ────────────────────── */}
       <Container>
-        <section className='py-16 lg:py-24' aria-label='블로그 글 목록'>
+        <section className='py-20 lg:py-32' aria-label='블로그 글 목록'>
           {/* 활성 필터 상태 표시 */}
           {(category || q) && (
-            <div className='mb-8 flex items-center gap-2 text-sm text-muted-foreground'>
+            <div className='mb-10 flex items-center gap-2 text-sm text-muted-foreground'>
               <span>
                 {q && (
                   <>
@@ -272,7 +272,7 @@ export default async function BlogHomePage({
           {/* 글 카드 그리드: 모바일 1열 / sm 이상 2열 / lg 이상 3열 */}
           {posts.length > 0 ? (
             <ul
-              className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-8'
+              className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 sm:gap-10'
               aria-label='블로그 글 목록'
             >
               {posts.map(post => (
