@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Plus_Jakarta_Sans, Noto_Sans_KR } from "next/font/go
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
 import { QueryProvider } from "@/components/common/QueryProvider";
+import { CustomCursor } from "@/components/common/custom-cursor";
 import { SITE_CONFIG } from "@/lib/constants";
 import "./globals.css";
 
@@ -50,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} ${notoSansKR.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${plusJakartaSans.variable} ${notoSansKR.variable} antialiased cursor-none`}
       >
         <ThemeProvider
           attribute="class"
@@ -60,6 +61,7 @@ export default function RootLayout({
         >
           <QueryProvider>
             <TooltipProvider>
+              <CustomCursor />
               {children}
             </TooltipProvider>
           </QueryProvider>
