@@ -18,7 +18,7 @@ export function HeroSection() {
 
       {/* 배경 애니메이션: 미세한 움직임 패턴 */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg width="40" height="40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="1" fill="white"/></svg>')] bg-repeat" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width=%2240%22%20height=%2240%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Ccircle%20cx=%2220%22%20cy=%2220%22%20r=%221%22%20fill=%22white%22/%3E%3C/svg%3E')] bg-repeat" />
       </div>
 
       {/* 콘텐츠 컨테이너 */}
