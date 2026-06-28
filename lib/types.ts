@@ -60,6 +60,14 @@ export interface Post {
   content?: string;
   /** 썸네일/커버 이미지 URL */
   imageUrl?: string;
+  /** 한 줄 문제 정의/요약 (채용 관점) */
+  summary?: string;
+  /** 결과 수치 (예: "이탈률 -18%p, 전환율 22% 향상") */
+  impact?: string;
+  /** 팀 규모 (예: "1인", "3인 팀 중 FE 담당") */
+  teamSize?: string;
+  /** 기여도 (예: "FE 100%", "FE 60%") */
+  contribution?: string;
 }
 
 /** 블로그 글 발행 상태 */

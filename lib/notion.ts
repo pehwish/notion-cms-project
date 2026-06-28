@@ -220,6 +220,32 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
     }
   }
 
+  // Summary, Impact, TeamSize, Contribution 필드 추출 (채용 관점)
+  const summaryField = props.Summary || props.요약;
+  const impactField = props.Impact || props.결과;
+  const teamSizeField = props.TeamSize || props.팀규모;
+  const contributionField = props.Contribution || props.기여도;
+
+  let summary = '';
+  if (summaryField?.type === 'rich_text' && summaryField.rich_text?.[0]) {
+    summary = summaryField.rich_text[0].plain_text || '';
+  }
+
+  let impact = '';
+  if (impactField?.type === 'rich_text' && impactField.rich_text?.[0]) {
+    impact = impactField.rich_text[0].plain_text || '';
+  }
+
+  let teamSize = '';
+  if (teamSizeField?.type === 'rich_text' && teamSizeField.rich_text?.[0]) {
+    teamSize = teamSizeField.rich_text[0].plain_text || '';
+  }
+
+  let contribution = '';
+  if (contributionField?.type === 'rich_text' && contributionField.rich_text?.[0]) {
+    contribution = contributionField.rich_text[0].plain_text || '';
+  }
+
   return {
     id: (page.id as string) || '',
     title,
@@ -235,7 +261,11 @@ function transformNotionPageToPost(page: Record<string, unknown>): Post {
       .replace(/^-|-$/g, ''),
     tags: [],
     description,
-    imageUrl
+    imageUrl,
+    summary: summary || undefined,
+    impact: impact || undefined,
+    teamSize: teamSize || undefined,
+    contribution: contribution || undefined
   };
 }
 

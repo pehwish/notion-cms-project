@@ -1,7 +1,7 @@
 'use client';
 
 import { useTypingAnimation } from '@/hooks/use-typing-animation';
-import { PROFILE_DATA } from '@/lib/constants';
+import { PROFILE_DATA, HERO_STATS } from '@/lib/constants';
 import { Section } from '@/components/layout/Section';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Mail, Github, Linkedin, Download } from 'lucide-react';
@@ -55,6 +55,23 @@ export function HeroSection() {
           {PROFILE_DATA.bio}
         </p>
 
+        {/* 추가 설명 */}
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-md">
+          {PROFILE_DATA.subBio}
+        </p>
+
+        {/* 기술 스택 배지 */}
+        <div className="flex flex-wrap gap-2 pt-2">
+          {['React', 'Next.js', 'TypeScript', 'Tailwind CSS'].map((tech) => (
+            <span
+              key={tech}
+              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
         {/* 소셜 링크 - Phase 4: 호버 효과 강화 */}
         <div className="flex gap-3 pt-2">
           <a
@@ -82,6 +99,20 @@ export function HeroSection() {
           >
             <Mail className="h-5 w-5" />
           </a>
+        </div>
+
+        {/* 주요 지표 카드 */}
+        <div className="grid grid-cols-3 gap-3 py-6 border-y border-border">
+          {HERO_STATS.map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-indigo-600 dark:text-indigo-400">
+                {stat.value}
+              </div>
+              <div className="text-xs sm:text-sm text-muted-foreground mt-1">
+                {stat.label}
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* CTA 버튼 - Phase 4: 호버 효과 강화 */}

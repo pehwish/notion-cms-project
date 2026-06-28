@@ -69,7 +69,8 @@ export const BRAND_COLORS = {
 export const PROFILE_DATA = {
   name: 'Eunhye Park',
   role: 'Frontend Developer',
-  bio: '사용자가 원하는 경험을 만들어내는 프론트엔드 개발자',
+  bio: 'React · Next.js · TypeScript로 사용자 경험을 설계하는 프론트엔드 개발자',
+  subBio: 'ISR 기반 Headless CMS 설계부터 WCAG 2.1 AA 접근성 구현까지, 성능과 UX를 함께 고민합니다.',
   location: 'Seoul, Korea',
   imageUrl: '/assets/images/hero-developer.png',
   github: 'https://github.com/pehwish',
@@ -116,22 +117,28 @@ export const CONTACT_DATA = [
   }
 ] as const;
 
-/** 개발 철학 */
+/** 개발 철학 (구체적 경험 기반) */
 export const PHILOSOPHY_DATA = [
   {
-    title: 'Clean Code',
-    description: '팀이 함께 성장할 수 있는 가독성 높은 코드 작성',
-    iconName: 'Code'
+    title: '성능 최적화 경험',
+    description: 'ISR + 인메모리 캐싱으로 Notion API 응답을 최적화하여 LCP 2.1s 달성. 번들 분석으로 불필요한 의존성을 제거한 경험이 있습니다.',
+    iconName: 'Zap'
   },
   {
-    title: 'User-Centered',
-    description: '모든 디자인 결정의 중심에 사용자 경험을 두기',
-    iconName: 'User'
+    title: 'UX 중심 개발',
+    description: 'WCAG 2.1 AA 접근성을 모든 컴포넌트에 적용. 스크린 리더 테스트와 키보드 네비게이션을 직접 검증하며 모든 사용자를 고려합니다.',
+    iconName: 'Users'
   },
   {
-    title: 'Always Growing',
-    description: '새로운 기술을 학습하고 지속적으로 개선하기'
-  ,
-    iconName: 'GraduationCap'
+    title: '유지보수 가능한 코드',
+    description: '상수 기반 데이터 주도 UI로 콘텐츠 추가 시 코드 수정 최소화. 커스텀 훅으로 관심사를 분리하여 팀 협업을 고려한 코드를 작성합니다.',
+    iconName: 'Code2'
   }
+] as const;
+
+/** Hero 섹션 주요 지표 */
+export const HERO_STATS = [
+  { label: '경력', value: '10년+' },
+  { label: '프로젝트', value: '14개+' },
+  { label: '핵심 기술', value: 'React / Next.js' }
 ] as const;

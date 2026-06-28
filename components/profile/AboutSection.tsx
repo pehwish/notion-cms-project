@@ -1,6 +1,6 @@
 'use client';
 
-import { Code, User, GraduationCap, LucideIcon } from 'lucide-react';
+import { Code, User, GraduationCap, Zap, Users, Code2, LucideIcon } from 'lucide-react';
 import { Section } from '@/components/layout/Section';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
@@ -11,8 +11,11 @@ import type { Philosophy } from '@/lib/types';
 /** iconName → Lucide 아이콘 컴포넌트 매핑 */
 const ICON_MAP: Record<string, LucideIcon> = {
   Code,
+  Code2,
   User,
-  GraduationCap
+  Users,
+  GraduationCap,
+  Zap
 };
 
 // =============================================================================

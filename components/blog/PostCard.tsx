@@ -141,9 +141,24 @@ export function PostCard({ post }: PostCardProps) {
           </figure>
 
           <CardFooter className='flex flex-col items-start gap-3 bg-white dark:bg-white text-slate-900 dark:text-slate-900'>
+            {/* 결과/임팩트 배지 (채용 관점 강조) */}
+            {post.impact && (
+              <div className='inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-green-100 text-green-800 text-xs font-semibold border border-green-300'>
+                <span>📈</span>
+                <span>{post.impact}</span>
+              </div>
+            )}
+
+            {/* 프로젝트 요약 (한 줄 문제 정의) */}
+            {post.summary && (
+              <p className='text-sm text-slate-700 line-clamp-2 leading-relaxed font-medium'>
+                {post.summary}
+              </p>
+            )}
+
             {/* 프로젝트 설명 (2줄 제한) */}
             {post.description && (
-              <p className='text-sm text-slate-700 line-clamp-2 leading-relaxed'>
+              <p className='text-sm text-slate-600 line-clamp-2 leading-relaxed'>
                 {post.description}
               </p>
             )}
