@@ -96,7 +96,7 @@ function SkillItem({ skill, isVisible, delayMs }: SkillItemProps) {
       </div>
 
       {/* 프로그레스 바: color override를 inline style로 지정 */}
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-primary/10">
+      <div className="relative h-2 w-full overflow-hidden rounded-full bg-border/50">
         <div
           className={cn('h-full rounded-full transition-all ease-out', skill.color)}
           style={{
@@ -201,8 +201,7 @@ export function SkillsSection() {
         className="mb-10 text-center"
       >
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          <span className="text-primary">Skills</span>
-          <span className="text-foreground"> &amp; Tech</span>
+          Skills &amp; Tech
         </h2>
         <p className="mt-3 text-base text-muted-foreground">
           현재까지 학습하고 사용해온 기술 스택입니다

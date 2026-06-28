@@ -65,21 +65,21 @@ export function HeroSection() {
           {['React', 'Next.js', 'TypeScript', 'Tailwind CSS'].map((tech) => (
             <span
               key={tech}
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-background border border-border text-muted-foreground hover:border-foreground/50 transition-colors"
             >
               {tech}
             </span>
           ))}
         </div>
 
-        {/* 소셜 링크 - Phase 4: 호버 효과 강화 */}
+        {/* 소셜 링크 */}
         <div className="flex gap-3 pt-2">
           <a
             href={PROFILE_DATA.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub 프로필"
-            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:border-indigo-400 dark:hover:border-purple-500 hover:bg-indigo-50 dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-lg border border-border hover:border-foreground/50 hover:bg-foreground/5 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
           >
             <Github className="h-5 w-5" />
           </a>
@@ -88,14 +88,14 @@ export function HeroSection() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn 프로필"
-            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:border-indigo-400 dark:hover:border-purple-500 hover:bg-indigo-50 dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-lg border border-border hover:border-foreground/50 hover:bg-foreground/5 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
           >
             <Linkedin className="h-5 w-5" />
           </a>
           <a
             href={`mailto:${PROFILE_DATA.email}`}
             aria-label="이메일 보내기"
-            className="inline-flex items-center justify-center h-10 w-10 rounded-md border border-border hover:border-indigo-400 dark:hover:border-purple-500 hover:bg-indigo-50 dark:hover:bg-slate-900 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+            className="inline-flex items-center justify-center h-10 w-10 rounded-lg border border-border hover:border-foreground/50 hover:bg-foreground/5 transition-all duration-300 hover:shadow-md hover:-translate-y-1"
           >
             <Mail className="h-5 w-5" />
           </a>
@@ -115,40 +115,33 @@ export function HeroSection() {
           ))}
         </div>
 
-        {/* CTA 버튼 - Phase 4: 호버 효과 강화 */}
+        {/* CTA 버튼 - 2026 리디자인: 52px 높이, 풀 라운드 */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4">
-          <Button
-            asChild
-            className="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-700 dark:hover:bg-indigo-600 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+          <a
+            href="/"
+            className="h-[52px] px-6 rounded-full bg-[#111111] dark:bg-white text-white dark:text-black font-semibold text-base inline-flex items-center justify-center gap-2 hover:opacity-90 transition-opacity w-full sm:w-auto"
             aria-label="포트폴리오 보기"
           >
-            <Link href="/">
-              <ArrowRight className="h-4 w-4" />
-              <span>View Projects</span>
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            className="w-full sm:w-auto hover:bg-indigo-50 dark:hover:bg-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-all duration-300 hover:-translate-y-1"
+            <ArrowRight className="h-4 w-4" />
+            Projects
+          </a>
+          <a
+            href={PROFILE_DATA.resumeUrl}
+            download="박은혜이력서.pdf"
+            className="h-[52px] px-6 rounded-full border border-current font-semibold text-base inline-flex items-center justify-center gap-2 hover:bg-foreground/5 transition-colors w-full sm:w-auto"
             aria-label="이력서 다운로드"
           >
-            <a href={PROFILE_DATA.resumeUrl} download="박은혜이력서.pdf">
-              <Download className="h-4 w-4" />
-              <span>Resume</span>
-            </a>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            className="w-full sm:w-auto hover:bg-indigo-50 dark:hover:bg-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-all duration-300 hover:-translate-y-1"
+            <Download className="h-4 w-4" />
+            Resume
+          </a>
+          <a
+            href="/contact"
+            className="h-[52px] px-6 rounded-full border border-current font-semibold text-base inline-flex items-center justify-center gap-2 hover:bg-foreground/5 transition-colors w-full sm:w-auto"
             aria-label="연락처 페이지로 이동"
           >
-            <Link href="/contact">
-              <Mail className="h-4 w-4" />
-              <span>Contact</span>
-            </Link>
-          </Button>
+            <Mail className="h-4 w-4" />
+            Contact
+          </a>
         </div>
       </div>
     </Section>

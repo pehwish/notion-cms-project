@@ -42,7 +42,7 @@ function PhilosophyCard({ item, delayClass, isVisible }: PhilosophyCardProps) {
   return (
     <Card
       className={cn(
-        'border border-border bg-card transition-all duration-300',
+        'border border-border/80 bg-white dark:bg-slate-950 transition-all duration-300',
         'hover:-translate-y-2 hover:shadow-lg',
         'cursor-default',
         /* 보이기 전: 투명 + 살짝 아래, 보인 후: 애니메이션 실행 */
@@ -51,9 +51,9 @@ function PhilosophyCard({ item, delayClass, isVisible }: PhilosophyCardProps) {
     >
       <CardContent className="flex flex-col gap-3 p-5">
         {/* 아이콘 원형 배경 */}
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-foreground/5">
           <IconComponent
-            className="h-5 w-5 text-primary"
+            className="h-5 w-5 text-foreground"
             aria-hidden="true"
           />
         </div>
@@ -99,7 +99,7 @@ export function AboutSection() {
   return (
     <Section
       id="about"
-      className="bg-muted/30 dark:bg-muted/10"
+      className="bg-background"
     >
       {/* 2열 그리드: 좌측 타이포그래피 영역 / 우측 소개 + 카드 */}
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">

@@ -57,14 +57,14 @@ function ContactCard({ item, delayClass, isVisible }: ContactCardProps) {
         isVisible ? delayClass : 'opacity-0 translate-y-5'
       )}
     >
-      <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
+      <Card className="h-full border border-border/80 bg-white dark:bg-slate-950 hover:border-foreground/30 transition-colors">
         <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
-          {/* 원형 아이콘 배경: 파란색 계열 + 호버 효과 */}
+          {/* 원형 아이콘 배경: 뉴트럴 계열 */}
           <div
-            className="flex size-20 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500 group-hover:scale-110 transition-transform duration-300"
+            className="flex size-20 items-center justify-center rounded-full bg-[#111111] dark:bg-white group-hover:scale-110 transition-transform duration-300"
             aria-hidden="true"
           >
-            <IconComponent className="size-9 text-white" />
+            <IconComponent className="size-9 text-white dark:text-black" />
           </div>
 
           {/* 연락처 타입 제목 */}
@@ -107,11 +107,9 @@ export function ContactSection() {
         ref={ref as React.RefObject<HTMLDivElement>}
         className="mb-12 text-center"
       >
-        {/* 섹션 제목: "Contact" = 파란색, "Me" = 기본 텍스트 색상 */}
+        {/* 섹션 제목 */}
         <h2 className="text-4xl font-bold sm:text-5xl">
-          <span className="text-blue-600 dark:text-blue-400">Contact</span>
-          {' '}
-          <span className="text-foreground">Me</span>
+          Contact Information
         </h2>
 
         {/* 섹션 설명 */}
@@ -149,13 +147,13 @@ export function ContactSection() {
             isVisible ? STAGGER_DELAY_CLASSES[2] : 'opacity-0 translate-y-5'
           )}
         >
-          <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
+          <Card className="h-full border border-border/80 bg-white dark:bg-slate-950 hover:border-foreground/30 transition-colors">
             <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
               <div
-                className="flex size-20 items-center justify-center rounded-full bg-gray-700 dark:bg-gray-600"
+                className="flex size-20 items-center justify-center rounded-full bg-[#111111] dark:bg-white"
                 aria-hidden="true"
               >
-                <Github className="size-9 text-white" />
+                <Github className="size-9 text-white dark:text-black" />
               </div>
               <h3 className="text-xl font-semibold text-foreground">
                 GitHub
@@ -179,13 +177,13 @@ export function ContactSection() {
             isVisible ? STAGGER_DELAY_CLASSES[3] : 'opacity-0 translate-y-5'
           )}
         >
-          <Card className="h-full border border-border bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 hover:border-indigo-400 dark:hover:border-purple-500 transition-colors">
+          <Card className="h-full border border-border/80 bg-white dark:bg-slate-950 hover:border-foreground/30 transition-colors">
             <CardContent className="flex flex-col items-center gap-5 p-8 text-center">
               <div
-                className="flex size-20 items-center justify-center rounded-full bg-blue-700 dark:bg-blue-600"
+                className="flex size-20 items-center justify-center rounded-full bg-[#111111] dark:bg-white"
                 aria-hidden="true"
               >
-                <Linkedin className="size-9 text-white" />
+                <Linkedin className="size-9 text-white dark:text-black" />
               </div>
               <h3 className="text-xl font-semibold text-foreground">
                 LinkedIn

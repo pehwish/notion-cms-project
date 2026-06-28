@@ -133,21 +133,21 @@ export function ContactForm({ formId }: ContactFormProps) {
           )}
         />
 
-        {/* 제출 버튼 */}
-        <Button
+        {/* 제출 버튼 - 2026 리디자인 */}
+        <button
           type='submit'
           disabled={isSubmitting}
-          className='w-full'
+          className='w-full h-[52px] rounded-full bg-[#111111] dark:bg-white text-white dark:text-black font-semibold text-base inline-flex items-center justify-center gap-2 hover:opacity-90 disabled:opacity-50 transition-opacity'
         >
           {isSubmitting ? (
             <>
-              <Loader2 className='h-4 w-4 mr-2 animate-spin' />
+              <Loader2 className='h-4 w-4 animate-spin' />
               전송 중...
             </>
           ) : (
             '메시지 전송'
           )}
-        </Button>
+        </button>
       </form>
     </Form>
   );
