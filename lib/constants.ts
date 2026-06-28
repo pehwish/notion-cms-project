@@ -11,7 +11,7 @@ export const SITE_CONFIG = {
 
 /** 블로그 헤더 네비게이션 링크 */
 export const MARKETING_NAV_LINKS = [
-  { label: 'Portfolio', href: '/' },
+  { label: 'Projects', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' }
 ] as const;
@@ -141,4 +141,44 @@ export const HERO_STATS = [
   { label: '경력', value: '10년+' },
   { label: '프로젝트', value: '14개+' },
   { label: '핵심 기술', value: 'React / Next.js' }
+] as const;
+
+// =============================================================================
+// 리디자인 2026: 채용 관점 강점 강화 (Hero/Core Strength)
+// =============================================================================
+
+/** Hero 섹션 리디자인 지표 4개 카드 */
+export const HERO_METRICS = [
+  { value: '11+', label: 'Years', sublabel: 'Experience' },
+  { value: '13', label: 'Projects', sublabel: 'Delivered' },
+  { value: '5+', label: 'Domains', sublabel: 'Finance · Public · Commerce' },
+  { value: 'WCAG', label: 'Certified', sublabel: 'Accessibility Expert' }
+] as const;
+
+/** 핵심 역량 카드 4개 (Core Strength 섹션) */
+export const CORE_STRENGTHS = [
+  {
+    title: 'Accessibility',
+    subtitle: '웹 접근성 전문',
+    description: 'WCAG 2.1 AA 인증 경험을 보유하며, 스크린 리더·키보드 네비게이션·포커스 관리를 모든 프로젝트에 적용합니다.',
+    iconName: 'Shield'
+  },
+  {
+    title: 'Product Ownership',
+    subtitle: '구축부터 운영까지',
+    description: '서비스 기획 참여부터 개발, 배포, 운영까지 전 단계를 경험했습니다. 문제를 단순히 구현하는 것이 아니라 서비스 관점으로 해결합니다.',
+    iconName: 'Layers'
+  },
+  {
+    title: 'Collaboration',
+    subtitle: '기획·디자인·백엔드 협업',
+    description: '기획자, 디자이너, 백엔드 개발자와의 긴밀한 협업을 통해 요구사항을 정확히 구현하고 팀 생산성을 높이는 커뮤니케이션을 리딩합니다.',
+    iconName: 'Users'
+  },
+  {
+    title: 'Problem Solving',
+    subtitle: '서비스 운영 중 문제 개선',
+    description: '서비스 운영 중 발생하는 버그, 성능 저하, 사용자 불편 사항을 빠르게 파악하고 근본 원인을 해결하는 지속적 개선 경험을 쌓았습니다.',
+    iconName: 'Zap'
+  }
 ] as const;

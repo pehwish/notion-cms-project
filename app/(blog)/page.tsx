@@ -1,65 +1,38 @@
 /**
- * 블로그 홈 페이지 - Hero + 탭 필터 + 카드 그리드 레이아웃
- * F-01: Notion API 연동으로 글 목록 조회
- * F-03: 카테고리 탭 필터링 (/?category=name)
- * F-04: 키워드 검색 (/?q=keyword)
+ * 포트폴리오 홈 페이지 - 리디자인 2026
+ * Hero + Core Strength + Featured Projects + Contact CTA
+ *
+ * 변경: 채용 관점 강점 강화
+ * - "무엇을 했는가" → "어떤 가치를 만드는 사람인가"로 전환
+ * - 11년 경력 + 4개 핵심 역량 강조
+ * - 대표작 4개만 홈 페이지에 표시
+ * - 전체 목록은 /projects 분리
  */
 
 import { Container } from '@/components/layout/Container';
-import { Input } from '@/components/ui/input';
-import Link from 'next/link';
 import type { Metadata } from 'next';
-import { PenLine } from 'lucide-react';
 import type { Post } from '@/lib/types';
 import { PostCard } from '@/components/blog/PostCard';
-import { SITE_CONFIG, PROFILE_DATA } from "@/lib/constants";
-import { calculateCareerYears, translateRoleToEnglish as translateRole } from "@/lib/utils";
+import { SITE_CONFIG, PROFILE_DATA, HERO_METRICS } from "@/lib/constants";
 import { fetchPublishedPosts } from '@/lib/notion';
+import { CoreStrengthSection } from '@/components/home/CoreStrengthSection';
+import { ContactCTASection } from '@/components/home/ContactCTASection';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: '포트폴리오',
-  description: `${SITE_CONFIG.description} — 모든 프로젝트`,
+  title: 'Home',
+  description: SITE_CONFIG.description,
   openGraph: {
-    title: `포트폴리오 | ${SITE_CONFIG.name}`,
-    description: `${SITE_CONFIG.description} — 모든 프로젝트`
+    title: SITE_CONFIG.name,
+    description: SITE_CONFIG.description
   }
 };
 
-/**
- * ISR: 3600초(1시간) 주기로 페이지 재검증
- * 변수 대신 리터럴로 명시 (Next.js 정적 분석 호환성)
- */
 export const revalidate = 3600;
 
-/** 홈 페이지 검색 파라미터 타입 */
-interface BlogHomePageProps {
-  searchParams: Promise<{
-    /** 기술 스택 필터: /?category=React */
-    category?: string;
-    /** 키워드 검색: /?q=typescript */
-    q?: string;
-  }>;
-}
-
-/**
- * 탭 아이템 스타일 헬퍼 함수
- * 활성 탭: 중간 굵기 텍스트 + 하단 언더라인, 비활성 탭: 흐린 텍스트
- */
-function getTabClassName(isActive: boolean): string {
-  const base =
-    'inline-block whitespace-nowrap px-4 py-3 text-sm font-medium transition-all duration-150';
-  if (isActive) {
-    return `${base} text-foreground border-b-2 border-indigo-600 dark:border-purple-400`;
-  }
-  return `${base} text-muted-foreground hover:text-foreground`;
-}
-
-export default async function BlogHomePage({
-  searchParams
-}: BlogHomePageProps) {
-  const { category, q } = await searchParams;
-
-  /* Notion API에서 발행된 글 목록 조회 (에러 시 빈 배열 반환) */
+export default async function BlogHomePage() {
+  /* Notion API에서 발행된 글 목록 조회 */
   let allPosts: Post[] = [];
   try {
     allPosts = await fetchPublishedPosts();
@@ -67,249 +40,137 @@ export default async function BlogHomePage({
     console.error('홈 페이지 글 목록 조회 실패:', error);
   }
 
-  /* 역할 목록 추출 (중복 제거, 빈 값 제외, 사용 횟수로 내림차순 정렬) */
-  const roleCountMap = new Map<string, number>();
-  allPosts.forEach(p => {
-    p.roles?.forEach(role => {
-      roleCountMap.set(role, (roleCountMap.get(role) ?? 0) + 1);
-    });
-  });
-
-  const roles = Array.from(roleCountMap)
-    .sort((a, b) => b[1] - a[1]) // 카운트 많은 순서로 정렬
-    .map(([role]) => role);
-
-  /* 필터링 로직: category(역할), q 쿼리 파라미터 적용 */
-  let posts: Post[] = allPosts;
-
-  if (category) {
-    posts = posts.filter(p =>
-      p.roles?.some(r => r === category)
-    );
-  }
-
-  if (q) {
-    const keyword = q.toLowerCase();
-    posts = posts.filter(
-      p =>
-        p.title.toLowerCase().includes(keyword) ||
-        p.tags?.some(t => t.toLowerCase().includes(keyword))
-    );
-  }
+  /* Featured Projects: 최신 4개 프로젝트 */
+  const displayPosts = allPosts.slice(0, 4);
 
   return (
     <div>
-      {/* ── Hero 섹션: Phase 6 - 확대된 패딩과 배경 패턴 ─────────────── */}
+      {/* ── Hero 섹션: 11년 경력 강조 ────────────────────────── */}
       <section
-        aria-labelledby='portfolio-hero-title'
-        className='relative border-b border-border bg-indigo-50/60 dark:bg-slate-900/60 min-h-screen flex items-center'
+        aria-labelledby="portfolio-hero-title"
+        className="relative min-h-[90vh] flex items-center justify-center bg-[#FCFCFC] dark:bg-[#0A0A0A]"
       >
-        {/* 배경 패턴 (점) */}
-        <div className='absolute inset-0 bg-pattern-dots dark:opacity-20' aria-hidden='true' />
-        
         <Container>
-          <div className='relative py-20 lg:py-28 z-10'>
-            {/* 대형 타이틀 */}
-            <div className='flex flex-col'>
-              <h1
-                id='portfolio-hero-title'
-                className='text-7xl sm:text-8xl lg:text-9xl font-bold leading-tight tracking-tight -tracking-wider'
+          <div className="py-24 lg:py-32 text-center">
+            {/* 경력 배지 */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/80 backdrop-blur-sm px-4 py-1.5 text-sm text-muted-foreground mb-8">
+              Frontend Engineer · 금융 · 공공 · 커머스
+            </div>
+
+            {/* H1: 대형 타이포 */}
+            <h1
+              id="portfolio-hero-title"
+              className="text-5xl sm:text-6xl lg:text-[72px] font-bold leading-[1.05] tracking-tight text-[#111111] dark:text-white max-w-4xl mx-auto"
+            >
+              11년간 서비스 구축과 운영을 경험한
+              <br />
+              Frontend Engineer
+            </h1>
+
+            {/* 부제 */}
+            <p className="mt-6 max-w-2xl mx-auto text-base lg:text-lg leading-[1.7] text-muted-foreground">
+              금융·공공·커머스 도메인에서 13개 이상의 서비스를 구축하고 운영했습니다.
+              React, Vue, React Native 기반의 프론트엔드 개발과 웹 접근성, 협업, 서비스 운영을 통해
+              사용자와 비즈니스 모두에게 가치 있는 경험을 만듭니다.
+            </p>
+
+            {/* CTA 버튼 */}
+            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="#featured-projects"
+                className="h-[52px] px-6 rounded-full bg-[#111111] dark:bg-white text-white dark:text-black font-semibold text-base inline-flex items-center justify-center hover:opacity-90 transition-opacity"
               >
-                Easy Code
-              </h1>
-              <p className='mt-8 text-lg lg:text-xl font-semibold text-indigo-600 dark:text-purple-300'>
-                박은혜 · Frontend Developer
-              </p>
+                대표 프로젝트 보기
+              </a>
+              <a
+                href={PROFILE_DATA.resumeUrl}
+                className="h-[52px] px-6 rounded-full border border-current font-semibold text-base inline-flex items-center justify-center hover:bg-foreground/5 transition-colors"
+              >
+                이력서 다운로드
+              </a>
+            </div>
 
-              {/* 소개 텍스트 */}
-              <p className='mt-10 max-w-2xl text-lg lg:text-xl leading-relaxed text-muted-foreground'>
-                사용자가 원하는 경험을 만들어내는 프론트엔드 개발자입니다.
-                <br />
-                React, Vue.js, React Native를 활용한 웹/앱 개발과 웹 접근성을 전문으로 합니다.
-              </p>
-
-              {/* 기술 스택 뱃지 */}
-              <div className='mt-12 flex flex-wrap gap-3'>
-                {['React', 'Vue.js', 'React Native', 'TypeScript'].map(tech => (
-                  <span
-                    key={tech}
-                    className='inline-flex items-center rounded-full bg-indigo-100 dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-indigo-700 dark:text-purple-300 border border-indigo-300 dark:border-slate-700'
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* 프로젝트 수 + 경력 표시 */}
-              <div className='mt-12 flex flex-col gap-4 text-base lg:text-lg text-muted-foreground'>
-                {allPosts.length > 0 && (
-                  <p>
-                    총{' '}
-                    <span className='font-semibold text-foreground'>
-                      {allPosts.length}
-                    </span>
-                    개의 프로젝트
-                  </p>
-                )}
-                <p>
-                  경력{' '}
-                  <span className='font-semibold text-foreground'>
-                    {calculateCareerYears(PROFILE_DATA.careerStartYear)}
-                  </span>
-                </p>
-              </div>
+            {/* 핵심 지표 4개 카드 */}
+            <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              {HERO_METRICS.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="rounded-2xl border border-border/80 bg-background p-6 text-center shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                >
+                  <p className="text-3xl font-bold text-foreground">{metric.value}</p>
+                  <p className="text-sm font-semibold mt-1">{metric.label}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{metric.sublabel}</p>
+                </div>
+              ))}
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ── 탭 필터 + 검색 바 ──────────────────────────────────────── */}
-      <div className='border-b border-border bg-background'>
+      {/* ── Core Strength 섹션 ────────────────────────────── */}
+      <CoreStrengthSection />
+
+      {/* ── Featured Projects 섹션 ──────────────────────── */}
+      <section
+        id="featured-projects"
+        aria-labelledby="featured-projects-title"
+        className="py-20 lg:py-28 bg-[#F7F7F7] dark:bg-slate-900/30"
+      >
         <Container>
-          <div className='flex items-stretch gap-4'>
-            {/* 역할 탭 목록: 가로 스크롤 지원 */}
-            <nav
-              aria-label='역할 필터'
-              className='min-w-0 flex-1 overflow-x-auto'
-            >
-              <ul className='flex' role='list'>
-                {/* View all 탭 */}
-                <li>
-                  <Link
-                    href={q ? `/?q=${encodeURIComponent(q)}` : '/'}
-                    aria-current={!category ? 'page' : undefined}
-                    className={getTabClassName(!category)}
-                  >
-                    View all
-                  </Link>
-                </li>
-
-                {/* 개별 역할 탭 */}
-                {roles.map(role => {
-                  const isActive = category === role;
-                  const href = q
-                    ? `/?category=${encodeURIComponent(role)}&q=${encodeURIComponent(q)}`
-                    : `/?category=${encodeURIComponent(role)}`;
-                  const displayRole = translateRole(role);
-                  return (
-                    <li key={role}>
-                      <Link
-                        href={href}
-                        aria-current={isActive ? 'page' : undefined}
-                        className={getTabClassName(isActive)}
-                      >
-                        {displayRole}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
-
-            {/* 검색 입력: 데스크탑에서만 탭 오른쪽에 표시 */}
-            <div
-              className='hidden shrink-0 items-center sm:flex'
-              aria-label='글 검색'
-            >
-              {/* TODO: 검색 로직 구현 필요 (form action으로 q 파라미터 전달) */}
-              <form action='/' method='get' role='search'>
-                {/* category 필터 유지를 위한 hidden input */}
-                {category && (
-                  <input type='hidden' name='category' value={category} />
-                )}
-                <Input
-                  type='search'
-                  name='q'
-                  placeholder='검색...'
-                  defaultValue={q ?? ''}
-                  className='h-8 w-44 text-sm lg:w-56'
-                  aria-label='글 검색'
-                />
-              </form>
-            </div>
-          </div>
-        </Container>
-      </div>
-
-      {/* ── 글 목록 영역: Phase 6 - 확대된 패딩 ────────────────────── */}
-      <Container>
-        <section className='py-20 lg:py-32' aria-label='블로그 글 목록'>
-          {/* 활성 필터 상태 표시 */}
-          {(category || q) && (
-            <div className='mb-10 flex items-center gap-2 text-sm text-muted-foreground'>
-              <span>
-                {q && (
-                  <>
-                    <span className='font-medium text-foreground'>
-                      &ldquo;{q}&rdquo;
-                    </span>{' '}
-                    검색 결과
-                  </>
-                )}
-                {q && category && ' · '}
-                {category && (
-                  <>
-                    Role:{' '}
-                    <span className='font-medium text-foreground'>
-                      {translateRole(category)}
-                    </span>
-                  </>
-                )}{' '}
-                <span className='text-muted-foreground'>
-                  ({posts.length}개)
-                </span>
-              </span>
-              <Link
-                href='/'
-                aria-label='검색 필터 초기화'
-                className='ml-auto text-xs underline-offset-4 hover:underline'
+          <div className="flex items-end justify-between mb-12 flex-col sm:flex-row gap-4">
+            <div>
+              <h2
+                id="featured-projects-title"
+                className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight"
               >
-                필터 초기화
-              </Link>
+                Featured Projects
+              </h2>
+              <p className="mt-3 text-muted-foreground text-base lg:text-lg">
+                금융·공공·커머스 도메인의 대표 프로젝트
+              </p>
             </div>
-          )}
-
-          {/* 글 카드 그리드: 모바일 1열 / sm 이상 2열 / lg 이상 3열 */}
-          {posts.length > 0 ? (
-            <ul
-              className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 sm:gap-10'
-              aria-label='블로그 글 목록'
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-1 text-sm font-medium hover:underline underline-offset-4 text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
             >
-              {posts.map(post => (
+              모든 프로젝트 보기
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          {/* 2열 그리드, 최대 4개 */}
+          {displayPosts.length > 0 ? (
+            <ul
+              className="grid grid-cols-1 sm:grid-cols-2 gap-8"
+              aria-label="대표 프로젝트 목록"
+            >
+              {displayPosts.map((post) => (
                 <li key={post.id ?? post.slug}>
                   <PostCard post={post} />
                 </li>
               ))}
             </ul>
           ) : (
-            /* 검색/필터 결과가 없거나 글이 없는 경우 빈 상태 안내 */
-            <div
-              role='status'
-              aria-live='polite'
-              className='flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-muted/20 py-24 text-center'
-            >
-              <PenLine
-                className='mb-4 h-10 w-10 text-muted-foreground'
-                aria-hidden='true'
-              />
-              <h2 className='text-lg font-semibold'>아직 프로젝트가 없습니다</h2>
-              <p className='mt-2 max-w-sm text-sm text-muted-foreground'>
-                {q || category
-                  ? '검색/필터 조건에 맞는 프로젝트를 찾지 못했습니다. 다른 조건으로 검색해 보세요.'
-                  : 'Notion에서 포트폴리오를 추가하면 여기에 표시됩니다.'}
-              </p>
-              {(q || category) && (
-                <Link
-                  href='/'
-                  className='mt-4 text-sm font-medium text-indigo-600 dark:text-purple-300 underline-offset-4 hover:underline'
-                >
-                  전체 프로젝트 보기
-                </Link>
-              )}
+            <div className="text-center py-12 text-muted-foreground">
+              <p>프로젝트를 불러올 수 없습니다.</p>
             </div>
           )}
-        </section>
-      </Container>
+
+          {/* 모바일용 "전체 보기" 링크 */}
+          <div className="mt-10 text-center sm:hidden">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-1 font-medium underline underline-offset-4"
+            >
+              모든 프로젝트 보기
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </Container>
+      </section>
+
+      {/* ── Contact CTA 섹션 ────────────────────────────── */}
+      <ContactCTASection />
     </div>
   );
 }
