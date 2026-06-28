@@ -118,22 +118,6 @@ export function PostCard({ post }: PostCardProps) {
               aria-hidden='true'
             />
 
-            {/* 호버 시 우측 상단 dog-ear 접힘 효과 */}
-            <div
-              className='absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10'
-              style={
-                {
-                  width: '0px !important',
-                  height: '0px !important',
-                  borderLeft: '20px solid #1f2937',
-                  borderBottom: '20px solid #1f2937',
-                  borderTop: `20px solid ${isDark ? 'lab(2.75381% 0 0)' : '#ffffff'}`,
-                  borderRight: `20px solid ${isDark ? 'lab(2.75381% 0 0)' : '#ffffff'}`
-                } as React.CSSProperties
-              }
-              aria-hidden='true'
-            />
-
             {/* figcaption: 글래스 효과 오버레이 */}
             <figcaption className='absolute inset-x-0 bottom-0 flex items-center justify-between px-5 py-5 bg-white/15 backdrop-blur-[10px] border-t border-t-white/20'>
               {/* 좌측: 제목 + 날짜 */}
