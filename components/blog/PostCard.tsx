@@ -142,7 +142,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
             </figcaption>
           </figure>
 
-          <CardFooter className='flex flex-col items-start gap-3 bg-white dark:bg-white text-slate-900 dark:text-slate-900'>
+          <CardFooter className='flex flex-col items-start gap-3 bg-white dark:bg-gradient-to-br dark:from-slate-950 dark:to-slate-900 text-slate-900 dark:text-slate-100'>
             {/* 결과/임팩트 배지 (채용 관점 강조) */}
             {post.impact && (
               <div className='inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-green-100 text-green-800 text-xs font-semibold border border-green-300'>
@@ -153,14 +153,14 @@ export function PostCard({ post, priority = false }: PostCardProps) {
 
             {/* 프로젝트 요약 (한 줄 문제 정의) */}
             {post.summary && (
-              <p className='text-sm text-slate-700 line-clamp-2 leading-relaxed font-medium'>
+              <p className='text-sm text-slate-700 dark:text-slate-300 line-clamp-2 leading-relaxed font-medium'>
                 {post.summary}
               </p>
             )}
 
             {/* 프로젝트 설명 (2줄 제한) */}
             {post.description && (
-              <p className='text-sm text-slate-600 line-clamp-2 leading-relaxed'>
+              <p className='text-sm text-slate-600 dark:text-slate-400 line-clamp-2 leading-relaxed'>
                 {post.description}
               </p>
             )}
@@ -180,7 +180,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
                 {post.technologies.length > 3 && (
                   <Badge
                     variant='secondary'
-                    className='text-xs font-medium bg-slate-200 text-slate-700'
+                    className='text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
                   >
                     +{post.technologies.length - 3}
                   </Badge>
@@ -200,7 +200,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
                 {post.tags.length > 3 && (
                   <Badge
                     variant='secondary'
-                    className='text-xs font-medium bg-slate-200 text-slate-700'
+                    className='text-xs font-medium bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200'
                   >
                     +{post.tags.length - 3}
                   </Badge>
@@ -210,7 +210,7 @@ export function PostCard({ post, priority = false }: PostCardProps) {
 
             {/* 더 읽기 링크 힌트: 시각적 장식 요소이므로 스크린 리더 숨김 처리 */}
             <div
-              className='flex items-center gap-1 text-xs font-medium text-slate-900 dark:text-slate-900 mt-1'
+              className='flex items-center gap-1 text-xs font-medium text-slate-900 dark:text-slate-100 mt-1'
               aria-hidden='true'
             >
               <span>Read post</span>

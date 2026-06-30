@@ -108,8 +108,8 @@ export function ContactSection() {
         className="mb-12 text-center"
       >
         {/* 섹션 제목 */}
-        <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter">
-          Contact Information
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter">
+          연락처 안내
         </h2>
 
         {/* 섹션 설명 */}
@@ -119,8 +119,7 @@ export function ContactSection() {
             isVisible ? 'fade-in-delay-100' : 'opacity-0'
           )}
         >
-          Feel free to reach out anytime. Whether it&apos;s a collaboration or
-          a question, I&apos;d love to hear from you.
+          언제든 편하게 연락주세요. 협업 제안이든 질문이든, 기쁘게 답해드리겠습니다.
         </p>
       </div>
 

@@ -89,7 +89,7 @@ export default async function ProjectsPage({
       <section className='border-b border-border bg-background py-12 lg:py-16'>
         <Container>
           <div>
-            <h1 className='text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.95]'>
+            <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95]'>
               모든 프로젝트
             </h1>
             <p className='mt-3 text-lg text-muted-foreground'>

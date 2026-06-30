@@ -22,7 +22,7 @@ export function HeroSection() {
       {/* 이름: 타이핑 애니메이션 + 깜빡이는 커서 */}
       {/* 이름: 타이핑 애니메이션 + 깜빡이는 커서 */}
       <div>
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tighter leading-[0.95]">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-foreground tracking-tighter leading-[0.95]">
           {displayedText}
           {!false && (
             <span className="inline-block animate-pulse ml-1 text-foreground opacity-70">|</span>

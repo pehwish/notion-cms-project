@@ -60,7 +60,7 @@ export default async function BlogHomePage() {
             {/* H1: 미니멀 타이포 */}
             <h1
               id="portfolio-hero-title"
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] text-foreground max-w-5xl mx-auto"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter leading-[0.95] text-foreground max-w-5xl mx-auto"
             >
               Frontend Engineer
               <br />

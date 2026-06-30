@@ -27,7 +27,7 @@ export function MobileNav() {
           <Menu className='w-5 h-5' />
         </button>
       </SheetTrigger>
-      <SheetContent side='left' className='w-[240px] sm:hidden'>
+      <SheetContent side='right' className='w-[240px] sm:hidden'>
         <nav className='flex flex-col gap-4 mt-8'>
           {MARKETING_NAV_LINKS.map((link) => (
             <Link

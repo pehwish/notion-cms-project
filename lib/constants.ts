@@ -67,7 +67,7 @@ export const BRAND_COLORS = {
 
 /** 프로필 정보 */
 export const PROFILE_DATA = {
-  name: 'Eunhye Park',
+  name: 'Eunhye Bak',
   role: 'Frontend Developer',
   bio: 'React · Next.js · TypeScript로 사용자 경험을 설계하는 프론트엔드 개발자',
   subBio: 'ISR 기반 Headless CMS 설계부터 WCAG 2.1 AA 접근성 구현까지, 성능과 UX를 함께 고민합니다.',
@@ -103,14 +103,14 @@ export const SKILLS_DATA = [
 export const CONTACT_DATA = [
   {
     type: 'Phone',
-    label: 'Phone',
+    label: '전화',
     value: '010-7997-3104',
     url: 'tel:01079973104',
     iconName: 'Phone'
   },
   {
     type: 'Email',
-    label: 'Email',
+    label: '이메일',
     value: 'pehwish@gmail.com',
     url: 'mailto:pehwish@gmail.com',
     iconName: 'Mail'
