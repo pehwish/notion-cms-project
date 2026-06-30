@@ -74,13 +74,14 @@ function getTechColor(tech: string): string {
 
 interface PostCardProps {
   post: Post;
+  priority?: boolean;
 }
 
 /**
  * 블로그 글 목록에서 개별 글을 카드 형식으로 표시
  * 카테고리 배지, 제목, 설명, 날짜, 태그를 포함
  */
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, priority = false }: PostCardProps) {
   const { theme, systemTheme } = useTheme();
   const isDark =
     theme === 'dark' || (theme === 'system' && systemTheme === 'dark');
@@ -101,6 +102,7 @@ export function PostCard({ post }: PostCardProps) {
                 src={post.imageUrl}
                 alt={post.title}
                 fill
+                priority={priority}
                 className='object-cover transition-transform duration-300 group-hover:scale-105'
                 sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
               />

@@ -144,9 +144,9 @@ export default async function BlogHomePage() {
               className="grid grid-cols-1 sm:grid-cols-2 gap-8"
               aria-label="대표 프로젝트 목록"
             >
-              {displayPosts.map((post) => (
+              {displayPosts.map((post, index) => (
                 <li key={post.id ?? post.slug}>
-                  <PostCard post={post} />
+                  <PostCard post={post} priority={index < 2} />
                 </li>
               ))}
             </ul>

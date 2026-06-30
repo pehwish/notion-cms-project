@@ -209,9 +209,9 @@ export default async function ProjectsPage({
               className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 sm:gap-10'
               aria-label='프로젝트 목록'
             >
-              {posts.map(post => (
+              {posts.map((post, index) => (
                 <li key={post.id ?? post.slug}>
-                  <PostCard post={post} />
+                  <PostCard post={post} priority={index < 3} />
                 </li>
               ))}
             </ul>
