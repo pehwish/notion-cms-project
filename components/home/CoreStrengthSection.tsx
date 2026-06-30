@@ -27,7 +27,7 @@ export function CoreStrengthSection() {
       <Container>
         <h2
           id="core-strength-title"
-          className="text-4xl sm:text-5xl md:text-6xl font-black text-center tracking-tighter mb-4"
+          className="text-2xl sm:text-3xl font-semibold text-center mb-4"
         >
           Core Strength
         </h2>
@@ -39,7 +39,7 @@ export function CoreStrengthSection() {
           {CORE_STRENGTHS.map((strength) => (
             <div
               key={strength.title}
-              className="group rounded-3xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white dark:bg-slate-950 p-8 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.12)] dark:hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)]"
+              className="group rounded-3xl border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white dark:bg-slate-950 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-foreground/30"
             >
               {/* 아이콘 */}
               <div className="mb-4 h-10 w-10 rounded-lg bg-foreground/5 dark:bg-foreground/10 flex items-center justify-center text-foreground">

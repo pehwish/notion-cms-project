@@ -29,7 +29,7 @@ function SkillItem({ skill, isVisible, delayMs }: SkillItemProps) {
       )}
       style={{ transitionDelay: `${delayMs}ms` }}
     >
-      <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-4xl">
+      <span className="text-lg font-semibold tracking-tight text-foreground sm:text-xl md:text-2xl">
         {skill.name}
       </span>
       <span className="shrink-0 text-xs font-medium uppercase tracking-widest text-muted-foreground sm:text-sm">
@@ -114,7 +114,7 @@ export function SkillsSection() {
         ref={ref as React.RefObject<HTMLDivElement>}
         className="mb-10 text-center"
       >
-        <h2 className="text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl">
+        <h2 className="text-2xl font-semibold sm:text-3xl">
           Skills &amp; Tech
         </h2>
         <p className="mt-3 text-base text-muted-foreground sm:text-lg">

@@ -57,14 +57,14 @@ export default async function BlogHomePage() {
               Frontend Engineer · 금융 · 공공 · 커머스
             </div>
 
-            {/* H1: 대형 타이포 */}
+            {/* H1: 미니멀 타이포 */}
             <h1
               id="portfolio-hero-title"
-              className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.95] text-foreground max-w-5xl mx-auto"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.95] text-foreground max-w-5xl mx-auto"
             >
-              11년간 서비스 구축과 운영을 경험한
-              <br />
               Frontend Engineer
+              <br />
+              11년의 경험
             </h1>
 
             {/* 부제 */}
@@ -95,9 +95,9 @@ export default async function BlogHomePage() {
               {HERO_METRICS.map((metric) => (
                 <div
                   key={metric.label}
-                  className="rounded-2xl border border-border/80 bg-background p-6 text-center shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="rounded-2xl border border-border/80 bg-background p-6 text-center hover:border-foreground/30 transition-colors"
                 >
-                  <p className="text-3xl font-bold text-foreground">{metric.value}</p>
+                  <p className="text-2xl font-bold text-foreground">{metric.value}</p>
                   <p className="text-sm font-semibold mt-1">{metric.label}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{metric.sublabel}</p>
                 </div>
@@ -121,7 +121,7 @@ export default async function BlogHomePage() {
             <div>
               <h2
                 id="featured-projects-title"
-                className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter"
+                className="text-2xl sm:text-3xl font-semibold"
               >
                 Featured Projects
               </h2>

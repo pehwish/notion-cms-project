@@ -51,9 +51,9 @@ function NumberedStrengthCard({ item, index, delayClass, isVisible }: NumberedSt
         isVisible ? delayClass : 'opacity-0 translate-y-5'
       )}
     >
-      {/* 좌측: 넘버드 인덱스 (워터마크 톤) */}
-      <div className="shrink-0 sm:w-20">
-        <span className="text-3xl sm:text-4xl font-black text-foreground/15 tabular-nums tracking-tighter">
+      {/* 좌측: 넘버드 인덱스 (작은 라벨) */}
+      <div className="shrink-0">
+        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
           {numberedIndex}
         </span>
       </div>
@@ -119,26 +119,13 @@ export function AboutSection() {
       {/* 2열 그리드: 좌측 타이포그래피 영역 / 우측 소개 + 카드 */}
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
 
-        {/* 좌측: 배경 타이포그래피 + 이름/직무 */}
-        <div className="flex flex-col justify-center">
-          {/* 배경 타이포그래피 */}
-          <p
-            className={cn(
-              'select-none text-6xl font-black leading-none tracking-tight',
-              'text-foreground/5 dark:text-foreground/5',
-              'sm:text-7xl lg:text-8xl',
-              isVisible ? 'fade-in' : 'opacity-0'
-            )}
-            aria-hidden="true"
-          >
-            WHO AM I
-          </p>
-
+        {/* 좌측: 이름/직무 + 위치 */}
+        <div className="flex flex-col justify-center gap-2">
           {/* 이름 */}
           <h2
             className={cn(
-              '-mt-4 text-3xl font-bold text-foreground sm:text-4xl',
-              isVisible ? 'fade-in-delay-100' : 'opacity-0'
+              'text-2xl font-bold text-foreground sm:text-3xl',
+              isVisible ? 'fade-in' : 'opacity-0'
             )}
           >
             {PROFILE_DATA.name}
@@ -147,8 +134,8 @@ export function AboutSection() {
           {/* 직무 */}
           <p
             className={cn(
-              'mt-2 text-lg font-medium text-primary sm:text-xl',
-              isVisible ? 'fade-in-delay-200' : 'opacity-0'
+              'text-lg font-medium text-primary sm:text-lg',
+              isVisible ? 'fade-in-delay-100' : 'opacity-0'
             )}
           >
             {PROFILE_DATA.role}
@@ -157,8 +144,8 @@ export function AboutSection() {
           {/* 위치 */}
           <p
             className={cn(
-              'mt-1 text-sm text-muted-foreground',
-              isVisible ? 'fade-in-delay-300' : 'opacity-0'
+              'text-sm text-muted-foreground',
+              isVisible ? 'fade-in-delay-200' : 'opacity-0'
             )}
           >
             {PROFILE_DATA.location}

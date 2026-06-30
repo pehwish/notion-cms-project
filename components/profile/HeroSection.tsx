@@ -22,7 +22,7 @@ export function HeroSection() {
       {/* 이름: 타이핑 애니메이션 + 깜빡이는 커서 */}
       {/* 이름: 타이핑 애니메이션 + 깜빡이는 커서 */}
       <div>
-        <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black text-foreground tracking-tighter leading-[0.95]">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-foreground tracking-tighter leading-[0.95]">
           {displayedText}
           {!false && (
             <span className="inline-block animate-pulse ml-1 text-foreground opacity-70">|</span>
@@ -90,7 +90,7 @@ export function HeroSection() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-8 border-y border-border">
         {HERO_METRICS.map((stat) => (
           <div key={stat.label} className="text-center sm:text-left">
-            <div className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground tracking-tight tabular-nums">
+            <div className="text-2xl sm:text-3xl md:text-4xl font-black text-foreground tracking-tight tabular-nums">
               {stat.value}
             </div>
             <div className="text-xs sm:text-sm text-muted-foreground mt-1.5 uppercase tracking-wide">

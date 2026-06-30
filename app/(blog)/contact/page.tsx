@@ -33,7 +33,7 @@ export default function ContactPage() {
       <section className='bg-[#FCFCFC] dark:bg-[#0A0A0A] border-b border-border py-12 lg:py-16'>
         <Container>
           <div>
-            <h1 className='text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.95]'>
+            <h1 className='text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-[1.2]'>
               Get In Touch
             </h1>
             <p className='mt-3 text-lg text-muted-foreground'>
@@ -53,7 +53,7 @@ export default function ContactPage() {
         <Container>
           <div className='max-w-2xl mx-auto'>
             <div className='text-center mb-12'>
-              <h2 id='contact-form-title' className='text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter mb-4'>
+              <h2 id='contact-form-title' className='text-2xl sm:text-3xl font-semibold mb-4'>
                 Direct Message
               </h2>
               <p className='text-muted-foreground text-base lg:text-lg'>

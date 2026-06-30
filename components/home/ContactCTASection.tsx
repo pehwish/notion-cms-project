@@ -11,7 +11,7 @@ export function ContactCTASection() {
     >
       <Container>
         <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter mb-4">
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
             함께 만들어가요
           </h2>
           <p className="text-lg text-white/70 dark:text-black/70 mb-8 leading-relaxed">
