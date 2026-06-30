@@ -36,7 +36,7 @@ function getTabClassName(isActive: boolean): string {
   const base =
     'inline-block whitespace-nowrap px-4 py-3 text-sm font-medium transition-all duration-150';
   if (isActive) {
-    return `${base} text-foreground border-b-2 border-indigo-600 dark:border-purple-400`;
+    return `${base} text-foreground border-b-2 border-foreground`;
   }
   return `${base} text-muted-foreground hover:text-foreground`;
 }
@@ -89,7 +89,7 @@ export default async function ProjectsPage({
       <section className='border-b border-border bg-background py-12 lg:py-16'>
         <Container>
           <div>
-            <h1 className='text-4xl lg:text-5xl font-bold tracking-tight'>
+            <h1 className='text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.95]'>
               모든 프로젝트
             </h1>
             <p className='mt-3 text-lg text-muted-foreground'>

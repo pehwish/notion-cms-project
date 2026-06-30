@@ -108,7 +108,7 @@ export function ContactSection() {
         className="mb-12 text-center"
       >
         {/* 섹션 제목 */}
-        <h2 className="text-4xl font-bold sm:text-5xl">
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter">
           Contact Information
         </h2>
 

@@ -60,7 +60,7 @@ export default async function BlogHomePage() {
             {/* H1: 대형 타이포 */}
             <h1
               id="portfolio-hero-title"
-              className="text-5xl sm:text-6xl lg:text-[72px] font-bold leading-[1.05] tracking-tight text-[#111111] dark:text-white max-w-4xl mx-auto"
+              className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-[0.95] text-foreground max-w-5xl mx-auto"
             >
               11년간 서비스 구축과 운영을 경험한
               <br />
@@ -121,7 +121,7 @@ export default async function BlogHomePage() {
             <div>
               <h2
                 id="featured-projects-title"
-                className="text-3xl lg:text-4xl font-bold leading-tight tracking-tight"
+                className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tighter"
               >
                 Featured Projects
               </h2>

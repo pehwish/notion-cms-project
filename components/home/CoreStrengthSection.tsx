@@ -27,7 +27,7 @@ export function CoreStrengthSection() {
       <Container>
         <h2
           id="core-strength-title"
-          className="text-3xl lg:text-4xl font-bold text-center leading-tight tracking-tight mb-4"
+          className="text-4xl sm:text-5xl md:text-6xl font-black text-center tracking-tighter mb-4"
         >
           Core Strength
         </h2>
