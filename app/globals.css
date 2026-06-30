@@ -206,6 +206,38 @@
     background-size: 30px 30px;
   }
 
+  /* 섹션 좌우 세로 라인 경계선 — 예시 디자인의 얇은 그리드 라인 효과 */
+  .section-divider-lines {
+    position: relative;
+  }
+
+  .section-divider-lines::before,
+  .section-divider-lines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--border) 25%, var(--border) 75%, transparent 100%);
+  }
+
+  .section-divider-lines::before {
+    left: 0;
+    @apply hidden sm:block;
+  }
+
+  .section-divider-lines::after {
+    right: 0;
+    @apply hidden sm:block;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .section-divider-lines::before,
+    .section-divider-lines::after {
+      opacity: 0.6;
+    }
+  }
+
   /* 이미지 반응형 기본값: 레이아웃 시프트(CLS) 방지 */
   img {
     max-width: 100%;
@@ -434,16 +466,6 @@
     }
   }
 
-  /* Float 애니메이션: 위아래 미세 움직임 */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-
   /* Pulse 애니메이션: 신중한 점멸 (호버/강조용) */
   @keyframes subtle-pulse {
     0%, 100% {
@@ -527,11 +549,6 @@
     padding-right: 2px;
   }
 
-  /* Float 애니메이션 클래스: 이미지나 아이콘의 부드러운 움직임 */
-  .float {
-    animation: float 3s ease-in-out infinite;
-  }
-
   /* prefers-reduced-motion: 애니메이션 감소 선호 사용자 대응 */
   @media (prefers-reduced-motion: reduce) {
     .fade-in,
@@ -545,7 +562,6 @@
     .fade-in-delay-400,
     .fade-in-delay-500,
     .typing-cursor,
-    .float,
     .subtle-pulse {
       animation: none !important;
       opacity: 1;

@@ -30,19 +30,19 @@ export const revalidate = 3600;
 export default function AboutPage() {
   return (
     <>
-      {/* 히어로 섹션: 이름 + 직무 + CTA (깨끗한 배경) */}
-      <div className='bg-[#FCFCFC] dark:bg-[#0A0A0A]'>
+      {/* 히어로 섹션: 이름 + 직무 + CTA (깨끗한 배경 + 그리드 라인) */}
+      <div className='bg-[#FCFCFC] dark:bg-[#0A0A0A] section-divider-lines'>
         <HeroSection />
       </div>
 
-      {/* 자기소개 + 개발 철학 카드 */}
-      <div className='bg-background'>
+      {/* 자기소개 + 핵심 역량 넘버드 카드 */}
+      <div className='bg-background section-divider-lines'>
         <AboutSection />
       </div>
       <Separator className="my-0" />
 
-      {/* 기술 스택 프로그레스 바 */}
-      <div className='bg-[#F7F7F7] dark:bg-slate-900/30'>
+      {/* 기술 스택 프로그레스 바 + 그리드 라인 */}
+      <div className='bg-[#F7F7F7] dark:bg-slate-900/30 section-divider-lines'>
         <SkillsSection />
       </div>
     </>

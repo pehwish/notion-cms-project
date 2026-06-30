@@ -1,59 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Section } from '@/components/layout/Section';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { SKILLS_DATA } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { Skill } from '@/lib/types';
-
-/** 카운트업 애니메이션 duration (ms) */
-const COUNT_UP_DURATION = 600;
-
-// =============================================================================
-// useSkillAnimation: 숫자 카운트업 + 프로그레스 바 애니메이션
-// =============================================================================
-
-interface UseSkillAnimationOptions {
-  proficiency: number;
-  isVisible: boolean;
-}
-
-/**
- * 숫자 카운트업 및 프로그레스 값 상태 관리 훅
- * - isVisible이 true가 될 때 0 → proficiency 로 증가
- * - requestAnimationFrame 기반 부드러운 애니메이션
- */
-function useSkillAnimation({ proficiency, isVisible }: UseSkillAnimationOptions) {
-  const [currentValue, setCurrentValue] = useState(0);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    const startTime = performance.now();
-
-    const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / COUNT_UP_DURATION, 1);
-      /* easeOut 커브: 빠르게 시작 후 서서히 감속 */
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrentValue(Math.round(eased * proficiency));
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    const frameId = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frameId);
-  }, [isVisible, proficiency]);
-
-  return currentValue;
-}
-
-// =============================================================================
-// SkillItem: 단일 기술 행 (이름 + 프로그레스 바 + 퍼센트)
-// =============================================================================
 
 interface SkillItemProps {
   skill: Skill;
@@ -64,59 +15,29 @@ interface SkillItemProps {
 
 /**
  * 단일 기술 항목
- * - 기술명 + 프로그레스 바 + 숫자 %
- * - isVisible 진입 시 카운트업 + 바 채움 애니메이션
+ * - 보더라인으로 구분된 가로 행: 좌측 굵은 기술명 + 우측 카테고리 라벨
+ * - 프로그레스 바 대신 타이포그래피 크기/굵기로 존재감을 표현
  */
 function SkillItem({ skill, isVisible, delayMs }: SkillItemProps) {
-  const currentValue = useSkillAnimation({
-    proficiency: skill.proficiency,
-    isVisible
-  });
-
   return (
-    <div
+    <li
       className={cn(
-        'flex flex-col gap-1.5',
-        'transition-all duration-500',
+        'group flex flex-col gap-1 border-t border-border/60 py-5',
+        'sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 sm:py-6',
+        'transition-all duration-500 hover:bg-foreground/[0.02]',
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       )}
       style={{ transitionDelay: `${delayMs}ms` }}
     >
-      {/* 기술명 + 숫자 % */}
-      <div className="flex items-center justify-between">
-        <span className="text-sm font-medium text-foreground">
-          {skill.name}
-        </span>
-        <span
-          className="text-xs font-semibold tabular-nums text-primary"
-          aria-label={`${skill.name} 숙련도 ${skill.proficiency}%`}
-        >
-          {currentValue}%
-        </span>
-      </div>
-
-      {/* 프로그레스 바: color override를 inline style로 지정 */}
-      <div className="relative h-2 w-full overflow-hidden rounded-full bg-border/50">
-        <div
-          className={cn('h-full rounded-full transition-all ease-out', skill.color)}
-          style={{
-            width: `${currentValue}%`,
-            transitionDuration: `${COUNT_UP_DURATION}ms`
-          }}
-          role="progressbar"
-          aria-valuenow={currentValue}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-label={`${skill.name} ${currentValue}%`}
-        />
-      </div>
-    </div>
+      <span className="text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-4xl">
+        {skill.name}
+      </span>
+      <span className="shrink-0 text-xs font-medium uppercase tracking-widest text-muted-foreground sm:text-sm">
+        {skill.category}
+      </span>
+    </li>
   );
 }
-
-// =============================================================================
-// SkillCategory: 카테고리 블록 (제목 + 기술 목록 2열)
-// =============================================================================
 
 interface SkillCategoryProps {
   category: string;
@@ -128,16 +49,14 @@ interface SkillCategoryProps {
 
 /**
  * 카테고리별 기술 그룹
- * - 카테고리 제목 + 기술 항목 2열 그리드
+ * - 카테고리 제목 + 기술 항목 세로 스택
  */
 function SkillCategory({ category, skills, isVisible, baseDelayMs }: SkillCategoryProps) {
   return (
-    <div className="flex flex-col gap-4">
-      {/* 카테고리 제목 */}
+    <div className="flex flex-col gap-2">
       <h3
         className={cn(
           'text-sm font-semibold uppercase tracking-widest text-muted-foreground',
-          'border-b border-border pb-2',
           'transition-all duration-500',
           isVisible ? 'opacity-100' : 'opacity-0'
         )}
@@ -146,8 +65,7 @@ function SkillCategory({ category, skills, isVisible, baseDelayMs }: SkillCatego
         {category}
       </h3>
 
-      {/* 기술 2열 그리드 */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <ul className="flex flex-col">
         {skills.map((skill, index) => (
           <SkillItem
             key={skill.name}
@@ -157,14 +75,10 @@ function SkillCategory({ category, skills, isVisible, baseDelayMs }: SkillCatego
             delayMs={baseDelayMs + index * 80}
           />
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
-
-// =============================================================================
-// SkillsSection: 기술 스택 전체 섹션
-// =============================================================================
 
 /** SKILLS_DATA를 카테고리별로 그룹핑 */
 function groupSkillsByCategory(
@@ -180,9 +94,9 @@ function groupSkillsByCategory(
 
 /**
  * Skills 섹션
- * - "Skills & Tech" 제목 (Skills는 primary, & Tech는 foreground)
- * - 카테고리별 그룹화 후 2열 그리드 배치
- * - 뷰포트 진입 시 순차 카운트업 + 프로그레스 바 애니메이션
+ * - "Skills & Tech" 제목
+ * - 카테고리별 그룹화 후 세로 스택 배치
+ * - 뷰포트 진입 시 순차 fade-in 애니메이션
  */
 export function SkillsSection() {
   const { ref, isVisible } = useIntersectionObserver({
@@ -200,10 +114,10 @@ export function SkillsSection() {
         ref={ref as React.RefObject<HTMLDivElement>}
         className="mb-10 text-center"
       >
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl">
           Skills &amp; Tech
         </h2>
-        <p className="mt-3 text-base text-muted-foreground">
+        <p className="mt-3 text-base text-muted-foreground sm:text-lg">
           현재까지 학습하고 사용해온 기술 스택입니다
         </p>
       </div>

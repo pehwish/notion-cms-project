@@ -149,12 +149,14 @@ export interface ProfileInfo {
   imageUrl?: string;
 }
 
-/** 개발 철학 */
+/** 개발 철학 및 핵심 역량 */
 export interface Philosophy {
-  /** 철학 제목 */
+  /** 철학/역량 제목 */
   title: string;
-  /** 철학 설명 */
+  /** 철학/역량 설명 */
   description: string;
   /** lucide-react 아이콘명 */
   iconName: string;
+  /** 부제목 (CORE_STRENGTHS 전용, 넘버드 카드에서 제목 옆 보조 텍스트로 사용) */
+  subtitle?: string;
 }

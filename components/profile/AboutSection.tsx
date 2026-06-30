@@ -1,10 +1,10 @@
 'use client';
 
-import { Code, User, GraduationCap, Zap, Users, Code2, LucideIcon } from 'lucide-react';
+import { Code, User, GraduationCap, Zap, Users, Code2, Shield, Layers, LucideIcon } from 'lucide-react';
 import { Section } from '@/components/layout/Section';
 import { Card, CardContent } from '@/components/ui/card';
 import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
-import { PHILOSOPHY_DATA, PROFILE_DATA } from '@/lib/constants';
+import { CORE_STRENGTHS, PROFILE_DATA } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { Philosophy } from '@/lib/types';
 
@@ -15,15 +15,18 @@ const ICON_MAP: Record<string, LucideIcon> = {
   User,
   Users,
   GraduationCap,
-  Zap
+  Zap,
+  Shield,
+  Layers
 };
 
 // =============================================================================
-// PhilosophyCard: 개발 철학 단일 카드
+// NumberedStrengthCard: 넘버드 강점 카드 (개발 철학 → 핵심 역량으로 재설계)
 // =============================================================================
 
-interface PhilosophyCardProps {
+interface NumberedStrengthCardProps {
   item: Philosophy;
+  index: number;
   /** stagger delay 클래스 (fade-in-delay-N) */
   delayClass: string;
   /** 부모 섹션이 보이는 상태 */
@@ -31,44 +34,55 @@ interface PhilosophyCardProps {
 }
 
 /**
- * 개발 철학 카드
- * - 아이콘 + 제목 + 설명 표시
- * - 호버 시 translateY(-8px) + shadow 확대
- * - isVisible 상태에 따라 fade-in 애니메이션 적용
+ * 넘버드 강점 카드 — 투워즈 스타일 "01~04 Process" 패턴 차용
+ * - 좌측: 큼직한 번호 (00처럼 패딩됨, 워터마크 톤)
+ * - 우측: 아이콘 + 제목 + 부제 + 설명
+ * - 호버 시 미세한 배경 변화 (카드 shadow 제거, hairline border 톤 강화)
  */
-function PhilosophyCard({ item, delayClass, isVisible }: PhilosophyCardProps) {
+function NumberedStrengthCard({ item, index, delayClass, isVisible }: NumberedStrengthCardProps) {
   const IconComponent = ICON_MAP[item.iconName] ?? Code;
+  const numberedIndex = String(index + 1).padStart(2, '0');
 
   return (
-    <Card
+    <div
       className={cn(
-        'border border-border/80 bg-white dark:bg-slate-950 transition-all duration-300',
-        'hover:-translate-y-2 hover:shadow-lg',
-        'cursor-default',
-        /* 보이기 전: 투명 + 살짝 아래, 보인 후: 애니메이션 실행 */
+        'group flex flex-col gap-4 border-t border-border/60 py-6 sm:flex-row sm:gap-8 sm:py-8 first:border-t-0',
+        'transition-colors duration-300 hover:bg-foreground/[0.02]',
         isVisible ? delayClass : 'opacity-0 translate-y-5'
       )}
     >
-      <CardContent className="flex flex-col gap-3 p-5">
-        {/* 아이콘 원형 배경 */}
-        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-foreground/5">
-          <IconComponent
-            className="h-5 w-5 text-foreground"
-            aria-hidden="true"
-          />
+      {/* 좌측: 넘버드 인덱스 (워터마크 톤) */}
+      <div className="shrink-0 sm:w-20">
+        <span className="text-3xl sm:text-4xl font-black text-foreground/15 tabular-nums tracking-tighter">
+          {numberedIndex}
+        </span>
+      </div>
+
+      {/* 우측: 아이콘 + 제목 + 부제(선택) + 설명 */}
+      <div className="flex flex-col gap-2 flex-1">
+        {/* 아이콘 + 제목 행 */}
+        <div className="flex items-start gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-foreground/5 shrink-0 mt-0.5">
+            <IconComponent className="h-4.5 w-4.5 text-foreground" aria-hidden="true" />
+          </div>
+          <h3 className="text-lg font-semibold text-foreground leading-tight">
+            {item.title}
+          </h3>
         </div>
 
-        {/* 제목 */}
-        <h3 className="text-base font-semibold text-foreground">
-          {item.title}
-        </h3>
+        {/* 부제 (CORE_STRENGTHS 전용) */}
+        {item.subtitle && (
+          <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground/80">
+            {item.subtitle}
+          </span>
+        )}
 
         {/* 설명 */}
         <p className="text-sm leading-relaxed text-muted-foreground">
           {item.description}
         </p>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 
@@ -76,11 +90,12 @@ function PhilosophyCard({ item, delayClass, isVisible }: PhilosophyCardProps) {
 // AboutSection: 자기소개 + 개발 철학 섹션
 // =============================================================================
 
-/** stagger delay 클래스 목록 (카드 순서대로 매핑) */
+/** stagger delay 클래스 목록 (카드 순서대로 매핑) — 4개 항목용으로 확장 */
 const STAGGER_DELAY_CLASSES = [
   'fade-in-delay-100',
   'fade-in-delay-200',
-  'fade-in-delay-300'
+  'fade-in-delay-300',
+  'fade-in-delay-400'
 ] as const;
 
 /**
@@ -166,13 +181,14 @@ export function AboutSection() {
             {PROFILE_DATA.bio}
           </p>
 
-          {/* 개발 철학 카드 3개 */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-            {PHILOSOPHY_DATA.map((item, index) => (
-              <PhilosophyCard
+          {/* 핵심 역량 넘버드 카드 4개 (세로 리스트) */}
+          <div className="flex flex-col -mx-4 sm:mx-0">
+            {CORE_STRENGTHS.map((item, index) => (
+              <NumberedStrengthCard
                 key={item.title}
                 item={item}
-                delayClass={STAGGER_DELAY_CLASSES[index] ?? 'fade-in-delay-100'}
+                index={index}
+                delayClass={STAGGER_DELAY_CLASSES[index % STAGGER_DELAY_CLASSES.length] ?? 'fade-in-delay-100'}
                 isVisible={isVisible}
               />
             ))}
